@@ -48,10 +48,10 @@ export const queryClient = new QueryClient({
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount: "always",
       refetchOnReconnect: false,
-      staleTime: Infinity,
-      gcTime: Infinity,
+      staleTime: 30 * 60 * 1000, // 30 minutes
+      gcTime: 60 * 60 * 1000, // 1 hour
       retry: false,
     },
     mutations: {
