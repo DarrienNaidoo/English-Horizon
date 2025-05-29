@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Home, Route, Mic, Gamepad2, TrendingUp, 
-  Presentation, Menu, X 
+  Presentation, Menu, X, Brain 
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalStorage } from "@/hooks/use-local-storage";
@@ -32,6 +32,7 @@ export default function Navigation() {
     { path: "/speaking-zone", label: "Speaking Zone", icon: Mic },
     { path: "/games", label: "Games", icon: Gamepad2 },
     { path: "/progress", label: "Progress", icon: TrendingUp },
+    { path: "/ai-insights", label: "AI Insights", icon: Brain },
   ];
 
   // Check if current user is a teacher
