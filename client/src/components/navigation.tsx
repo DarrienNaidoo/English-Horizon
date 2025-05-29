@@ -64,15 +64,15 @@ export default function Navigation() {
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link key={item.path} href={item.path}>
-                <a 
-                  className={`font-medium transition-colors ${
+                <span 
+                  className={`font-medium transition-colors cursor-pointer ${
                     location === item.path 
                       ? 'text-primary-custom border-b-2 border-primary-custom pb-1' 
                       : 'text-medium-custom hover:text-dark-custom'
                   }`}
                 >
                   {item.label}
-                </a>
+                </span>
               </Link>
             ))}
           </div>
@@ -141,8 +141,8 @@ export default function Navigation() {
             <div className="space-y-2">
               {navItems.map((item) => (
                 <Link key={item.path} href={item.path}>
-                  <a 
-                    className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                  <div 
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors cursor-pointer ${
                       location === item.path 
                         ? 'bg-primary-custom text-white' 
                         : 'text-medium-custom hover:bg-gray-100'
@@ -151,15 +151,15 @@ export default function Navigation() {
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.label}</span>
-                  </a>
+                  </div>
                 </Link>
               ))}
               
               {/* Teacher Mode Access - Mobile */}
               {(isTeacher || isTeacherMode) && (
                 <Link href="/teacher-mode">
-                  <a 
-                    className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                  <div 
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors cursor-pointer ${
                       location === "/teacher-mode" 
                         ? 'bg-primary-custom text-white' 
                         : 'text-medium-custom hover:bg-gray-100'
@@ -168,7 +168,7 @@ export default function Navigation() {
                   >
                     <Presentation className="w-5 h-5" />
                     <span>Teacher Mode</span>
-                  </a>
+                  </div>
                 </Link>
               )}
               

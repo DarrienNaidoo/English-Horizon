@@ -17,7 +17,7 @@ export default function BottomNavigation() {
       <div className="flex justify-around items-center">
         {navItems.map((item) => (
           <Link key={item.path} href={item.path}>
-            <a className="flex flex-col items-center space-y-1 transition-colors">
+            <div className="flex flex-col items-center space-y-1 transition-colors cursor-pointer">
               <item.icon 
                 className={`w-5 h-5 ${
                   location === item.path 
@@ -34,7 +34,7 @@ export default function BottomNavigation() {
               >
                 {item.label}
               </span>
-            </a>
+            </div>
           </Link>
         ))}
       </div>
