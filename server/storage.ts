@@ -322,12 +322,13 @@ export class MemStorage implements IStorage {
     
     const progress: UserProgress = {
       id: existing?.id || this.currentProgressId++,
-      ...insertProgress,
-      completed: insertProgress.completed || false,
-      attempts: insertProgress.attempts || 1,
-      score: insertProgress.score || null,
-      completedAt: insertProgress.completedAt || null,
-      timeSpent: insertProgress.timeSpent || null,
+      userId: insertProgress.userId,
+      lessonId: insertProgress.lessonId,
+      completed: insertProgress.completed ?? false,
+      attempts: insertProgress.attempts ?? 1,
+      score: insertProgress.score ?? null,
+      completedAt: insertProgress.completedAt ?? null,
+      timeSpent: insertProgress.timeSpent ?? null,
     };
     
     this.userProgress.set(key, progress);

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Progress as ProgressBar } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   TrendingUp, 
@@ -123,7 +123,7 @@ export default function Progress() {
                 <TrendingUp className="h-4 w-4 text-primary" />
               </div>
               <div className="text-2xl font-bold capitalize mb-2">{CURRENT_USER.level}</div>
-              <Progress value={levelProgress.progress} className="mb-2" />
+              <ProgressBar value={levelProgress.progress} className="mb-2" />
               <p className="text-xs text-muted-foreground">
                 {formatXP(CURRENT_USER.xp)} / {formatXP(levelProgress.nextLevelXP)}
               </p>
@@ -267,7 +267,7 @@ export default function Progress() {
                           {skill.current}{skill.skill === "Vocabulary" ? " words" : "%"}
                         </span>
                       </div>
-                      <Progress 
+                      <ProgressBar 
                         value={(skill.current / skill.target) * 100} 
                         className="h-2"
                       />
