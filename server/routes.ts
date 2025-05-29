@@ -501,6 +501,358 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Pronunciation Analysis API
+  app.post("/api/pronunciation/analyze", async (req, res) => {
+    try {
+      const { audioData, targetWord, userId } = req.body;
+      const analysis = await pronunciationAnalyzer.analyzeAudio(
+        Buffer.from(audioData, 'base64'), 
+        targetWord, 
+        userId
+      );
+      res.json(analysis);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to analyze pronunciation", error });
+    }
+  });
+
+  app.get("/api/pronunciation/exercises", async (req, res) => {
+    try {
+      const { difficulty, category } = req.query;
+      const exercises = pronunciationAnalyzer.getExercises(
+        difficulty as string, 
+        category as string
+      );
+      res.json(exercises);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get pronunciation exercises", error });
+    }
+  });
+
+  app.get("/api/pronunciation/progress/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const progress = pronunciationAnalyzer.getUserProgress(userId);
+      res.json(progress);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get pronunciation progress", error });
+    }
+  });
+
+  // Personalized Dashboard API
+  app.post("/api/dashboard/goals", async (req, res) => {
+    try {
+      const { userId, type, title, description, targetValue, deadline, priority } = req.body;
+      const goal = personalizedDashboard.createGoal(
+        userId, type, title, description, targetValue, new Date(deadline), priority
+      );
+      res.json(goal);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create goal", error });
+    }
+  });
+
+  app.get("/api/dashboard/goals/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const goals = personalizedDashboard.getUserGoals(userId);
+      res.json(goals);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user goals", error });
+    }
+  });
+
+  app.get("/api/dashboard/recommendations/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const recommendations = personalizedDashboard.getDailyRecommendations(userId);
+      res.json(recommendations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get recommendations", error });
+    }
+  });
+
+  app.get("/api/dashboard/insights/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const insights = personalizedDashboard.getLearningInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get learning insights", error });
+    }
+  });
+
+  app.post("/api/dashboard/streak/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const streak = personalizedDashboard.updateStudyStreak(userId);
+      res.json(streak);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update study streak", error });
+    }
+  });
+
+  // Reading Comprehension API
+  app.get("/api/reading/passages", async (req, res) => {
+    try {
+      const { level, category } = req.query;
+      const passages = readingComprehensionSystem.getPassages(
+        level as string, 
+        category as string
+      );
+      res.json(passages);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get reading passages", error });
+    }
+  });
+
+  app.get("/api/reading/passages/:id", async (req, res) => {
+    try {
+      const passage = readingComprehensionSystem.getPassage(req.params.id);
+      if (!passage) {
+        return res.status(404).json({ message: "Passage not found" });
+      }
+      res.json(passage);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get passage", error });
+    }
+  });
+
+  app.post("/api/reading/sessions", async (req, res) => {
+    try {
+      const { userId, passageId } = req.body;
+      const session = readingComprehensionSystem.startReadingSession(userId, passageId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start reading session", error });
+    }
+  });
+
+  app.post("/api/reading/sessions/:sessionId/highlights", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const highlight = readingComprehensionSystem.addHighlight(sessionId, req.body);
+      res.json(highlight);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to add highlight", error });
+    }
+  });
+
+  app.post("/api/reading/sessions/:sessionId/answers", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const { questionId, answer, timeSpent } = req.body;
+      const result = readingComprehensionSystem.submitAnswer(sessionId, questionId, answer, timeSpent);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit answer", error });
+    }
+  });
+
+  // Speaking Practice API
+  app.get("/api/speaking/exercises", async (req, res) => {
+    try {
+      const { type, level, accent } = req.query;
+      const exercises = speakingPracticeSystem.getExercises(
+        type as string, 
+        level as string, 
+        accent as string
+      );
+      res.json(exercises);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get speaking exercises", error });
+    }
+  });
+
+  app.get("/api/speaking/conversations", async (req, res) => {
+    try {
+      const conversations = speakingPracticeSystem.getConversations();
+      res.json(conversations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get conversations", error });
+    }
+  });
+
+  app.post("/api/speaking/sessions", async (req, res) => {
+    try {
+      const { userId, exerciseId } = req.body;
+      const session = speakingPracticeSystem.startSpeakingSession(userId, exerciseId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start speaking session", error });
+    }
+  });
+
+  app.post("/api/speaking/sessions/:sessionId/record", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const { segment, duration } = req.body;
+      const recording = speakingPracticeSystem.recordAudio(sessionId, segment, duration);
+      res.json(recording);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record audio", error });
+    }
+  });
+
+  app.get("/api/speaking/sessions/:sessionId/feedback", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const feedback = speakingPracticeSystem.generateFeedback(sessionId);
+      res.json(feedback);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate feedback", error });
+    }
+  });
+
+  // Social Learning API
+  app.post("/api/social/study-buddy/find", async (req, res) => {
+    try {
+      const { userId, preferences } = req.body;
+      const matches = socialLearningSystem.findStudyBuddy(userId, preferences);
+      res.json(matches);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to find study buddy", error });
+    }
+  });
+
+  app.get("/api/social/challenges", async (req, res) => {
+    try {
+      const { status, type } = req.query;
+      const challenges = socialLearningSystem.getChallenges(status as string, type as string);
+      res.json(challenges);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get challenges", error });
+    }
+  });
+
+  app.post("/api/social/challenges/:challengeId/join", async (req, res) => {
+    try {
+      const { challengeId } = req.params;
+      const { userId } = req.body;
+      const success = socialLearningSystem.joinChallenge(challengeId, userId);
+      res.json({ success });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to join challenge", error });
+    }
+  });
+
+  app.get("/api/social/leaderboard/:type/:category", async (req, res) => {
+    try {
+      const { type, category } = req.params;
+      const leaderboard = socialLearningSystem.getLeaderboard(type, category);
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get leaderboard", error });
+    }
+  });
+
+  app.post("/api/social/feedback", async (req, res) => {
+    try {
+      const feedback = socialLearningSystem.submitPeerFeedback(req.body);
+      res.json(feedback);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit feedback", error });
+    }
+  });
+
+  app.get("/api/social/groups", async (req, res) => {
+    try {
+      const { isPublic, focusArea } = req.query;
+      const groups = socialLearningSystem.getStudyGroups(
+        isPublic === 'true', 
+        focusArea as string
+      );
+      res.json(groups);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get study groups", error });
+    }
+  });
+
+  // Content Creation API
+  app.post("/api/content/lessons", async (req, res) => {
+    try {
+      const { creatorId, ...lessonData } = req.body;
+      const lesson = contentCreationSystem.createLesson(creatorId, lessonData);
+      res.json(lesson);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create lesson", error });
+    }
+  });
+
+  app.get("/api/content/lessons", async (req, res) => {
+    try {
+      const { creatorId, category, level, isPublic } = req.query;
+      const lessons = contentCreationSystem.getLessons(
+        creatorId ? parseInt(creatorId as string) : undefined,
+        category as string,
+        level as string,
+        isPublic === 'true'
+      );
+      res.json(lessons);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get lessons", error });
+    }
+  });
+
+  app.post("/api/content/vocabulary", async (req, res) => {
+    try {
+      const { creatorId, ...listData } = req.body;
+      const vocabularyList = contentCreationSystem.createVocabularyList(creatorId, listData);
+      res.json(vocabularyList);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create vocabulary list", error });
+    }
+  });
+
+  app.post("/api/content/stories", async (req, res) => {
+    try {
+      const { authorId, ...storyData } = req.body;
+      const story = contentCreationSystem.createStory(authorId, storyData);
+      res.json(story);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create story", error });
+    }
+  });
+
+  app.get("/api/content/stories", async (req, res) => {
+    try {
+      const { authorId, genre, level, isPublic } = req.query;
+      const stories = contentCreationSystem.getStories(
+        authorId ? parseInt(authorId as string) : undefined,
+        genre as string,
+        level as string,
+        isPublic === 'true'
+      );
+      res.json(stories);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get stories", error });
+    }
+  });
+
+  app.get("/api/content/popular/:type", async (req, res) => {
+    try {
+      const { type } = req.params;
+      const { limit } = req.query;
+      const content = contentCreationSystem.getPopularContent(
+        type as any, 
+        limit ? parseInt(limit as string) : 10
+      );
+      res.json(content);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get popular content", error });
+    }
+  });
+
+  app.get("/api/content/search", async (req, res) => {
+    try {
+      const { query, type } = req.query;
+      const results = contentCreationSystem.searchContent(query as string, type as string);
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to search content", error });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

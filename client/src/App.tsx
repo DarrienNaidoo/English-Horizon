@@ -17,6 +17,9 @@ import AIConversation from "@/pages/ai-conversation";
 import VocabularyGames from "@/pages/vocabulary-games";
 import WritingAssistant from "@/pages/writing-assistant";
 import VirtualClassroom from "@/pages/virtual-classroom";
+import PronunciationPractice from "@/pages/pronunciation-practice";
+import ReadingComprehension from "@/pages/reading-comprehension";
+import SocialLearning from "@/pages/social-learning";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
@@ -39,6 +42,9 @@ function Router() {
           <Route path="/vocabulary-games" component={VocabularyGames} />
           <Route path="/writing-assistant" component={WritingAssistant} />
           <Route path="/virtual-classroom" component={VirtualClassroom} />
+          <Route path="/pronunciation-practice" component={PronunciationPractice} />
+          <Route path="/reading-comprehension" component={ReadingComprehension} />
+          <Route path="/social-learning" component={SocialLearning} />
           <Route component={NotFound} />
         </Switch>
       </main>
