@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import TranslationToggle from "@/components/translation-toggle";
 import type { User } from "@shared/schema";
 
 export default function Navigation() {
@@ -32,6 +33,9 @@ export default function Navigation() {
     { path: "/games", label: "Games", icon: Gamepad2 },
     { path: "/progress", label: "Progress", icon: TrendingUp },
   ];
+
+  // Check if current user is a teacher
+  const isTeacher = user?.role === "teacher";
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -66,16 +70,34 @@ export default function Navigation() {
 
           {/* Right side */}
           <div className="flex items-center space-x-4">
+            {/* Translation Toggle */}
+            <TranslationToggle className="hidden md:flex" />
+            
+            {/* Teacher Mode Access - Only show if user is teacher or in teacher mode */}
+            {(isTeacher || isTeacherMode) && (
+              <Link href="/teacher-mode">
+                <Button 
+                  variant="ghost"
+                  className={`hidden lg:flex items-center space-x-2 transition-colors ${
+                    location === "/teacher-mode" ? 'bg-primary-custom text-white' : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
+                >
+                  <Presentation className="w-4 h-4" />
+                  <span className="text-sm">Teacher Mode</span>
+                </Button>
+              </Link>
+            )}
+            
             {/* Teacher Mode Toggle - Desktop */}
             <Button 
               variant="ghost"
               onClick={toggleTeacherMode}
               className={`hidden lg:flex items-center space-x-2 transition-colors ${
-                isTeacherMode ? 'bg-primary-custom text-white' : 'bg-gray-100 hover:bg-gray-200'
+                isTeacherMode ? 'bg-orange-500 text-white' : 'bg-gray-100 hover:bg-gray-200'
               }`}
             >
               <Presentation className="w-4 h-4" />
-              <span className="text-sm">Teacher Mode</span>
+              <span className="text-sm">Projection</span>
             </Button>
             
             {/* User Profile */}
@@ -124,16 +146,38 @@ export default function Navigation() {
                 </Link>
               ))}
               
-              {/* Teacher Mode Toggle - Mobile */}
+              {/* Teacher Mode Access - Mobile */}
+              {(isTeacher || isTeacherMode) && (
+                <Link href="/teacher-mode">
+                  <a 
+                    className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                      location === "/teacher-mode" 
+                        ? 'bg-primary-custom text-white' 
+                        : 'text-medium-custom hover:bg-gray-100'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Presentation className="w-5 h-5" />
+                    <span>Teacher Mode</span>
+                  </a>
+                </Link>
+              )}
+              
+              {/* Translation Toggle - Mobile */}
+              <div className="px-3 py-2">
+                <TranslationToggle className="w-full" />
+              </div>
+              
+              {/* Projection Toggle - Mobile */}
               <Button 
                 variant="ghost"
                 onClick={toggleTeacherMode}
                 className={`w-full justify-start space-x-3 px-3 py-2 ${
-                  isTeacherMode ? 'bg-primary-custom text-white' : 'text-medium-custom hover:bg-gray-100'
+                  isTeacherMode ? 'bg-orange-500 text-white' : 'text-medium-custom hover:bg-gray-100'
                 }`}
               >
                 <Presentation className="w-5 h-5" />
-                <span>Teacher Mode</span>
+                <span>Projection Mode</span>
                 {isTeacherMode && <Badge variant="secondary" className="ml-auto">ON</Badge>}
               </Button>
             </div>
