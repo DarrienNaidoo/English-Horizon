@@ -12,6 +12,7 @@ import GroupActivities from "@/pages/group-activities";
 import CulturalContent from "@/pages/cultural-content";
 import Progress from "@/pages/progress";
 import Profile from "@/pages/profile";
+import VoiceTranslator from "@/pages/voice-translator";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 

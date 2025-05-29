@@ -233,6 +233,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Translation API endpoint
+  app.post("/api/translate", async (req, res) => {
+    try {
+      const { text, sourceLanguage, targetLanguage } = req.body;
+      
+      if (!text || !sourceLanguage || !targetLanguage) {
+        return res.status(400).json({ 
+          message: "Missing required fields: text, sourceLanguage, targetLanguage" 
+        });
+      }
+
+      // For now, provide a simple fallback translation system
+      // In production, this would integrate with external APIs like Google Translate
+      const translations: Record<string, Record<string, string>> = {
+        "hello": {
+          "zh": "你好",
+          "es": "hola",
+          "fr": "bonjour",
+          "de": "hallo",
+          "ja": "こんにちは",
+          "ko": "안녕하세요",
+          "it": "ciao"
+        },
+        "good morning": {
+          "zh": "早上好",
+          "es": "buenos días",
+          "fr": "bonjour",
+          "de": "guten Morgen",
+          "ja": "おはようございます",
+          "ko": "좋은 아침",
+          "it": "buongiorno"
+        },
+        "thank you": {
+          "zh": "谢谢",
+          "es": "gracias",
+          "fr": "merci",
+          "de": "danke",
+          "ja": "ありがとう",
+          "ko": "감사합니다",
+          "it": "grazie"
+        },
+        "how are you": {
+          "zh": "你好吗",
+          "es": "¿cómo estás?",
+          "fr": "comment allez-vous?",
+          "de": "wie geht es dir?",
+          "ja": "元気ですか？",
+          "ko": "어떻게 지내세요?",
+          "it": "come stai?"
+        }
+      };
+
+      const lowerText = text.toLowerCase().trim();
+      let translatedText = translations[lowerText]?.[targetLanguage];
+      
+      if (!translatedText) {
+        // If no translation found, return a message indicating external service needed
+        return res.status(503).json({
+          message: "Translation service requires external API key",
+          error: "EXTERNAL_SERVICE_NEEDED",
+          supportedPhrases: Object.keys(translations)
+        });
+      }
+
+      res.json({
+        translatedText,
+        confidence: 0.95,
+        sourceLanguage,
+        targetLanguage,
+        timestamp: new Date().toISOString()
+      });
+
+    } catch (error) {
+      res.status(500).json({ message: "Translation failed", error });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
