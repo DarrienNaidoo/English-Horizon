@@ -8,13 +8,15 @@ import {
   Users, 
   Flag, 
   BarChart3,
-  Home
+  Home,
+  Languages
 } from "lucide-react";
 
 const navigationItems = [
   { href: "/", label: "Dashboard", icon: Home },
   { href: "/learning-paths", label: "Learning Paths", icon: BookOpen },
   { href: "/speaking-zone", label: "Speaking Zone", icon: Mic },
+  { href: "/voice-translator", label: "Voice Translator", icon: Languages },
   { href: "/games", label: "Games", icon: Gamepad2 },
   { href: "/group-activities", label: "Group Activities", icon: Users },
   { href: "/cultural-content", label: "Cultural Content", icon: Flag },

@@ -30,6 +30,7 @@ function Router() {
           <Route path="/cultural-content" component={CulturalContent} />
           <Route path="/progress" component={Progress} />
           <Route path="/profile" component={Profile} />
+          <Route path="/voice-translator" component={VoiceTranslator} />
           <Route component={NotFound} />
         </Switch>
       </main>
