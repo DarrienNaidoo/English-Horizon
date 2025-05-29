@@ -45,8 +45,8 @@ function App() {
                         (window.navigator as any).standalone === true;
     setIsInstalled(isStandalone);
 
-    // Register service worker
-    if ('serviceWorker' in navigator) {
+    // Register service worker (disabled during development to prevent reload loops)
+    if ('serviceWorker' in navigator && import.meta.env.PROD) {
       navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
           console.log('SW registered: ', registration);
