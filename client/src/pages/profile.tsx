@@ -85,11 +85,11 @@ export default function Profile() {
   const levelProgress = getLevelProgress(CURRENT_USER.xp, CURRENT_USER.level);
 
   // Calculate cache size on component mount
-  useState(() => {
+  useEffect(() => {
     pwaUtils.getCacheSize().then(size => {
       setCacheSize(size);
     });
-  });
+  }, []);
 
   const handleSaveProfile = () => {
     // In real app, this would call an API to update user profile
