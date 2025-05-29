@@ -4,6 +4,10 @@ import { storage } from "./storage";
 import { insertUserSchema, insertUserProgressSchema } from "@shared/schema";
 import { adaptiveLearningEngine } from "./adaptive-learning";
 import { translationService } from "./translation-service";
+import { conversationAI } from "./conversation-ai";
+import { vocabularyGameEngine } from "./vocabulary-game";
+import { writingAssistant } from "./writing-assistant";
+import { virtualClassroom } from "./virtual-classroom";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
