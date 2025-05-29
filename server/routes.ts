@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertUserProgressSchema } from "@shared/schema";
 import { adaptiveLearningEngine } from "./adaptive-learning";
+import { translationService } from "./translation-service";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -244,69 +245,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // For now, provide a simple fallback translation system
-      // In production, this would integrate with external APIs like Google Translate
-      const translations: Record<string, Record<string, string>> = {
-        "hello": {
-          "zh": "你好",
-          "es": "hola",
-          "fr": "bonjour",
-          "de": "hallo",
-          "ja": "こんにちは",
-          "ko": "안녕하세요",
-          "it": "ciao"
-        },
-        "good morning": {
-          "zh": "早上好",
-          "es": "buenos días",
-          "fr": "bonjour",
-          "de": "guten Morgen",
-          "ja": "おはようございます",
-          "ko": "좋은 아침",
-          "it": "buongiorno"
-        },
-        "thank you": {
-          "zh": "谢谢",
-          "es": "gracias",
-          "fr": "merci",
-          "de": "danke",
-          "ja": "ありがとう",
-          "ko": "감사합니다",
-          "it": "grazie"
-        },
-        "how are you": {
-          "zh": "你好吗",
-          "es": "¿cómo estás?",
-          "fr": "comment allez-vous?",
-          "de": "wie geht es dir?",
-          "ja": "元気ですか？",
-          "ko": "어떻게 지내세요?",
-          "it": "come stai?"
-        }
-      };
-
-      const lowerText = text.toLowerCase().trim();
-      let translatedText = translations[lowerText]?.[targetLanguage];
+      const result = await translationService.translate(text, sourceLanguage, targetLanguage);
       
-      if (!translatedText) {
-        // If no translation found, return a message indicating external service needed
-        return res.status(503).json({
-          message: "Translation service requires external API key",
-          error: "EXTERNAL_SERVICE_NEEDED",
-          supportedPhrases: Object.keys(translations)
-        });
-      }
-
       res.json({
-        translatedText,
-        confidence: 0.95,
+        translatedText: result.translatedText,
+        confidence: result.confidence,
+        provider: result.provider,
         sourceLanguage,
         targetLanguage,
         timestamp: new Date().toISOString()
       });
 
     } catch (error) {
-      res.status(500).json({ message: "Translation failed", error });
+      const errorMessage = (error as Error).message;
+      
+      // Check if it's a missing phrase error for demo provider
+      if (errorMessage.includes("Translation not available")) {
+        return res.status(503).json({
+          message: "For full translation capabilities, external API keys are needed",
+          error: "LIMITED_DEMO_MODE",
+          details: errorMessage,
+          availableProviders: translationService.getAvailableProviders(),
+          configurationStatus: translationService.getConfigurationStatus()
+        });
+      }
+      
+      res.status(500).json({ 
+        message: "Translation failed", 
+        error: errorMessage,
+        availableProviders: translationService.getAvailableProviders() 
+      });
+    }
+  });
+
+  // Translation service status endpoint
+  app.get("/api/translation/status", async (req, res) => {
+    try {
+      res.json({
+        availableProviders: translationService.getAvailableProviders(),
+        configurationStatus: translationService.getConfigurationStatus(),
+        supportedLanguages: [
+          { code: "en", name: "English" },
+          { code: "zh", name: "Chinese (Mandarin)" },
+          { code: "es", name: "Spanish" },
+          { code: "fr", name: "French" },
+          { code: "de", name: "German" },
+          { code: "ja", name: "Japanese" },
+          { code: "ko", name: "Korean" },
+          { code: "it", name: "Italian" }
+        ]
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get translation status", error });
     }
   });
 

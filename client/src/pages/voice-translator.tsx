@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,10 @@ import {
   RefreshCw,
   Copy,
   Info,
-  ArrowRight
+  ArrowRight,
+  CheckCircle,
+  XCircle,
+  Settings
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,7 +28,18 @@ interface TranslationResult {
   sourceLanguage: string;
   targetLanguage: string;
   confidence: number;
+  provider?: string;
   timestamp: Date;
+}
+
+interface TranslationStatus {
+  availableProviders: string[];
+  configurationStatus: {
+    google: boolean;
+    azure: boolean;
+    demo: boolean;
+  };
+  supportedLanguages: Array<{ code: string; name: string }>;
 }
 
 const SUPPORTED_LANGUAGES = [
@@ -54,6 +69,11 @@ export default function VoiceTranslator() {
   
   const recognitionRef = useRef<any>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
+
+  // Query translation service status
+  const { data: translationStatus } = useQuery<TranslationStatus>({
+    queryKey: ["/api/translation/status"],
+  });
 
   useEffect(() => {
     // Check browser support
@@ -164,6 +184,7 @@ export default function VoiceTranslator() {
         sourceLanguage,
         targetLanguage,
         confidence: result.confidence || 0.95,
+        provider: result.provider,
         timestamp: new Date(),
       };
       
@@ -238,6 +259,50 @@ export default function VoiceTranslator() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Translation Service Status */}
+        {translationStatus && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Settings className="h-5 w-5" />
+                <span>Translation Service Status</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="flex items-center space-x-2">
+                  {translationStatus.configurationStatus.google ? (
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-gray-400" />
+                  )}
+                  <span className="text-sm">Google Translate</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {translationStatus.configurationStatus.azure ? (
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-gray-400" />
+                  )}
+                  <span className="text-sm">Azure Translator</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="h-4 w-4 text-blue-500" />
+                  <span className="text-sm">Demo Mode</span>
+                </div>
+              </div>
+              <div className="mt-3 text-xs text-muted-foreground">
+                Active providers: {translationStatus.availableProviders.join(", ")}
+                {!translationStatus.configurationStatus.google && !translationStatus.configurationStatus.azure && (
+                  <span className="block mt-1">
+                    Configure external API keys for unlimited translation capabilities
+                  </span>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Browser Support Alert */}
         {(!browserSupport.speechRecognition || !browserSupport.speechSynthesis) && (
           <Alert>
