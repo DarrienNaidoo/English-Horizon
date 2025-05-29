@@ -240,6 +240,57 @@ export class MemStorage implements IStorage {
     };
 
     this.dailyChallenges.set(today, todayChallenge);
+    
+    // Initialize sample user for demo
+    const sampleUser: User = {
+      id: 1,
+      username: "liwei",
+      firstName: "Li",
+      lastName: "Wei",
+      email: "liwei@example.com",
+      level: "intermediate",
+      xp: 2450,
+      streak: 7,
+      preferences: {},
+      createdAt: new Date(),
+      lastActiveDate: new Date(),
+    };
+    this.users.set(1, sampleUser);
+    
+    // Add some sample progress data
+    const sampleProgress: UserProgress[] = [
+      {
+        id: 1,
+        userId: 1,
+        lessonId: 1,
+        status: "completed",
+        score: 85,
+        timeSpent: 12,
+        completedAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // Yesterday
+      },
+      {
+        id: 2,
+        userId: 1,
+        lessonId: 2,
+        status: "completed",
+        score: 92,
+        timeSpent: 15,
+        completedAt: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago
+      },
+      {
+        id: 3,
+        userId: 1,
+        lessonId: 3,
+        status: "in_progress",
+        score: 70,
+        timeSpent: 8,
+        completedAt: new Date(),
+      },
+    ];
+    
+    sampleProgress.forEach(progress => {
+      this.userProgress.set(`${progress.userId}-${progress.lessonId}`, progress);
+    });
   }
 
   async getUser(id: number): Promise<User | undefined> {
