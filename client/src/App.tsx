@@ -13,9 +13,7 @@ import TeacherMode from "@/pages/teacher-mode";
 // import AIInsights from "@/pages/ai-insights";
 import Navigation from "@/components/navigation";
 import BottomNavigation from "@/components/bottom-navigation";
-import OfflineIndicator from "@/components/offline-indicator";
-import { useOffline } from "@/hooks/use-offline";
-import { useEffect } from "react";
+
 
 function Router() {
   return (
@@ -32,18 +30,13 @@ function Router() {
 }
 
 function App() {
-  const { isOffline, registerSW } = useOffline();
-
-  useEffect(() => {
-    // Register service worker for PWA functionality
-    registerSW();
-  }, [registerSW]);
+  // Disable PWA functionality to stabilize the app
+  const isOffline = false;
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className={`min-h-screen bg-light-custom ${isOffline ? 'pwa-offline' : ''}`}>
-          <OfflineIndicator />
+        <div className="min-h-screen bg-light-custom">
           <Navigation />
           <main className="pb-20 lg:pb-0">
             <Router />
