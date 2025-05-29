@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 249 250 251; /* #F9FAFB */
+  --foreground: 31 41 55; /* #1F2937 */
+  --muted: 107 114 128; /* #6B7280 */
+  --muted-foreground: 107 114 128; /* #6B7280 */
+  --popover: 255 255 255; /* #FFFFFF */
+  --popover-foreground: 31 41 55; /* #1F2937 */
+  --card: 255 255 255; /* #FFFFFF */
+  --card-foreground: 31 41 55; /* #1F2937 */
+  --border: 229 231 235; /* #E5E7EB */
+  --input: 229 231 235; /* #E5E7EB */
+  --primary: 37 99 235; /* #2563EB */
+  --primary-foreground: 255 255 255; /* #FFFFFF */
+  --secondary: 5 150 105; /* #059669 */
+  --secondary-foreground: 255 255 255; /* #FFFFFF */
+  --accent: 245 158 11; /* #F59E0B */
+  --accent-foreground: 255 255 255; /* #FFFFFF */
+  --destructive: 220 38 38; /* #DC2626 */
+  --destructive-foreground: 255 255 255; /* #FFFFFF */
+  --ring: 37 99 235; /* #2563EB */
+  --radius: 0.75rem;
+  
+  /* Custom colors for the app */
+  --cultural: 220 38 38; /* #DC2626 */
+  --light: 249 250 251; /* #F9FAFB */
+  --medium: 107 114 128; /* #6B7280 */
+  --dark: 31 41 55; /* #1F2937 */
+}
+
+.dark {
+  --background: 31 41 55; /* #1F2937 */
+  --foreground: 249 250 251; /* #F9FAFB */
+  --muted: 107 114 128; /* #6B7280 */
+  --muted-foreground: 156 163 175; /* #9CA3AF */
+  --popover: 31 41 55; /* #1F2937 */
+  --popover-foreground: 249 250 251; /* #F9FAFB */
+  --card: 31 41 55; /* #1F2937 */
+  --card-foreground: 249 250 251; /* #F9FAFB */
+  --border: 75 85 99; /* #4B5563 */
+  --input: 75 85 99; /* #4B5563 */
+  --primary: 37 99 235; /* #2563EB */
+  --primary-foreground: 255 255 255; /* #FFFFFF */
+  --secondary: 5 150 105; /* #059669 */
+  --secondary-foreground: 255 255 255; /* #FFFFFF */
+  --accent: 245 158 11; /* #F59E0B */
+  --accent-foreground: 255 255 255; /* #FFFFFF */
+  --destructive: 239 68 68; /* #EF4444 */
+  --destructive-foreground: 255 255 255; /* #FFFFFF */
+  --ring: 37 99 235; /* #2563EB */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+}
+
+@layer utilities {
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), #3B82F6);
+  }
+  
+  .bg-secondary-gradient {
+    background: linear-gradient(135deg, hsl(var(--secondary)), #059669);
+  }
+  
+  .bg-accent-gradient {
+    background: linear-gradient(135deg, hsl(var(--accent)), #F59E0B);
+  }
+  
+  .bg-cultural-gradient {
+    background: linear-gradient(135deg, hsl(var(--cultural)), #DC2626);
+  }
+  
+  .text-primary-custom {
+    color: hsl(var(--primary));
+  }
+  
+  .text-secondary-custom {
+    color: hsl(var(--secondary));
+  }
+  
+  .text-accent-custom {
+    color: hsl(var(--accent));
+  }
+  
+  .text-cultural-custom {
+    color: hsl(var(--cultural));
+  }
+  
+  .text-medium-custom {
+    color: hsl(var(--medium));
+  }
+  
+  .text-dark-custom {
+    color: hsl(var(--dark));
+  }
+  
+  .bg-light-custom {
+    background-color: hsl(var(--light));
+  }
+}
+
+/* Teacher mode styles */
+.teacher-mode {
+  font-size: 1.2rem;
+}
+
+.teacher-mode .text-sm {
+  font-size: 1rem;
+}
+
+.teacher-mode .text-xs {
+  font-size: 0.9rem;
+}
+
+/* PWA specific styles */
+.pwa-offline {
+  filter: grayscale(0.5);
+}
+
+/* Custom animations */
+@keyframes bounce-slow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .grid-cols-responsive {
+    grid-template-columns: 1fr;
+  }
+  
+  .teacher-mode {
+    font-size: 1.1rem;
+  }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
