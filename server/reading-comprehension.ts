@@ -237,6 +237,274 @@ Smart technology integration helps optimize resource usage throughout the city. 
           'Many sustainable city concepts originated in Northern European countries like Denmark and Sweden',
           'Singapore is often cited as a leading example of sustainable urban planning in Asia'
         ]
+      },
+      {
+        id: 'modern-workplace',
+        title: 'The Evolution of the Modern Workplace',
+        content: `The concept of work has undergone dramatic transformation in recent decades. Traditional office environments with rigid schedules and hierarchical structures are giving way to flexible, collaborative workspaces that prioritize employee well-being and productivity.
+
+Remote work, once considered an unconventional arrangement, has become mainstream. The global shift toward telecommuting has demonstrated that many jobs can be performed effectively from anywhere with reliable internet access. This flexibility allows employees to achieve better work-life balance while companies can access talent from a broader geographic pool.
+
+Technology plays a pivotal role in this evolution. Video conferencing platforms, cloud-based collaboration tools, and project management software have made distributed teams as effective as those working in the same physical location. Artificial intelligence and automation are increasingly handling routine tasks, freeing human workers to focus on creative problem-solving and strategic thinking.
+
+The physical office space itself is being reimagined. Open floor plans encourage collaboration and communication, while quiet zones provide spaces for concentrated work. Wellness features such as natural lighting, ergonomic furniture, and recreational areas recognize the connection between employee health and performance.
+
+Companies are also embracing new approaches to career development. Traditional linear career paths are being replaced by more fluid structures that allow for lateral movement and skill diversification. Continuous learning has become essential, with many organizations investing heavily in employee training and development programs to keep pace with rapidly changing industry demands.`,
+        level: 'intermediate',
+        category: 'business',
+        wordCount: 248,
+        estimatedReadingTime: 3,
+        vocabulary: [
+          {
+            word: 'hierarchical',
+            definition: 'arranged in order of rank or authority',
+            pronunciation: '/ˌhaɪəˈrɑrkɪkəl/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'The company has a hierarchical management structure.',
+            difficulty: 'medium'
+          },
+          {
+            word: 'telecommuting',
+            definition: 'working from home using computer and telecommunications technology',
+            pronunciation: '/ˈtɛləkəˌmjutɪŋ/',
+            partOfSpeech: 'noun',
+            exampleSentence: 'Telecommuting has become popular among tech workers.',
+            difficulty: 'medium'
+          },
+          {
+            word: 'ergonomic',
+            definition: 'designed for efficiency and comfort in the working environment',
+            pronunciation: '/ˌɜrɡəˈnɑmɪk/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'The ergonomic chair reduced back pain for office workers.',
+            difficulty: 'hard'
+          }
+        ],
+        comprehensionQuestions: [
+          {
+            id: 'mw-q1',
+            type: 'multiple-choice',
+            question: 'What has made remote work possible?',
+            options: ['Better office designs', 'Technology and internet access', 'Government policies', 'Reduced working hours'],
+            correctAnswer: 'Technology and internet access',
+            explanation: 'The passage mentions reliable internet access and various technologies enabling remote work.',
+            points: 2
+          },
+          {
+            id: 'mw-q2',
+            type: 'true-false',
+            question: 'Traditional linear career paths are still the most common approach.',
+            correctAnswer: 'false',
+            explanation: 'The passage states that traditional linear career paths are being replaced by more fluid structures.',
+            points: 2
+          }
+        ],
+        keyPhrases: ['work-life balance', 'distributed teams', 'collaboration tools', 'career development'],
+        culturalNotes: [
+          'The concept of work-life balance varies significantly across different cultures',
+          'Some countries have laws mandating remote work options for eligible employees'
+        ]
+      },
+      {
+        id: 'ocean-exploration',
+        title: 'Mysteries of Deep Ocean Exploration',
+        content: `The deep ocean remains one of Earth's final frontiers, with less than 5% of our planet's underwater realm thoroughly explored. This vast underwater wilderness holds secrets that could revolutionize our understanding of life, climate, and planetary history.
+
+Recent technological advances have opened new possibilities for deep-sea research. Remotely operated vehicles (ROVs) equipped with high-definition cameras and sophisticated sensors can dive to depths previously unreachable by human explorers. These robotic ambassadors have discovered thriving ecosystems around hydrothermal vents, where unique organisms survive in extreme conditions without sunlight.
+
+Marine biologists have identified countless new species in these deep-sea environments. Giant tube worms, bioluminescent jellyfish, and bacteria that derive energy from chemical processes rather than photosynthesis challenge our fundamental assumptions about life's requirements. Some of these organisms possess unique properties that could lead to breakthroughs in medicine, biotechnology, and materials science.
+
+The deep ocean also serves as a crucial component of Earth's climate system. Ocean currents transport heat around the globe, while the deep sea absorbs significant amounts of carbon dioxide from the atmosphere. Understanding these processes is essential for predicting climate change impacts and developing mitigation strategies.
+
+Commercial interests in deep-sea mining have sparked important debates about conservation versus resource extraction. The ocean floor contains valuable minerals including rare earth elements crucial for modern technology. However, scientists warn that mining activities could damage fragile ecosystems that took millions of years to develop, potentially eliminating species before they are even discovered.`,
+        level: 'advanced',
+        category: 'science',
+        wordCount: 278,
+        estimatedReadingTime: 3,
+        vocabulary: [
+          {
+            word: 'hydrothermal',
+            definition: 'relating to hot water, especially in the context of underwater volcanic vents',
+            pronunciation: '/ˌhaɪdroʊˈθɜrməl/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'Hydrothermal vents support unique ecosystems on the ocean floor.',
+            difficulty: 'hard'
+          },
+          {
+            word: 'bioluminescent',
+            definition: 'producing light through chemical reactions within living organisms',
+            pronunciation: '/ˌbaɪoʊˌluməˈnɛsənt/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'The bioluminescent plankton made the water glow at night.',
+            difficulty: 'hard'
+          },
+          {
+            word: 'photosynthesis',
+            definition: 'the process by which plants use sunlight to synthesize nutrients from carbon dioxide and water',
+            pronunciation: '/ˌfoʊtoʊˈsɪnθəsɪs/',
+            partOfSpeech: 'noun',
+            exampleSentence: 'Photosynthesis is essential for plant growth and oxygen production.',
+            difficulty: 'medium'
+          }
+        ],
+        comprehensionQuestions: [
+          {
+            id: 'oe-q1',
+            type: 'multiple-choice',
+            question: 'What percentage of the ocean has been thoroughly explored?',
+            options: ['Less than 5%', 'About 25%', 'Approximately 50%', 'More than 75%'],
+            correctAnswer: 'Less than 5%',
+            explanation: 'The passage states that less than 5% of the underwater realm has been thoroughly explored.',
+            points: 2
+          },
+          {
+            id: 'oe-q2',
+            type: 'short-answer',
+            question: 'What role does the deep ocean play in climate regulation?',
+            correctAnswer: ['transports heat', 'absorbs carbon dioxide', 'ocean currents'],
+            explanation: 'The deep ocean transports heat through currents and absorbs carbon dioxide from the atmosphere.',
+            points: 3
+          }
+        ],
+        keyPhrases: ['deep-sea research', 'hydrothermal vents', 'climate system', 'resource extraction'],
+        culturalNotes: [
+          'Many cultures have myths and legends about sea monsters that may have been inspired by deep-sea creatures',
+          'International waters governance makes deep-sea mining regulation complex'
+        ]
+      },
+      {
+        id: 'digital-citizenship',
+        title: 'Digital Citizenship in the 21st Century',
+        content: `As digital technology becomes increasingly integrated into daily life, the concept of digital citizenship has emerged as a crucial skill for navigating the modern world. Digital citizenship encompasses the responsible and ethical use of technology, including understanding online rights, responsibilities, and digital etiquette.
+
+Privacy protection represents one of the most important aspects of digital citizenship. Personal information shared online can be permanent and far-reaching, affecting future opportunities and relationships. Understanding privacy settings, recognizing data collection practices, and making informed decisions about information sharing are essential skills for maintaining digital autonomy.
+
+The spread of misinformation poses significant challenges to informed democratic participation. Digital citizens must develop critical thinking skills to evaluate online sources, verify information accuracy, and understand how algorithms influence the content they see. Media literacy education helps individuals distinguish between reliable journalism and opinion, advertising, or propaganda.
+
+Cyberbullying and online harassment have serious psychological and social consequences. Digital citizenship education emphasizes empathy, respect, and constructive communication in online spaces. Understanding the human impact of digital interactions encourages more thoughtful and compassionate online behavior.
+
+The digital divide highlights inequalities in technology access and digital skills. Socioeconomic factors, geographic location, and educational opportunities can create disparities in digital participation. Promoting digital inclusion requires addressing both infrastructure limitations and providing comprehensive digital literacy training for all community members.`,
+        level: 'intermediate',
+        category: 'daily-life',
+        wordCount: 235,
+        estimatedReadingTime: 3,
+        vocabulary: [
+          {
+            word: 'encompasses',
+            definition: 'includes or contains as a part or whole',
+            pronunciation: '/ɪnˈkʌmpəsɪz/',
+            partOfSpeech: 'verb',
+            exampleSentence: 'The course encompasses both theory and practical applications.',
+            difficulty: 'medium'
+          },
+          {
+            word: 'algorithms',
+            definition: 'sets of rules or instructions for solving problems or completing tasks',
+            pronunciation: '/ˈælɡəˌrɪðəmz/',
+            partOfSpeech: 'noun',
+            exampleSentence: 'Social media algorithms determine what content users see.',
+            difficulty: 'medium'
+          },
+          {
+            word: 'disparities',
+            definition: 'notable differences or inequalities between groups',
+            pronunciation: '/dɪˈspærɪtiz/',
+            partOfSpeech: 'noun',
+            exampleSentence: 'Educational disparities exist between urban and rural areas.',
+            difficulty: 'medium'
+          }
+        ],
+        comprehensionQuestions: [
+          {
+            id: 'dc-q1',
+            type: 'multiple-choice',
+            question: 'What does digital citizenship primarily focus on?',
+            options: ['Using the latest technology', 'Responsible and ethical technology use', 'Increasing internet speed', 'Buying digital products'],
+            correctAnswer: 'Responsible and ethical technology use',
+            explanation: 'Digital citizenship encompasses responsible and ethical use of technology.',
+            points: 2
+          },
+          {
+            id: 'dc-q2',
+            type: 'true-false',
+            question: 'The digital divide only affects people in developing countries.',
+            correctAnswer: 'false',
+            explanation: 'The passage mentions that socioeconomic factors and geographic location create disparities, indicating it affects various communities.',
+            points: 2
+          }
+        ],
+        keyPhrases: ['digital etiquette', 'privacy protection', 'media literacy', 'digital inclusion'],
+        culturalNotes: [
+          'Privacy expectations vary significantly across different cultures and legal systems',
+          'Digital citizenship education is becoming mandatory in many school curricula worldwide'
+        ]
+      },
+      {
+        id: 'food-sustainability',
+        title: 'Sustainable Food Systems: Feeding the Future',
+        content: `Global food production faces unprecedented challenges as the world population approaches 10 billion people by 2050. Traditional agricultural methods, while having fed humanity for millennia, are increasingly unsustainable due to climate change, soil degradation, and resource scarcity.
+
+Vertical farming represents one innovative solution to these challenges. By growing crops in stacked layers within controlled environments, vertical farms can produce food year-round while using 95% less water than conventional agriculture. LED lighting systems optimized for plant growth eliminate weather dependency and enable farming in urban areas close to consumers.
+
+Plant-based protein alternatives are gaining traction as sustainable substitutes for resource-intensive animal agriculture. Legumes, nuts, and innovative products made from algae or fungi provide essential nutrients while requiring significantly less land, water, and energy to produce. Some companies are even developing laboratory-grown meat that could revolutionize protein production.
+
+Food waste reduction presents another critical opportunity for sustainability. Approximately one-third of all food produced globally is lost or wasted along the supply chain. Smart packaging technologies, improved distribution networks, and consumer education about proper food storage can significantly reduce this waste.
+
+Regenerative agriculture practices focus on rebuilding soil health through diverse crop rotations, cover crops, and minimal tillage. These methods can sequester carbon in soil, improve biodiversity, and create more resilient farming systems that adapt better to climate variability while maintaining productivity.`,
+        level: 'intermediate',
+        category: 'science',
+        wordCount: 245,
+        estimatedReadingTime: 3,
+        vocabulary: [
+          {
+            word: 'unprecedented',
+            definition: 'never having been done or experienced before',
+            pronunciation: '/ʌnˈprɛsɪˌdɛntɪd/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'The pandemic created unprecedented challenges for healthcare systems.',
+            difficulty: 'medium'
+          },
+          {
+            word: 'sequester',
+            definition: 'to isolate or store something, especially carbon, in a natural reservoir',
+            pronunciation: '/sɪˈkwɛstər/',
+            partOfSpeech: 'verb',
+            exampleSentence: 'Forests sequester carbon dioxide from the atmosphere.',
+            difficulty: 'hard'
+          },
+          {
+            word: 'resilient',
+            definition: 'able to recover quickly from difficulties or adapt to change',
+            pronunciation: '/rɪˈzɪljənt/',
+            partOfSpeech: 'adjective',
+            exampleSentence: 'Resilient communities bounce back faster from natural disasters.',
+            difficulty: 'medium'
+          }
+        ],
+        comprehensionQuestions: [
+          {
+            id: 'fs-q1',
+            type: 'multiple-choice',
+            question: 'How much water can vertical farming save compared to conventional agriculture?',
+            options: ['50%', '75%', '85%', '95%'],
+            correctAnswer: '95%',
+            explanation: 'The passage states that vertical farms use 95% less water than conventional agriculture.',
+            points: 2
+          },
+          {
+            id: 'fs-q2',
+            type: 'short-answer',
+            question: 'What percentage of global food production is lost or wasted?',
+            correctAnswer: ['one-third', '33%', 'about one-third'],
+            explanation: 'The passage mentions that approximately one-third of all food produced globally is lost or wasted.',
+            points: 2
+          }
+        ],
+        keyPhrases: ['vertical farming', 'plant-based protein', 'regenerative agriculture', 'food waste reduction'],
+        culturalNotes: [
+          'Food waste patterns vary greatly between developed and developing countries',
+          'Traditional farming practices in many cultures already incorporate sustainable principles'
+        ]
       }
     ];
 

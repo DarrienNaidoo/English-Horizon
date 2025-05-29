@@ -322,6 +322,276 @@ export class SpeakingPracticeSystem {
           'Learn interview question patterns',
           'Develop confident speaking tone'
         ]
+      },
+      {
+        id: 'doctor-appointment',
+        scenario: 'Medical consultation',
+        participants: [
+          {
+            id: 'doctor',
+            name: 'Dr. Williams',
+            role: 'Family Doctor',
+            personality: 'Caring and thorough',
+            accent: 'british',
+            speakingStyle: 'formal'
+          },
+          {
+            id: 'patient',
+            name: 'You',
+            role: 'Patient',
+            personality: 'Concerned but cooperative',
+            accent: 'learner',
+            speakingStyle: 'formal'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'doctor',
+            text: 'Good morning. Please have a seat. What brings you in to see me today?',
+            emotion: 'professional',
+            responseOptions: [
+              'I\'ve been having headaches for the past week.',
+              'I think I might have caught a cold.',
+              'I\'d like to discuss my annual check-up results.'
+            ],
+            culturalNotes: ['Be specific about symptoms', 'Mention duration and severity', 'Ask questions if unclear']
+          }
+        ],
+        culturalContext: [
+          'Medical consultations require clear, specific communication',
+          'Patient confidentiality is strictly maintained',
+          'It\'s important to ask for clarification about medical terms'
+        ],
+        languageGoals: [
+          'Learn medical vocabulary',
+          'Practice describing symptoms',
+          'Understand medical instructions'
+        ]
+      },
+      {
+        id: 'university-seminar',
+        scenario: 'Academic seminar discussion',
+        participants: [
+          {
+            id: 'professor',
+            name: 'Professor Martinez',
+            role: 'Literature Professor',
+            personality: 'Intellectual and encouraging',
+            accent: 'american',
+            speakingStyle: 'formal'
+          },
+          {
+            id: 'student',
+            name: 'You',
+            role: 'Graduate Student',
+            personality: 'Studious and analytical',
+            accent: 'learner',
+            speakingStyle: 'formal'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'professor',
+            text: 'Today we\'re examining the symbolism in contemporary literature. What are your thoughts on how authors use metaphor to convey deeper meaning?',
+            emotion: 'inquisitive',
+            responseOptions: [
+              'I believe metaphors allow readers to connect emotionally...',
+              'From my analysis, symbolic elements often represent...',
+              'Could you elaborate on specific examples?'
+            ],
+            culturalNotes: ['Academic discussions value evidence-based arguments', 'Citing sources strengthens your position', 'Building on others\' ideas shows engagement']
+          }
+        ],
+        culturalContext: [
+          'Academic discussions reward critical thinking and analysis',
+          'Respectful disagreement is encouraged in scholarly debate',
+          'Proper citation and attribution are essential'
+        ],
+        languageGoals: [
+          'Develop academic vocabulary',
+          'Practice analytical language',
+          'Learn to express complex ideas clearly'
+        ]
+      },
+      {
+        id: 'hotel-checkin',
+        scenario: 'Hotel check-in process',
+        participants: [
+          {
+            id: 'receptionist',
+            name: 'Maria',
+            role: 'Front Desk Agent',
+            personality: 'Professional and helpful',
+            accent: 'american',
+            speakingStyle: 'formal'
+          },
+          {
+            id: 'guest',
+            name: 'You',
+            role: 'Hotel Guest',
+            personality: 'Tired traveler',
+            accent: 'learner',
+            speakingStyle: 'polite'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'receptionist',
+            text: 'Good evening, welcome to the Grand Plaza Hotel. How may I assist you today?',
+            emotion: 'welcoming',
+            responseOptions: [
+              'I have a reservation under the name...',
+              'I\'d like to check in, please.',
+              'Could you help me with my booking?'
+            ],
+            culturalNotes: ['Have confirmation number ready', 'Valid ID and credit card required', 'Ask about hotel amenities']
+          }
+        ],
+        culturalContext: [
+          'Hotel staff are trained to be helpful and accommodating',
+          'Tipping bellhops and housekeeping is customary',
+          'Most hotels offer concierge services for local recommendations'
+        ],
+        languageGoals: [
+          'Learn hospitality vocabulary',
+          'Practice making requests politely',
+          'Understand hotel procedures'
+        ]
+      },
+      {
+        id: 'shopping-assistance',
+        scenario: 'Shopping for clothes',
+        participants: [
+          {
+            id: 'salesperson',
+            name: 'Jamie',
+            role: 'Sales Associate',
+            personality: 'Helpful and knowledgeable',
+            accent: 'australian',
+            speakingStyle: 'casual'
+          },
+          {
+            id: 'shopper',
+            name: 'You',
+            role: 'Customer',
+            personality: 'Looking for specific items',
+            accent: 'learner',
+            speakingStyle: 'casual'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'salesperson',
+            text: 'Hi there! Are you looking for anything specific today, or would you like to browse around?',
+            emotion: 'friendly',
+            responseOptions: [
+              'I\'m looking for a formal dress for a wedding.',
+              'Do you have any jeans in size medium?',
+              'Could you show me your winter coat selection?'
+            ],
+            culturalNotes: ['Fitting rooms are standard in clothing stores', 'Return policies vary by store', 'Sales associates can suggest coordinating items']
+          }
+        ],
+        culturalContext: [
+          'Clothing sizes vary between countries and brands',
+          'Most stores have return policies for unworn items',
+          'Sales staff can provide style advice and alternatives'
+        ],
+        languageGoals: [
+          'Learn clothing and fashion vocabulary',
+          'Practice describing preferences',
+          'Understand sizing and fit terms'
+        ]
+      },
+      {
+        id: 'public-transport',
+        scenario: 'Using public transportation',
+        participants: [
+          {
+            id: 'conductor',
+            name: 'Robert',
+            role: 'Train Conductor',
+            personality: 'Efficient and helpful',
+            accent: 'british',
+            speakingStyle: 'formal'
+          },
+          {
+            id: 'passenger',
+            name: 'You',
+            role: 'Passenger',
+            personality: 'Confused traveler',
+            accent: 'learner',
+            speakingStyle: 'polite'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'conductor',
+            text: 'Good morning, tickets please. Where are you traveling to today?',
+            emotion: 'professional',
+            responseOptions: [
+              'I\'m going to Central Station.',
+              'Do I need to change trains to get to the airport?',
+              'Is this the right train for downtown?'
+            ],
+            culturalNotes: ['Keep tickets visible during journey', 'Stand on right side of escalators', 'Offer seats to elderly and pregnant passengers']
+          }
+        ],
+        culturalContext: [
+          'Public transport etiquette varies by country',
+          'Peak hours can be very crowded',
+          'Mobile apps often provide real-time scheduling information'
+        ],
+        languageGoals: [
+          'Learn transportation vocabulary',
+          'Practice asking for directions',
+          'Understand public announcements'
+        ]
+      },
+      {
+        id: 'bank-services',
+        scenario: 'Banking and financial services',
+        participants: [
+          {
+            id: 'banker',
+            name: 'Ms. Thompson',
+            role: 'Bank Representative',
+            personality: 'Professional and trustworthy',
+            accent: 'american',
+            speakingStyle: 'formal'
+          },
+          {
+            id: 'customer',
+            name: 'You',
+            role: 'Bank Customer',
+            personality: 'Cautious with finances',
+            accent: 'learner',
+            speakingStyle: 'formal'
+          }
+        ],
+        turns: [
+          {
+            participantId: 'banker',
+            text: 'Good afternoon. How can I help you with your banking needs today?',
+            emotion: 'professional',
+            responseOptions: [
+              'I\'d like to open a savings account.',
+              'Could you explain your loan options?',
+              'I need to transfer money internationally.'
+            ],
+            culturalNotes: ['Bring government-issued ID', 'Understand fees and minimum balances', 'Ask about online banking features']
+          }
+        ],
+        culturalContext: [
+          'Banking requires strong identity verification',
+          'Financial literacy is important for making informed decisions',
+          'Different account types serve different purposes'
+        ],
+        languageGoals: [
+          'Learn financial vocabulary',
+          'Practice formal communication',
+          'Understand banking procedures'
+        ]
       }
     ];
 

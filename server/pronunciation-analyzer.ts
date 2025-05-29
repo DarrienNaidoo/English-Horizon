@@ -39,6 +39,7 @@ export interface PronunciationProgress {
 
 export class PronunciationAnalyzer {
   private exercises: PronunciationExercise[] = [
+    // TH Sounds
     {
       id: 'th-sound',
       word: 'think',
@@ -53,6 +54,34 @@ export class PronunciationAnalyzer {
       ]
     },
     {
+      id: 'th-sound-2',
+      word: 'mother',
+      phonetic: '/ˈmʌðər/',
+      difficulty: 'medium',
+      category: 'consonants',
+      commonMistakes: ['mudder', 'mozzer'],
+      tips: [
+        'Voiced TH - vocal cords vibrate',
+        'Touch teeth with tongue tip',
+        'Practice with "father" and "brother"'
+      ]
+    },
+    {
+      id: 'th-sound-3',
+      word: 'birthday',
+      phonetic: '/ˈbɜrθdeɪ/',
+      difficulty: 'hard',
+      category: 'consonants',
+      commonMistakes: ['birfday', 'birthday'],
+      tips: [
+        'Two TH sounds in one word',
+        'First TH is voiceless',
+        'Practice slowly then speed up'
+      ]
+    },
+
+    // R Sounds
+    {
       id: 'r-sound',
       word: 'right',
       phonetic: '/raɪt/',
@@ -65,6 +94,75 @@ export class PronunciationAnalyzer {
         'Practice with "red" and "run"'
       ]
     },
+    {
+      id: 'r-sound-2',
+      word: 'restaurant',
+      phonetic: '/ˈrɛstərɑnt/',
+      difficulty: 'hard',
+      category: 'consonants',
+      commonMistakes: ['westaurant', 'lestaurant'],
+      tips: [
+        'Strong R at beginning',
+        'Weak R in middle',
+        'Practice each syllable separately'
+      ]
+    },
+    {
+      id: 'r-sound-3',
+      word: 'refrigerator',
+      phonetic: '/rɪˈfrɪdʒəreɪtər/',
+      difficulty: 'hard',
+      category: 'consonants',
+      commonMistakes: ['lefrigerator', 'frigerator'],
+      tips: [
+        'Multiple R sounds',
+        'Focus on initial R',
+        'Break into syllables: re-fri-ge-ra-tor'
+      ]
+    },
+
+    // L Sounds
+    {
+      id: 'l-sound',
+      word: 'love',
+      phonetic: '/lʌv/',
+      difficulty: 'medium',
+      category: 'consonants',
+      commonMistakes: ['rove', 'wove'],
+      tips: [
+        'Touch tip of tongue to roof of mouth',
+        'Keep tongue sides down',
+        'Practice with "light" and "like"'
+      ]
+    },
+    {
+      id: 'l-sound-2',
+      word: 'parallel',
+      phonetic: '/ˈpærəlɛl/',
+      difficulty: 'hard',
+      category: 'consonants',
+      commonMistakes: ['parawel', 'paralwel'],
+      tips: [
+        'Two L sounds with different qualities',
+        'First L is clear, second is dark',
+        'Practice slowly with emphasis on Ls'
+      ]
+    },
+    {
+      id: 'l-sound-3',
+      word: 'literally',
+      phonetic: '/ˈlɪtərəli/',
+      difficulty: 'hard',
+      category: 'consonants',
+      commonMistakes: ['riterally', 'literawry'],
+      tips: [
+        'Initial L followed by T sound',
+        'End with clear L sound',
+        'Practice: LIT-er-al-ly'
+      ]
+    },
+
+    // Vowel Sounds
     {
       id: 'vowel-ae',
       word: 'cat',
@@ -89,6 +187,157 @@ export class PronunciationAnalyzer {
         'Relax mouth for first syllable',
         'Use neutral vowel sound',
         'Practice unstressed syllables'
+      ]
+    },
+    {
+      id: 'vowel-ee',
+      word: 'receive',
+      phonetic: '/rɪˈsiv/',
+      difficulty: 'medium',
+      category: 'vowels',
+      commonMistakes: ['recieve', 'receeve'],
+      tips: [
+        'Long E sound at the end',
+        'Don\'t diphthongize',
+        'Keep tongue high and front'
+      ]
+    },
+    {
+      id: 'vowel-oo',
+      word: 'through',
+      phonetic: '/θru/',
+      difficulty: 'hard',
+      category: 'vowels',
+      commonMistakes: ['trew', 'fru'],
+      tips: [
+        'Combines TH and long U sound',
+        'Round lips for U',
+        'Practice TH first, then add U'
+      ]
+    },
+
+    // Diphthongs
+    {
+      id: 'diphthong-ay',
+      word: 'exercise',
+      phonetic: '/ˈɛksərˌsaɪz/',
+      difficulty: 'medium',
+      category: 'vowels',
+      commonMistakes: ['exersise', 'excersise'],
+      tips: [
+        'AI diphthong in last syllable',
+        'Start with AH, glide to EE',
+        'Practice: EX-er-SIZE'
+      ]
+    },
+    {
+      id: 'diphthong-ow',
+      word: 'mountain',
+      phonetic: '/ˈmaʊntən/',
+      difficulty: 'medium',
+      category: 'vowels',
+      commonMistakes: ['mounten', 'muntin'],
+      tips: [
+        'AW diphthong in first syllable',
+        'Start with AH, glide to OO',
+        'Weak schwa in final syllable'
+      ]
+    },
+
+    // Word Stress
+    {
+      id: 'stress-1',
+      word: 'photograph',
+      phonetic: '/ˈfoʊtəˌɡræf/',
+      difficulty: 'medium',
+      category: 'stress',
+      commonMistakes: ['photoGRAPH', 'PHOtograph'],
+      tips: [
+        'Stress on first syllable: PHO-to-graph',
+        'Secondary stress on last syllable',
+        'Reduce middle vowel to schwa'
+      ]
+    },
+    {
+      id: 'stress-2',
+      word: 'photographer',
+      phonetic: '/fəˈtɑɡrəfər/',
+      difficulty: 'hard',
+      category: 'stress',
+      commonMistakes: ['PHOtographer', 'photoGRAPHer'],
+      tips: [
+        'Stress shifts to second syllable: pho-TOG-ra-pher',
+        'First syllable becomes schwa',
+        'Compare with "photograph"'
+      ]
+    },
+    {
+      id: 'stress-3',
+      word: 'comfortable',
+      phonetic: '/ˈkʌmftərbəl/',
+      difficulty: 'hard',
+      category: 'stress',
+      commonMistakes: ['comfortABLE', 'comFORTable'],
+      tips: [
+        'Stress on first syllable: COM-fort-a-ble',
+        'Often pronounced as 3 syllables: COMF-ter-ble',
+        'Reduce unstressed vowels'
+      ]
+    },
+
+    // Connected Speech
+    {
+      id: 'connected-1',
+      word: 'What are you doing?',
+      phonetic: '/wʌdər ju ˈduɪŋ/',
+      difficulty: 'hard',
+      category: 'connected',
+      commonMistakes: ['What are you doing', 'Wot ar yu doing'],
+      tips: [
+        'Link words together smoothly',
+        '"What are" becomes "whadder"',
+        'Practice natural rhythm and flow'
+      ]
+    },
+    {
+      id: 'connected-2',
+      word: 'I\'m going to',
+      phonetic: '/aɪm ˈɡoʊnə/',
+      difficulty: 'medium',
+      category: 'connected',
+      commonMistakes: ['I am going to', 'Im gonna'],
+      tips: [
+        'Reduce "going to" to "gonna"',
+        'Contract "I am" to "I\'m"',
+        'Natural fast speech pattern'
+      ]
+    },
+
+    // Minimal Pairs
+    {
+      id: 'minimal-1',
+      word: 'ship',
+      phonetic: '/ʃɪp/',
+      difficulty: 'medium',
+      category: 'minimal-pairs',
+      commonMistakes: ['sheep', 'chip'],
+      tips: [
+        'Short I sound, not long EE',
+        'Compare with "sheep" /ʃip/',
+        'Practice: ship-sheep, ship-sheep'
+      ]
+    },
+    {
+      id: 'minimal-2',
+      word: 'beach',
+      phonetic: '/bitʃ/',
+      difficulty: 'medium',
+      category: 'minimal-pairs',
+      commonMistakes: ['bitch', 'beech'],
+      tips: [
+        'Long EE sound followed by CH',
+        'Be careful of vowel length',
+        'Compare with similar words'
       ]
     }
   ];
