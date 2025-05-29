@@ -8,6 +8,12 @@ import { conversationAI } from "./conversation-ai";
 import { vocabularyGameEngine } from "./vocabulary-game";
 import { writingAssistant } from "./writing-assistant";
 import { virtualClassroom } from "./virtual-classroom";
+import { pronunciationAnalyzer } from "./pronunciation-analyzer";
+import { personalizedDashboard } from "./personalized-dashboard";
+import { readingComprehensionSystem } from "./reading-comprehension";
+import { speakingPracticeSystem } from "./speaking-practice";
+import { socialLearningSystem } from "./social-learning";
+import { contentCreationSystem } from "./content-creation";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
