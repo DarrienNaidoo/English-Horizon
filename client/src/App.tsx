@@ -10,7 +10,7 @@ import SpeakingZone from "@/pages/speaking-zone";
 import Games from "@/pages/games";
 import Progress from "@/pages/progress";
 import TeacherMode from "@/pages/teacher-mode";
-import AIInsights from "@/pages/ai-insights";
+// import AIInsights from "@/pages/ai-insights";
 import Navigation from "@/components/navigation";
 import BottomNavigation from "@/components/bottom-navigation";
 import OfflineIndicator from "@/components/offline-indicator";
@@ -26,7 +26,6 @@ function Router() {
       <Route path="/games" component={Games} />
       <Route path="/progress" component={Progress} />
       <Route path="/teacher-mode" component={TeacherMode} />
-      <Route path="/ai-insights" component={AIInsights} />
       <Route component={NotFound} />
     </Switch>
   );

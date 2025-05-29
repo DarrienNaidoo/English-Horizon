@@ -39,16 +39,6 @@ export interface IStorage {
   // Activities
   getUserActivities(userId: number, limit?: number): Promise<Activity[]>;
   addActivity(activity: InsertActivity): Promise<Activity>;
-
-  // Adaptive Learning
-  getUserAnalytics(userId: number): Promise<LearningAnalytics | undefined>;
-  updateUserAnalytics(userId: number, analytics: InsertLearningAnalytics): Promise<LearningAnalytics>;
-  getUserRecommendations(userId: number): Promise<PersonalizedRecommendation[]>;
-  addRecommendation(recommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation>;
-  markRecommendationCompleted(recommendationId: number): Promise<void>;
-  getUserFeedback(userId: number, limit?: number): Promise<AdaptiveFeedback[]>;
-  addFeedback(feedback: InsertAdaptiveFeedback): Promise<AdaptiveFeedback>;
-  markFeedbackRead(feedbackId: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -404,88 +394,6 @@ export class MemStorage implements IStorage {
     };
     this.activities.set(id, activity);
     return activity;
-  }
-
-  // Adaptive Learning Methods
-  async getUserAnalytics(userId: number): Promise<LearningAnalytics | undefined> {
-    return Array.from(this.learningAnalytics.values()).find(analytics => analytics.userId === userId);
-  }
-
-  async updateUserAnalytics(userId: number, insertAnalytics: InsertLearningAnalytics): Promise<LearningAnalytics> {
-    const existing = await this.getUserAnalytics(userId);
-    
-    if (existing) {
-      const updated: LearningAnalytics = {
-        ...existing,
-        ...insertAnalytics,
-        lastAnalysis: new Date(),
-      };
-      this.learningAnalytics.set(existing.id, updated);
-      return updated;
-    } else {
-      const id = this.currentAnalyticsId++;
-      const analytics: LearningAnalytics = {
-        ...insertAnalytics,
-        id,
-        lastAnalysis: new Date(),
-        createdAt: new Date(),
-      };
-      this.learningAnalytics.set(id, analytics);
-      return analytics;
-    }
-  }
-
-  async getUserRecommendations(userId: number): Promise<PersonalizedRecommendation[]> {
-    return Array.from(this.recommendations.values())
-      .filter(rec => rec.userId === userId && !rec.isCompleted)
-      .sort((a, b) => b.priority - a.priority);
-  }
-
-  async addRecommendation(insertRecommendation: InsertPersonalizedRecommendation): Promise<PersonalizedRecommendation> {
-    const id = this.currentRecommendationId++;
-    const recommendation: PersonalizedRecommendation = {
-      ...insertRecommendation,
-      id,
-      isCompleted: false,
-      createdAt: new Date(),
-    };
-    this.recommendations.set(id, recommendation);
-    return recommendation;
-  }
-
-  async markRecommendationCompleted(recommendationId: number): Promise<void> {
-    const recommendation = this.recommendations.get(recommendationId);
-    if (recommendation) {
-      recommendation.isCompleted = true;
-      this.recommendations.set(recommendationId, recommendation);
-    }
-  }
-
-  async getUserFeedback(userId: number, limit = 10): Promise<AdaptiveFeedback[]> {
-    return Array.from(this.adaptiveFeedback.values())
-      .filter(feedback => feedback.userId === userId)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-      .slice(0, limit);
-  }
-
-  async addFeedback(insertFeedback: InsertAdaptiveFeedback): Promise<AdaptiveFeedback> {
-    const id = this.currentFeedbackId++;
-    const feedback: AdaptiveFeedback = {
-      ...insertFeedback,
-      id,
-      isRead: false,
-      createdAt: new Date(),
-    };
-    this.adaptiveFeedback.set(id, feedback);
-    return feedback;
-  }
-
-  async markFeedbackRead(feedbackId: number): Promise<void> {
-    const feedback = this.adaptiveFeedback.get(feedbackId);
-    if (feedback) {
-      feedback.isRead = true;
-      this.adaptiveFeedback.set(feedbackId, feedback);
-    }
   }
 }
 

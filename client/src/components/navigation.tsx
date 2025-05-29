@@ -32,7 +32,6 @@ export default function Navigation() {
     { path: "/speaking-zone", label: "Speaking Zone", icon: Mic },
     { path: "/games", label: "Games", icon: Gamepad2 },
     { path: "/progress", label: "Progress", icon: TrendingUp },
-    { path: "/ai-insights", label: "AI Insights", icon: Brain },
   ];
 
   // Check if current user is a teacher
