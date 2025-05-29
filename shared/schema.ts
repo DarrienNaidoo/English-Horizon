@@ -120,6 +120,48 @@ export const translations = pgTable("translations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const learningAnalytics = pgTable("learning_analytics", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  skillArea: text("skill_area").notNull(), // speaking, reading, writing, listening, vocabulary, grammar
+  proficiencyLevel: integer("proficiency_level").notNull(), // 1-5 scale
+  strugglingTopics: text("struggling_topics").array(),
+  strongTopics: text("strong_topics").array(),
+  recommendedDifficulty: text("recommended_difficulty").notNull(), // beginner, intermediate, advanced
+  learningStyle: text("learning_style").notNull(), // visual, auditory, kinesthetic, mixed
+  adaptiveMetrics: jsonb("adaptive_metrics").notNull(),
+  lastAnalysis: timestamp("last_analysis").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const personalizedRecommendations = pgTable("personalized_recommendations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  lessonId: integer("lesson_id"),
+  recommendationType: text("recommendation_type").notNull(), // lesson, exercise, review, challenge
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  difficulty: text("difficulty").notNull(),
+  estimatedTime: integer("estimated_time").notNull(), // in minutes
+  priority: integer("priority").notNull(), // 1-5, 5 being highest
+  reasoning: text("reasoning").notNull(),
+  isCompleted: boolean("is_completed").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const adaptiveFeedback = pgTable("adaptive_feedback", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  activityId: integer("activity_id"),
+  feedbackType: text("feedback_type").notNull(), // encouragement, correction, guidance, achievement
+  message: text("message").notNull(),
+  chineseTranslation: text("chinese_translation"),
+  tone: text("tone").notNull(), // positive, constructive, celebratory, motivational
+  triggers: text("triggers").array(), // what caused this feedback
+  isRead: boolean("is_read").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -169,6 +211,22 @@ export const insertTranslationSchema = createInsertSchema(translations).omit({
   createdAt: true,
 });
 
+export const insertLearningAnalyticsSchema = createInsertSchema(learningAnalytics).omit({
+  id: true,
+  lastAnalysis: true,
+  createdAt: true,
+});
+
+export const insertPersonalizedRecommendationSchema = createInsertSchema(personalizedRecommendations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertAdaptiveFeedbackSchema = createInsertSchema(adaptiveFeedback).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -190,3 +248,9 @@ export type GroupActivity = typeof groupActivities.$inferSelect;
 export type InsertGroupActivity = z.infer<typeof insertGroupActivitySchema>;
 export type Translation = typeof translations.$inferSelect;
 export type InsertTranslation = z.infer<typeof insertTranslationSchema>;
+export type LearningAnalytics = typeof learningAnalytics.$inferSelect;
+export type InsertLearningAnalytics = z.infer<typeof insertLearningAnalyticsSchema>;
+export type PersonalizedRecommendation = typeof personalizedRecommendations.$inferSelect;
+export type InsertPersonalizedRecommendation = z.infer<typeof insertPersonalizedRecommendationSchema>;
+export type AdaptiveFeedback = typeof adaptiveFeedback.$inferSelect;
+export type InsertAdaptiveFeedback = z.infer<typeof insertAdaptiveFeedbackSchema>;
