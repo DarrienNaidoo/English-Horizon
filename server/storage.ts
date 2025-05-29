@@ -30,7 +30,7 @@ export interface IStorage {
 
   // Vocabulary
   getVocabulary(level?: string, topic?: string): Promise<Vocabulary[]>;
-  getUserVocabulary(userId: number): Promise<UserVocabulary[]>;
+  getUserVocabulary(userId: number): Promise<any[]>;
 
   // Daily Challenges
   getDailyChallenge(date: string): Promise<DailyChallenge | undefined>;
@@ -44,7 +44,7 @@ export class MemStorage implements IStorage {
   private achievements: Map<number, Achievement> = new Map();
   private userAchievements: Map<string, UserAchievement> = new Map();
   private vocabulary: Map<number, Vocabulary> = new Map();
-  private userVocabulary: Map<string, UserVocabulary> = new Map();
+  private userVocabulary: Map<string, any> = new Map();
   private dailyChallenges: Map<string, DailyChallenge> = new Map();
   private userDailyChallenges: Map<string, any> = new Map();
   
@@ -254,6 +254,10 @@ export class MemStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id: this.currentUserId++,
+      level: insertUser.level || "beginner",
+      xp: insertUser.xp || 0,
+      streak: insertUser.streak || 0,
+      preferences: insertUser.preferences || {},
       createdAt: new Date(),
       lastActiveDate: new Date(),
     };
@@ -292,6 +296,9 @@ export class MemStorage implements IStorage {
     const lesson: Lesson = {
       ...insertLesson,
       id: this.currentLessonId++,
+      xpReward: insertLesson.xpReward || 10,
+      estimatedMinutes: insertLesson.estimatedMinutes || 5,
+      isOfflineAvailable: insertLesson.isOfflineAvailable || true,
       createdAt: new Date(),
     };
     this.lessons.set(lesson.id, lesson);
@@ -316,6 +323,11 @@ export class MemStorage implements IStorage {
     const progress: UserProgress = {
       id: existing?.id || this.currentProgressId++,
       ...insertProgress,
+      completed: insertProgress.completed || false,
+      attempts: insertProgress.attempts || 1,
+      score: insertProgress.score || null,
+      completedAt: insertProgress.completedAt || null,
+      timeSpent: insertProgress.timeSpent || null,
     };
     
     this.userProgress.set(key, progress);
@@ -359,7 +371,7 @@ export class MemStorage implements IStorage {
     return vocab;
   }
 
-  async getUserVocabulary(userId: number): Promise<UserVocabulary[]> {
+  async getUserVocabulary(userId: number): Promise<any[]> {
     return Array.from(this.userVocabulary.values()).filter(uv => 
       uv.userId === userId
     );
