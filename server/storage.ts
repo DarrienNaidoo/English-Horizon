@@ -75,6 +75,8 @@ export class MemStorage implements IStorage {
       streak: 7,
       badges: 12,
       lessonsCompleted: 28,
+      role: "student",
+      preferredLanguage: "both",
       createdAt: new Date(),
     };
     this.users.set(1, sampleUser);
@@ -231,7 +233,14 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
-      createdAt: new Date() 
+      createdAt: new Date(),
+      currentLevel: insertUser.currentLevel ?? 1,
+      totalXP: insertUser.totalXP ?? 0,
+      streak: insertUser.streak ?? 0,
+      badges: insertUser.badges ?? 0,
+      lessonsCompleted: insertUser.lessonsCompleted ?? 0,
+      role: insertUser.role ?? "student",
+      preferredLanguage: insertUser.preferredLanguage ?? "en"
     };
     this.users.set(id, user);
     return user;
@@ -264,7 +273,12 @@ export class MemStorage implements IStorage {
 
   async createLesson(insertLesson: InsertLesson): Promise<Lesson> {
     const id = this.currentLessonId++;
-    const lesson: Lesson = { ...insertLesson, id };
+    const lesson: Lesson = { 
+      ...insertLesson, 
+      id,
+      imageUrl: insertLesson.imageUrl ?? null,
+      isOfflineAvailable: insertLesson.isOfflineAvailable ?? true
+    };
     this.lessons.set(id, lesson);
     return lesson;
   }
@@ -375,6 +389,8 @@ export class MemStorage implements IStorage {
       ...insertActivity,
       id,
       createdAt: new Date(),
+      description: insertActivity.description ?? null,
+      xpGained: insertActivity.xpGained ?? null,
     };
     this.activities.set(id, activity);
     return activity;
