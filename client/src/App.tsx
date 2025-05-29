@@ -13,6 +13,10 @@ import CulturalContent from "@/pages/cultural-content";
 import Progress from "@/pages/progress";
 import Profile from "@/pages/profile";
 import VoiceTranslator from "@/pages/voice-translator";
+import AIConversation from "@/pages/ai-conversation";
+import VocabularyGames from "@/pages/vocabulary-games";
+import WritingAssistant from "@/pages/writing-assistant";
+import VirtualClassroom from "@/pages/virtual-classroom";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
@@ -31,6 +35,10 @@ function Router() {
           <Route path="/progress" component={Progress} />
           <Route path="/profile" component={Profile} />
           <Route path="/voice-translator" component={VoiceTranslator} />
+          <Route path="/ai-conversation" component={AIConversation} />
+          <Route path="/vocabulary-games" component={VocabularyGames} />
+          <Route path="/writing-assistant" component={WritingAssistant} />
+          <Route path="/virtual-classroom" component={VirtualClassroom} />
           <Route component={NotFound} />
         </Switch>
       </main>

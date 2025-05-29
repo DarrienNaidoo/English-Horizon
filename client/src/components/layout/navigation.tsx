@@ -9,7 +9,11 @@ import {
   Flag, 
   BarChart3,
   Home,
-  Languages
+  Languages,
+  MessageCircle,
+  Target,
+  PenTool,
+  Video
 } from "lucide-react";
 
 const navigationItems = [
@@ -17,6 +21,10 @@ const navigationItems = [
   { href: "/learning-paths", label: "Learning Paths", icon: BookOpen },
   { href: "/speaking-zone", label: "Speaking Zone", icon: Mic },
   { href: "/voice-translator", label: "Voice Translator", icon: Languages },
+  { href: "/ai-conversation", label: "AI Conversation", icon: MessageCircle },
+  { href: "/vocabulary-games", label: "Vocabulary Games", icon: Target },
+  { href: "/writing-assistant", label: "Writing Assistant", icon: PenTool },
+  { href: "/virtual-classroom", label: "Virtual Classroom", icon: Video },
   { href: "/games", label: "Games", icon: Gamepad2 },
   { href: "/group-activities", label: "Group Activities", icon: Users },
   { href: "/cultural-content", label: "Cultural Content", icon: Flag },

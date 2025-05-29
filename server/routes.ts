@@ -304,6 +304,197 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AI Conversation Practice API
+  app.get("/api/conversation/scenarios", async (req, res) => {
+    try {
+      const scenarios = conversationAI.getScenarios();
+      res.json(scenarios);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get scenarios", error });
+    }
+  });
+
+  app.post("/api/conversation/:scenarioId/chat", async (req, res) => {
+    try {
+      const { scenarioId } = req.params;
+      const { message, history } = req.body;
+      
+      const response = await conversationAI.generateResponse(scenarioId, history || [], message);
+      res.json(response);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate conversation response", error });
+    }
+  });
+
+  // Vocabulary Game API
+  app.get("/api/vocabulary/words", async (req, res) => {
+    try {
+      const { category, difficulty } = req.query;
+      const words = vocabularyGameEngine.getVocabularyByCategory(
+        category as string, 
+        difficulty as string
+      );
+      res.json(words);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get vocabulary", error });
+    }
+  });
+
+  app.post("/api/vocabulary/game/start", async (req, res) => {
+    try {
+      const { userId, gameType, difficulty } = req.body;
+      const session = vocabularyGameEngine.startGameSession(userId, gameType, difficulty);
+      const questions = vocabularyGameEngine.generateGameQuestions(gameType, userId, difficulty);
+      
+      res.json({ session, questions });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start vocabulary game", error });
+    }
+  });
+
+  app.post("/api/vocabulary/game/:sessionId/answer", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const { questionId, answer, timeSpent } = req.body;
+      
+      const result = vocabularyGameEngine.submitAnswer(sessionId, questionId, answer, timeSpent);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit answer", error });
+    }
+  });
+
+  app.get("/api/vocabulary/progress/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const progress = vocabularyGameEngine.getUserProgress(userId);
+      const stats = vocabularyGameEngine.getGameStats(userId);
+      
+      res.json({ progress, stats });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get vocabulary progress", error });
+    }
+  });
+
+  // Writing Assistant API
+  app.post("/api/writing/analyze", async (req, res) => {
+    try {
+      const { text } = req.body;
+      const analysis = await writingAssistant.analyzeText(text);
+      res.json(analysis);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to analyze text", error });
+    }
+  });
+
+  app.post("/api/writing/improve", async (req, res) => {
+    try {
+      const { text, focus } = req.body;
+      const improvement = await writingAssistant.improveText(text, focus);
+      res.json(improvement);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to improve text", error });
+    }
+  });
+
+  app.get("/api/writing/templates", async (req, res) => {
+    try {
+      const { type, level } = req.query;
+      const templates = writingAssistant.getTemplates(type as string, level as string);
+      res.json(templates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get writing templates", error });
+    }
+  });
+
+  // Virtual Classroom API
+  app.post("/api/classroom/sessions", async (req, res) => {
+    try {
+      const { teacherId, title, description, maxStudents } = req.body;
+      const session = virtualClassroom.createSession(teacherId, title, description, maxStudents);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create classroom session", error });
+    }
+  });
+
+  app.post("/api/classroom/sessions/:sessionId/join", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const { studentId } = req.body;
+      
+      const success = virtualClassroom.joinSession(sessionId, studentId);
+      res.json({ success });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to join session", error });
+    }
+  });
+
+  app.get("/api/classroom/sessions", async (req, res) => {
+    try {
+      const { teacherId } = req.query;
+      const sessions = virtualClassroom.getSessions(teacherId ? parseInt(teacherId as string) : undefined);
+      res.json(sessions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get sessions", error });
+    }
+  });
+
+  app.post("/api/classroom/study-groups", async (req, res) => {
+    try {
+      const { ownerId, name, description, focusTopics, isPublic, maxMembers } = req.body;
+      const group = virtualClassroom.createStudyGroup(
+        ownerId, name, description, focusTopics, isPublic, maxMembers
+      );
+      res.json(group);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create study group", error });
+    }
+  });
+
+  app.get("/api/classroom/study-groups", async (req, res) => {
+    try {
+      const { isPublic, userId } = req.query;
+      
+      let groups;
+      if (userId) {
+        groups = virtualClassroom.getUserStudyGroups(parseInt(userId as string));
+      } else {
+        groups = virtualClassroom.getStudyGroups(
+          isPublic !== undefined ? isPublic === 'true' : undefined
+        );
+      }
+      
+      res.json(groups);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get study groups", error });
+    }
+  });
+
+  app.post("/api/classroom/projects", async (req, res) => {
+    try {
+      const { leaderId, title, description, groupMembers, deadline } = req.body;
+      const project = virtualClassroom.createGroupProject(
+        leaderId, title, description, groupMembers, new Date(deadline)
+      );
+      res.json(project);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create group project", error });
+    }
+  });
+
+  app.get("/api/classroom/projects", async (req, res) => {
+    try {
+      const { userId } = req.query;
+      const projects = virtualClassroom.getGroupProjects(
+        userId ? parseInt(userId as string) : undefined
+      );
+      res.json(projects);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get group projects", error });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
