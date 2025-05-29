@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertUserProgressSchema } from "@shared/schema";
+import { adaptiveLearningEngine } from "./adaptive-learning";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -169,6 +170,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(stats);
     } catch (error) {
       res.status(500).json({ message: "Failed to get user stats", error });
+    }
+  });
+
+  // Adaptive Learning API endpoints
+  app.get("/api/users/:userId/learning-profile", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const progressHistory = await storage.getUserProgress(userId);
+      const lessons = await storage.getLessons();
+      
+      const profile = adaptiveLearningEngine.analyzeUserPerformance(user, progressHistory, lessons);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to analyze learning profile", error });
+    }
+  });
+
+  app.get("/api/users/:userId/recommendations", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const progressHistory = await storage.getUserProgress(userId);
+      const lessons = await storage.getLessons();
+      
+      const profile = adaptiveLearningEngine.analyzeUserPerformance(user, progressHistory, lessons);
+      const recommendations = adaptiveLearningEngine.generateRecommendations(profile, lessons, progressHistory);
+      
+      res.json({
+        profile,
+        recommendations,
+        generatedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate recommendations", error });
+    }
+  });
+
+  app.post("/api/users/:userId/adaptive-difficulty", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const progressHistory = await storage.getUserProgress(userId);
+      
+      const optimalDifficulty = adaptiveLearningEngine.calculateOptimalDifficulty(progressHistory);
+      
+      res.json({
+        userId,
+        optimalDifficulty,
+        calculatedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to calculate optimal difficulty", error });
     }
   });
 
