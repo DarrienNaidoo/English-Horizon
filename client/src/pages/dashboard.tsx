@@ -14,27 +14,42 @@ export default function Dashboard() {
   const [currentUserId] = useLocalStorage("currentUserId", 1);
 
   const { data: user, isLoading: userLoading } = useQuery<User>({
-    queryKey: [`/api/user/${currentUserId}`],
+    queryKey: ["user", currentUserId],
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   const { data: lessons } = useQuery<Lesson[]>({
-    queryKey: ["/api/lessons"],
+    queryKey: ["lessons"],
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   const { data: activities } = useQuery<Activity[]>({
-    queryKey: [`/api/user/${currentUserId}/activities`],
+    queryKey: ["activities", currentUserId],
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   const { data: todayChallenge } = useQuery<DailyChallenge>({
-    queryKey: ["/api/challenge/today"],
+    queryKey: ["challenge", "today"],
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   const { data: challengeProgress } = useQuery<UserChallengeProgress>({
-    queryKey: [`/api/user/${currentUserId}/challenge/${todayChallenge?.id}`],
-    enabled: !!todayChallenge,
+    queryKey: ["challengeProgress", currentUserId, todayChallenge?.id],
+    enabled: !!todayChallenge?.id,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
-  const todayLesson = lessons?.find(lesson => lesson.category === "Cultural");
+  const todayLesson = lessons?.find((lesson: any) => lesson.category === "Cultural");
 
   if (userLoading) {
     return (
