@@ -1,0 +1,108 @@
+{
+  "name": "SpeakWorld: English for Life",
+  "short_name": "SpeakWorld",
+  "description": "An offline-capable English learning Progressive Web App designed for Chinese students, featuring comprehensive language learning tools with teacher and student modes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iNDAiIGZpbGw9IiMzQjgyRjYiLz4KPHN2ZyB4PSI0OCIgeT0iNDgiIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptLTIgMTVsLTUtNSAxLjQxLTEuNDFMMTAgMTQuMTdsMi41OS0yLjU4TDE0IDE2bC00IDR6bTItNmMtMS4xIDAtMi0uOS0yLTJzLjktMiAyLTIgMiAuOSAyIDItLjkgMi0yIDJ6Ii8+Cjwvc3ZnPgo8L3N2Zz4K",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTA0IiBmaWxsPSIjM0I4MkY2Ii8+CjxzdmcgeD0iMTI4IiB5PSIxMjgiIHdpZHRoPSIyNTYiIGhlaWdodD0iMjU2IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMiAxNWwtNS01IDEuNDEtMS40MUwxMCAxNC4xN2wyLjU5LTIuNThMMTQgMTZsLTQgNHptMi02Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMiAyIC45IDIgMi0uOSAyLTIgMnoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Learning Paths",
+      "short_name": "Learn",
+      "description": "Access structured learning lessons",
+      "url": "/learning-paths",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgMThoMmwuMDEtMTJMMy4wMSA2SDE4VjRoLTEuMjVjLjUzIDAgLjk2LS40My45Ni0uOTZTMTcuMjggMiAxNi43NSAySDMuMjVDMi41NiAyIDIgMi41NiAyIDMuMjV2MTMuNUM2IDUgNiA1LjU2IDMgMTh6IiBmaWxsPSIjM0I4MkY2Ii8+CjwvcGF0aD4KPC9zdmc+",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Speaking Practice",
+      "short_name": "Speak",
+      "description": "Practice pronunciation and speaking",
+      "url": "/speaking-zone",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJjLTQuOTcgMC05IDQuMDMtOSA5czcgNCAxMiA0djNjMCAxIDEgMiAyIDJoMnYtNmgtMmMtMS45OCAzLTMuNTggMC0zLjU4LTJTNy42MyA4IDEyIDhzNC4zNyAxLjM3IDQuMzcgNFMxNi4zNyAxNiAxMiAxNkg5djZoMmMxIDAgMi0xIDItMnYtM2M1IDAgMTItMy4wMyAxMi05UzE2Ljk3IDIgMTIgMnoiIGZpbGw9IiMxMEI5ODEiLz4KPC9wYXRoPgo8L3N2Zz4=",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "short_name": "Play",
+      "description": "Learn through interactive games",
+      "url": "/games",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE1IDdWM0g5djRIM1Y5aDZ2NEg5VjE1aDZWMTFoNlY5SDJWMTNoMlY3aDJ6IiBmaWxsPSIjOTMzM0VBIi8+CjwvcGF0aD4KPC9zdmc+",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Progress",
+      "short_name": "Stats",
+      "description": "View learning progress and achievements",
+      "url": "/progress",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMuNSAxOC40OWwtNi0zIDEuNS0yLjk4IDYgM1ptNi4zMi03Ljk4TDMgMTJsLTEuNS0yLjk4TDE4IDZsLTguMTggNC41MXoiIGZpbGw9IiNGNTlFMEIiLz4KPC9wYXRoPgo8L3N2Zz4=",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjU2OCIgdmlld0JveD0iMCAwIDMyMCA1NjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iNTY4IiBmaWxsPSIjRjhGQUZDIi8+CjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjI4OCIgaGVpZ2h0PSI4MCIgcng9IjEyIiBmaWxsPSIjM0I4MkY2Ii8+Cjx0ZXh0IHg9IjMyIiB5PSI0MCIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iNjAwIj5TcGVha1dvcmxkOiBFbmdsaXNoIGZvciBMaWZlPC90ZXh0Pgo8dGV4dCB4PSIzMiIgeT0iNjAiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+TGVhcm4gRW5nbGlzaCBhbnl3aGVyZSwgYW55dGltZSE8L3RleHQ+CjxyZWN0IHg9IjE2IiB5PSIxMTIiIHdpZHRoPSIyODgiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0id2hpdGUiLz4KPHRleHQgeD0iMzIiIHk9IjE0MCIgZmlsbD0iIzFFMjkzQiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI2MDAiPkRhaWx5IENoYWxsZW5nZTwvdGV4dD4KPHR4dCB4PSIzMiIgeT0iMTYwIiBmaWxsPSIjNjQ3NDhCIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+RGVzY3JpYmUgdGhlIE1pZC1BdXR1bW4gRmVzdGl2YWwgaW4gRW5nbGlzaDwvdGV4dD4KPC9zdmc+",
+      "sizes": "320x568",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI3NjgiIHZpZXdCb3g9IjAgMCAxMDI0IDc2OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iNzY4IiBmaWxsPSIjRjhGQUZDIi8+CjxyZWN0IHg9IjY0IiB5PSI2NCIgd2lkdGg9Ijg5NiIgaGVpZ2h0PSIxMjAiIHJ4PSIxNiIgZmlsbD0iIzNCODJGNiIvPgo8dGV4dCB4PSI5NiIgeT0iMTA0IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSI2MDAiPlNwZWFrV29ybGQ6IEVuZ2xpc2ggZm9yIExpZmU8L3RleHQ+Cjx0ZXh0IHg9Ijk2IiB5PSIxMzYiIGZpbGw9IndoaXRlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiI+TGVhcm4gRW5nbGlzaCBhbnl3aGVyZSwgYW55dGltZSEgT2ZmbGluZS1jYXBhYmxlIFBXQSBmb3IgQ2hpbmVzZSBzdHVkZW50czwvdGV4dD4KPHJlY3QgeD0iNjQiIHk9IjIxNiIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyMDAiIHJ4PSIxMiIgZmlsbD0id2hpdGUiLz4KPHR4dCB4PSI5NiIgeT0iMjU2IiBmaWxsPSIjMUUyOTNCIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjYwMCI+TGVhcm5pbmcgUGF0aHM8L3RleHQ+Cjx0ZXh0IHg9Ijk2IiB5PSIyODAiIGZpbGw9IiM2NDc0OEIiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0Ij5TdHJ1Y3R1cmVkIGxlc3NvbnMgY292ZXJpbmcgZm9vZCwgdHJhdmVsLCB0ZWNobm9sb2d5PC90ZXh0Pgo8L3N2Zz4=",
+      "sizes": "1024x768",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "features": [
+    "offline-capable",
+    "installable",
+    "educational-content",
+    "speech-recognition",
+    "progress-tracking",
+    "cultural-content",
+    "gamification"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}
