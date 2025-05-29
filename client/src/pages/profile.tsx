@@ -104,13 +104,11 @@ export default function Profile() {
   };
 
   const handleSettingChange = (key: keyof UserSettings, value: any) => {
-    setSettings(prev => ({
-      ...prev,
-      [key]: value
-    }));
+    const newSettings = { ...settings, [key]: value };
+    setSettings(newSettings);
     
     // Save to localStorage
-    localStorageUtils.setItem('userSettings', { ...settings, [key]: value });
+    localStorageUtils.setItem('userSettings', newSettings);
     
     // Apply theme changes immediately
     if (key === "theme") {
