@@ -13,60 +13,26 @@ import type { User, Lesson, Activity, DailyChallenge, UserChallengeProgress } fr
 export default function Dashboard() {
   const [currentUserId] = useLocalStorage("currentUserId", 1);
 
-  // Disable all queries to fix continuous loading issue
-  const user: User = {
-    id: 1,
-    username: "liming",
-    displayName: "李明 (Li Ming)",
-    email: "liming@example.com",
-    role: "student" as const,
-    xpTotal: 1250,
-    currentLevel: 3,
-    currentStreak: 7,
-    createdAt: new Date()
-  };
-  const userLoading = false;
-  
-  const lessons: Lesson[] = [
-    {
-      id: 1,
-      title: "Chinese New Year Traditions",
-      description: "Learn about traditional Chinese celebrations",
-      level: 1,
-      category: "Cultural",
-      xpReward: 100,
-      estimatedTime: 15,
-      createdAt: new Date()
-    }
-  ];
-  
-  const activities: Activity[] = [
-    {
-      id: 1,
-      userId: 1,
-      type: "lesson_completed" as const,
-      lessonId: 1,
-      score: 85,
-      xpGained: 100,
-      createdAt: new Date(),
-      description: "Completed Chinese New Year lesson"
-    }
-  ];
-  
-  const todayChallenge: DailyChallenge = {
-    id: 1,
-    title: "Speaking Champion",
-    description: "Complete 3 speaking exercises",
-    type: "speaking" as const,
-    targetCount: 3,
-    xpReward: 50,
-    createdAt: new Date()
-  };
-  
-  const challengeProgress: UserChallengeProgress = {
-    currentCount: 0,
-    completed: false
-  };
+  const { data: user, isLoading: userLoading } = useQuery<User>({
+    queryKey: [`/api/user/${currentUserId}`],
+  });
+
+  const { data: lessons } = useQuery<Lesson[]>({
+    queryKey: ["/api/lessons"],
+  });
+
+  const { data: activities } = useQuery<Activity[]>({
+    queryKey: [`/api/user/${currentUserId}/activities`],
+  });
+
+  const { data: todayChallenge } = useQuery<DailyChallenge>({
+    queryKey: ["/api/challenges/today"],
+  });
+
+  const { data: challengeProgress } = useQuery<UserChallengeProgress>({
+    queryKey: [`/api/user/${currentUserId}/challenges/${todayChallenge?.id}/progress`],
+    enabled: !!todayChallenge?.id,
+  });
 
   const todayLesson = lessons?.find((lesson: any) => lesson.category === "Cultural");
 

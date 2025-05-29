@@ -12,22 +12,21 @@ import type { User, UserProgress, Activity, UserAchievement } from "@shared/sche
 export default function ProgressPage() {
   const [currentUserId] = useLocalStorage("currentUserId", 1);
 
-  // Disable queries to stop continuous loading
-  const user: User = {
-    id: 1,
-    username: "liming",
-    displayName: "李明 (Li Ming)",
-    email: "liming@example.com",
-    role: "student" as const,
-    xpTotal: 1250,
-    currentLevel: 3,
-    currentStreak: 7,
-    createdAt: new Date()
-  };
-  const userLoading = false;
-  const userProgress: UserProgress[] = [];
-  const activities: Activity[] = [];
-  const userAchievements: UserAchievement[] = [];
+  const { data: user, isLoading: userLoading } = useQuery<User>({
+    queryKey: [`/api/user/${currentUserId}`],
+  });
+
+  const { data: userProgress } = useQuery<UserProgress[]>({
+    queryKey: [`/api/user/${currentUserId}/progress`],
+  });
+
+  const { data: activities } = useQuery<Activity[]>({
+    queryKey: [`/api/user/${currentUserId}/activities`],
+  });
+
+  const { data: userAchievements } = useQuery<UserAchievement[]>({
+    queryKey: [`/api/user/${currentUserId}/achievements`],
+  });
 
   if (userLoading) {
     return (

@@ -30,13 +30,10 @@ function Router() {
 }
 
 function App() {
-  // Disable PWA functionality to stabilize the app
-  const isOffline = false;
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen bg-light-custom">
+        <div className="min-h-screen bg-gray-50">
           <Navigation />
           <main className="pb-20 lg:pb-0">
             <Router />

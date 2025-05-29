@@ -17,18 +17,9 @@ export default function Navigation() {
   const [isTeacherMode, setIsTeacherMode] = useLocalStorage("teacherMode", false);
   const [currentUserId] = useLocalStorage("currentUserId", 1);
 
-  // Disable user query to stop continuous loading
-  const user: User = {
-    id: 1,
-    username: "liming",
-    displayName: "李明 (Li Ming)",
-    email: "liming@example.com",
-    role: "student" as const,
-    xpTotal: 1250,
-    currentLevel: 3,
-    currentStreak: 7,
-    createdAt: new Date()
-  };
+  const { data: user } = useQuery<User>({
+    queryKey: [`/api/user/${currentUserId}`],
+  });
 
   const toggleTeacherMode = () => {
     setIsTeacherMode(!isTeacherMode);
