@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BookOpen, 
   Mic, 
@@ -15,10 +16,14 @@ import {
   Flame,
   Globe,
   Download,
-  Smartphone
+  Smartphone,
+  Brain,
+  Settings
 } from "lucide-react";
 import { Link } from "wouter";
 import { cn, formatXP, getLevelProgress } from "@/lib/utils";
+import LearningInsights from "@/components/adaptive/learning-insights";
+import AdaptiveDifficulty from "@/components/adaptive/adaptive-difficulty";
 import type { User, DailyChallenge } from "@shared/schema";
 
 // Mock user for demo - in real app this would come from authentication
@@ -111,7 +116,7 @@ export default function Dashboard() {
       gradient: "from-indigo-50 to-blue-50 dark:from-indigo-950/20 dark:to-blue-950/20",
       borderColor: "border-indigo-100 dark:border-indigo-800",
       iconBg: "bg-indigo-500",
-      stats: `${userStats?.vocabularyMastered || 850} words • Level ${userStats?.level || 5} • ${userStats?.achievementsEarned || 12} badges`
+      stats: `850 words • Level 5 • 12 badges`
     }
   ];
 
@@ -221,6 +226,44 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Adaptive Learning Section */}
+      <section className="py-12 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4 flex items-center justify-center space-x-2">
+              <Brain className="h-8 w-8 text-primary" />
+              <span>Personalized Learning Experience</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Advanced analytics create a unique learning path tailored specifically to your progress and preferences
+            </p>
+          </div>
+
+          <Tabs defaultValue="insights" className="mb-12">
+            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
+              <TabsTrigger value="insights" className="flex items-center space-x-2">
+                <Brain className="h-4 w-4" />
+                <span>Learning Insights</span>
+              </TabsTrigger>
+              <TabsTrigger value="difficulty" className="flex items-center space-x-2">
+                <Settings className="h-4 w-4" />
+                <span>Adaptive Difficulty</span>
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="insights" className="mt-6">
+              <LearningInsights userId={CURRENT_USER_ID} />
+            </TabsContent>
+
+            <TabsContent value="difficulty" className="mt-6">
+              <div className="max-w-2xl mx-auto">
+                <AdaptiveDifficulty userId={CURRENT_USER_ID} />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 

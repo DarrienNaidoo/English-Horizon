@@ -33,9 +33,10 @@ export default function AdaptiveDifficulty({ userId, className }: AdaptiveDiffic
   });
 
   const recalculateMutation = useMutation({
-    mutationFn: () => apiRequest(`/api/users/${userId}/adaptive-difficulty`, {
+    mutationFn: () => fetch(`/api/users/${userId}/adaptive-difficulty`, {
       method: "POST",
-    }),
+      headers: { "Content-Type": "application/json" },
+    }).then(res => res.json()),
     onSuccess: () => {
       queryClient.invalidateQueries({ 
         queryKey: ["/api/users", userId, "adaptive-difficulty"] 
