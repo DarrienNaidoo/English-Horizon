@@ -61,7 +61,7 @@ export default function Header() {
                 <Globe className="text-white h-6 w-6" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>SpeakWorld</h1>
+                <h1 className="text-xl font-bold text-blue-600">SpeakWorld</h1>
                 <p className="text-xs text-muted-foreground">English for Life</p>
               </div>
             </div>
