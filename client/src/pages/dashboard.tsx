@@ -156,8 +156,8 @@ export default function Dashboard() {
                   <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-secondary">
                     Welcome back, {CURRENT_USER.firstName}
                   </h2>
-                  <p className="text-lg mb-8 text-primary-foreground/80">
-                    Advanced learning technology at your fingertips • Elevate your skills
+                  <p className="text-lg mb-8 text-primary-foreground/80 font-mono">
+                    {'>'} NEURAL INTERFACE ACTIVE • SYSTEM STATUS: ONLINE
                   </p>
                 </div>
                 
