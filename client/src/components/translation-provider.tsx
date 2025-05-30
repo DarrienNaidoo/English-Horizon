@@ -318,7 +318,6 @@ const translations: Record<string, string> = {
   'Active Groups': '活跃小组',
   'Class Total XP': '班级总经验值',
   'Overview': '概览',
-  'Groups': '小组',
   'Competitions': '比赛',
   'Rewards': '奖励',
   'Class Leaderboard': '班级排行榜',

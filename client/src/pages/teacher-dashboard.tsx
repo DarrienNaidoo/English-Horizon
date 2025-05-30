@@ -87,7 +87,7 @@ export default function TeacherDashboard() {
               <Users className="h-8 w-8 text-primary" />
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              <TranslatableText>{CLASSROOM_DATA.activeStudents} active today</TranslatableText>
+              <TranslatableText>{`${CLASSROOM_DATA.activeStudents} active today`}</TranslatableText>
             </p>
           </CardContent>
         </Card>
@@ -164,6 +164,10 @@ export default function TeacherDashboard() {
             <TranslatableText>Settings</TranslatableText>
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="classroom" className="space-y-6">
+          <ClassManagement />
+        </TabsContent>
 
         <TabsContent value="students" className="space-y-6">
           <Card>
