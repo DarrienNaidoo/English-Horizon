@@ -28,6 +28,8 @@ import Achievements from "@/pages/achievements";
 import DailyChallenge from "@/pages/daily-challenge";
 import AIDebates from "@/pages/ai-debates";
 import Presentations from "@/pages/presentations";
+import EnhancedVoiceTranslator from "@/pages/enhanced-voice-translator";
+import { TranslationProvider } from "@/components/translation-provider";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
@@ -60,6 +62,7 @@ function Router() {
           <Route path="/daily-challenge" component={DailyChallenge} />
           <Route path="/ai-debates" component={AIDebates} />
           <Route path="/presentations" component={Presentations} />
+          <Route path="/enhanced-voice-translator" component={EnhancedVoiceTranslator} />
           <Route component={NotFound} />
         </Switch>
       </main>
@@ -91,10 +94,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="speakworld-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <TranslationProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </TranslationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
