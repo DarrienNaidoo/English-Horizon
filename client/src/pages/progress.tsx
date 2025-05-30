@@ -82,13 +82,13 @@ export default function Progress() {
     ? Math.round(userProgress.reduce((total, p) => total + (p.score || 0), 0) / userProgress.length)
     : 0;
 
-  const earnedAchievements = achievements.filter(achievement => 
+  const earnedAchievements = Array.isArray(achievements) ? achievements.filter(achievement => 
     userAchievements.some(ua => ua.achievementId === achievement.id)
-  );
+  ) : [];
 
-  const pendingAchievements = achievements.filter(achievement => 
+  const pendingAchievements = Array.isArray(achievements) ? achievements.filter(achievement => 
     !userAchievements.some(ua => ua.achievementId === achievement.id)
-  );
+  ) : [];
 
   const getSkillColor = (level: string) => {
     switch (level) {
