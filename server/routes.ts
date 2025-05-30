@@ -29,6 +29,9 @@ import { mascotProgressSystem } from "./mascot-progress";
 import { gestureNavigationSystem } from "./gesture-navigation";
 import { socialSharingSystem } from "./social-sharing";
 import { miniGameSystem } from "./mini-games";
+import { aiLearningPathSystem } from "./ai-learning-path";
+import { speakingPartnerBotSystem } from "./speaking-partner-bot";
+import { dailyChallengeSystem } from "./daily-challenges";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1953,6 +1956,178 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(leaderboard);
     } catch (error) {
       res.status(500).json({ message: "Failed to get game leaderboard", error });
+    }
+  });
+
+  // AI Learning Path API
+  app.get("/api/ai-path/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const path = aiLearningPathSystem.getLearningPath(userId);
+      res.json(path);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get learning path", error });
+    }
+  });
+
+  app.get("/api/ai-path/recommendations/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const recommendations = aiLearningPathSystem.generatePersonalizedRecommendations(userId);
+      res.json(recommendations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate recommendations", error });
+    }
+  });
+
+  app.post("/api/ai-path/activity", async (req, res) => {
+    try {
+      const { userId, ...activityData } = req.body;
+      const activity = aiLearningPathSystem.recordLearningActivity(userId, activityData);
+      res.json(activity);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record learning activity", error });
+    }
+  });
+
+  app.get("/api/ai-path/insights/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const insights = aiLearningPathSystem.generateAIInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate AI insights", error });
+    }
+  });
+
+  // Speaking Partner Bot API
+  app.get("/api/speaking/bots", async (req, res) => {
+    try {
+      const { difficulty } = req.query;
+      const bots = speakingPartnerBotSystem.getAvailableBots(difficulty as string);
+      res.json(bots);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get available bots", error });
+    }
+  });
+
+  app.get("/api/speaking/templates", async (req, res) => {
+    try {
+      const { role } = req.query;
+      const templates = speakingPartnerBotSystem.getConversationTemplates(role as string);
+      res.json(templates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get conversation templates", error });
+    }
+  });
+
+  app.post("/api/speaking/conversation/start", async (req, res) => {
+    try {
+      const { userId, botId, templateId } = req.body;
+      const session = speakingPartnerBotSystem.startConversation(userId, botId, templateId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start conversation", error });
+    }
+  });
+
+  app.post("/api/speaking/conversation/input", async (req, res) => {
+    try {
+      const { sessionId, userInput, audioData } = req.body;
+      const exchange = speakingPartnerBotSystem.processUserInput(sessionId, userInput, audioData);
+      res.json(exchange);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to process user input", error });
+    }
+  });
+
+  app.post("/api/speaking/conversation/end", async (req, res) => {
+    try {
+      const { sessionId } = req.body;
+      const feedback = speakingPartnerBotSystem.endConversation(sessionId);
+      res.json(feedback);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to end conversation", error });
+    }
+  });
+
+  app.get("/api/speaking/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = speakingPartnerBotSystem.getUserSpeakingProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get speaking profile", error });
+    }
+  });
+
+  // Daily Challenges API
+  app.get("/api/challenges/today", async (req, res) => {
+    try {
+      const todaysChallenge = dailyChallengeSystem.getTodaysChallenge();
+      res.json(todaysChallenge);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get today's challenge", error });
+    }
+  });
+
+  app.get("/api/challenges/available", async (req, res) => {
+    try {
+      const challenges = dailyChallengeSystem.getAvailableChallenges();
+      res.json(challenges);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get available challenges", error });
+    }
+  });
+
+  app.post("/api/challenges/start", async (req, res) => {
+    try {
+      const { userId, challengeId } = req.body;
+      const attempt = dailyChallengeSystem.startChallenge(userId, challengeId);
+      res.json(attempt);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start challenge", error });
+    }
+  });
+
+  app.post("/api/challenges/submit", async (req, res) => {
+    try {
+      const { userId, challengeId, userAnswer, hintsUsed } = req.body;
+      const result = dailyChallengeSystem.submitChallengeAnswer(userId, challengeId, userAnswer, hintsUsed);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit challenge answer", error });
+    }
+  });
+
+  app.get("/api/challenges/streak/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const streak = dailyChallengeSystem.getUserStreak(userId);
+      res.json(streak);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user streak", error });
+    }
+  });
+
+  app.get("/api/challenges/history/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { limit } = req.query;
+      const history = dailyChallengeSystem.getUserChallengeHistory(userId, limit ? parseInt(limit as string) : 10);
+      res.json(history);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get challenge history", error });
+    }
+  });
+
+  app.get("/api/challenges/leaderboard/:period", async (req, res) => {
+    try {
+      const { period } = req.params;
+      const leaderboard = dailyChallengeSystem.getChallengeLeaderboard(period as any);
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get challenge leaderboard", error });
     }
   });
 
