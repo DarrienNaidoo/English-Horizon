@@ -25,6 +25,7 @@ import { Link } from "wouter";
 import { cn, formatXP, getLevelProgress } from "@/lib/utils";
 import LearningInsights from "@/components/adaptive/learning-insights";
 import AdaptiveDifficulty from "@/components/adaptive/adaptive-difficulty";
+import { TranslatableText } from "@/components/translation-provider";
 import type { User, DailyChallenge } from "@shared/schema";
 
 // Mock user for demo - in real app this would come from authentication
@@ -299,7 +300,7 @@ export default function Dashboard() {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Current Level</h3>
+                  <h3 className="text-lg font-semibold"><TranslatableText>Current Level</TranslatableText></h3>
                   <TrendingUp className="text-primary h-5 w-5" />
                 </div>
                 <div className="text-3xl font-bold text-primary mb-2 capitalize">
@@ -316,7 +317,7 @@ export default function Dashboard() {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Study Streak</h3>
+                  <h3 className="text-lg font-semibold"><TranslatableText>Study Streak</TranslatableText></h3>
                   <Flame className="text-accent h-5 w-5" />
                 </div>
                 <div className="text-3xl font-bold text-accent mb-2">
@@ -332,7 +333,7 @@ export default function Dashboard() {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Latest Achievement</h3>
+                  <h3 className="text-lg font-semibold"><TranslatableText>Latest Achievement</TranslatableText></h3>
                   <Trophy className="text-accent h-5 w-5" />
                 </div>
                 <div className="flex items-center space-x-3">

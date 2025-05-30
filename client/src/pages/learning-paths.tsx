@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BookOpen, Clock, Star, Filter } from "lucide-react";
 import LessonCard from "@/components/learning/lesson-card";
+import { TranslatableText } from "@/components/translation-provider";
 import { cn } from "@/lib/utils";
 import type { Lesson, UserProgress } from "@shared/schema";
 
