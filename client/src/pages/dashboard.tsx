@@ -229,19 +229,34 @@ export default function Dashboard() {
                     </p>
                     <div className="flex gap-3 flex-wrap">
                       <Button
-                        onClick={() => matrixLoader.startLoading("Learning in progress...", 3000)}
+                        onClick={() => {
+                          matrixLoader.startLoading("Accessing learning paths...", 2000);
+                          setTimeout(() => {
+                            window.location.href = "/learning-paths";
+                          }, 2000);
+                        }}
                         className="gamified-button bg-primary text-primary-foreground"
                       >
                         🌟 Start Learning
                       </Button>
                       <Button
-                        onClick={() => matrixLoader.startLoading("Unlocking achievements...", 4000)}
+                        onClick={() => {
+                          matrixLoader.startLoading("Unlocking achievements...", 2000);
+                          setTimeout(() => {
+                            window.location.href = "/achievements";
+                          }, 2000);
+                        }}
                         className="gamified-button bg-secondary text-secondary-foreground"
                       >
                         🏆 Achievements
                       </Button>
                       <Button
-                        onClick={() => matrixLoader.startLoading("Connecting with friends...", 5000)}
+                        onClick={() => {
+                          matrixLoader.startLoading("Connecting with friends...", 2000);
+                          setTimeout(() => {
+                            window.location.href = "/social-learning";
+                          }, 2000);
+                        }}
                         className="gamified-button bg-accent text-accent-foreground"
                       >
                         👥 Social Hub

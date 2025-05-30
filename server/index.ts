@@ -54,7 +54,8 @@ app.get("/api/daily-challenge", (req, res) => {
 });
 
 app.get("/api/lessons", (req, res) => {
-  const { level, unit } = req.query;
+  const level = req.query.level as string;
+  const unit = req.query.unit as string;
   
   const lessons = [
     // Unit 1: My Daily Life
@@ -378,7 +379,7 @@ app.get("/api/lessons", (req, res) => {
     filteredLessons = filteredLessons.filter(lesson => lesson.level === level);
   }
   
-  if (unit) {
+  if (unit && typeof unit === 'string') {
     filteredLessons = filteredLessons.filter(lesson => lesson.unit === parseInt(unit));
   }
 
