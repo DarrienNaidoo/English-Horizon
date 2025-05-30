@@ -26,6 +26,8 @@ import InteractiveGames from "@/pages/interactive-games";
 import CulturalImmersion from "@/pages/cultural-immersion";
 import Achievements from "@/pages/achievements";
 import DailyChallenge from "@/pages/daily-challenge";
+import AIDebates from "@/pages/ai-debates";
+import Presentations from "@/pages/presentations";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
@@ -56,6 +58,8 @@ function Router() {
           <Route path="/cultural-immersion" component={CulturalImmersion} />
           <Route path="/achievements" component={Achievements} />
           <Route path="/daily-challenge" component={DailyChallenge} />
+          <Route path="/ai-debates" component={AIDebates} />
+          <Route path="/presentations" component={Presentations} />
           <Route component={NotFound} />
         </Switch>
       </main>

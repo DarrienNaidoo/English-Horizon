@@ -47,6 +47,12 @@ export default function PronunciationPracticePage() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [analysisResult, setAnalysisResult] = useState<PronunciationAnalysis | null>(null);
+  const [currentMode, setCurrentMode] = useState<'word' | 'sentence' | 'conversation'>('word');
+  const [practiceSession, setPracticeSession] = useState({
+    correctCount: 0,
+    totalAttempts: 0,
+    sessionScore: 0
+  });
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
