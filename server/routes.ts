@@ -16,6 +16,10 @@ import { socialLearningSystem } from "./social-learning";
 import { contentCreationSystem } from "./content-creation";
 import { grammarExerciseSystem } from "./grammar-exercises";
 import { riddleGameSystem } from "./riddle-game";
+import { advancedWritingSystem } from "./advanced-writing";
+import { speechRecognitionSystem } from "./speech-recognition";
+import { aiTutoringSystem } from "./ai-tutoring";
+import { culturalImmersionSystem } from "./cultural-immersion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1018,6 +1022,294 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(stats);
     } catch (error) {
       res.status(500).json({ message: "Failed to get user stats", error });
+    }
+  });
+
+  // Advanced Writing API
+  app.get("/api/writing/templates", async (req, res) => {
+    try {
+      const { type, difficulty } = req.query;
+      const templates = advancedWritingSystem.getTemplates(type as string, difficulty as string);
+      res.json(templates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get writing templates", error });
+    }
+  });
+
+  app.get("/api/writing/assignments", async (req, res) => {
+    try {
+      const { templateId } = req.query;
+      const assignments = advancedWritingSystem.getAssignments(templateId as string);
+      res.json(assignments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get writing assignments", error });
+    }
+  });
+
+  app.post("/api/writing/submit", async (req, res) => {
+    try {
+      const { assignmentId, userId, content, isDraft } = req.body;
+      const submission = advancedWritingSystem.submitWriting(assignmentId, userId, content, isDraft);
+      res.json(submission);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit writing", error });
+    }
+  });
+
+  app.get("/api/writing/submissions/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const submissions = advancedWritingSystem.getUserSubmissions(userId);
+      res.json(submissions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user submissions", error });
+    }
+  });
+
+  app.post("/api/writing/collaborative", async (req, res) => {
+    try {
+      const { title, description, type, participants } = req.body;
+      const project = advancedWritingSystem.createCollaborativeProject(title, description, type, participants);
+      res.json(project);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create collaborative project", error });
+    }
+  });
+
+  // Speech Recognition API
+  app.get("/api/speech/accent-exercises", async (req, res) => {
+    try {
+      const { accent, category, difficulty } = req.query;
+      const exercises = speechRecognitionSystem.getAccentExercises(
+        accent as string, 
+        category as string, 
+        difficulty as string
+      );
+      res.json(exercises);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get accent exercises", error });
+    }
+  });
+
+  app.get("/api/speech/fluency-tests", async (req, res) => {
+    try {
+      const { level } = req.query;
+      const tests = speechRecognitionSystem.getFluencyTests(level as string);
+      res.json(tests);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get fluency tests", error });
+    }
+  });
+
+  app.post("/api/speech/analyze", async (req, res) => {
+    try {
+      const { audioData, targetText } = req.body;
+      const analysis = await speechRecognitionSystem.analyzeSpeech(audioData, targetText);
+      res.json(analysis);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to analyze speech", error });
+    }
+  });
+
+  app.post("/api/speech/fluency-test", async (req, res) => {
+    try {
+      const { testId, userId, audioData } = req.body;
+      const result = await speechRecognitionSystem.conductFluencyTest(testId, userId, audioData);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to conduct fluency test", error });
+    }
+  });
+
+  app.get("/api/speech/fluency-results/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const results = speechRecognitionSystem.getUserFluencyResults(userId);
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get fluency results", error });
+    }
+  });
+
+  app.post("/api/speech/voice-journal", async (req, res) => {
+    try {
+      const { userId, title, audioData, topics, isPrivate } = req.body;
+      const entry = await speechRecognitionSystem.createVoiceJournalEntry(
+        userId, title, audioData, topics, isPrivate
+      );
+      res.json(entry);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create voice journal entry", error });
+    }
+  });
+
+  app.get("/api/speech/voice-journal/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const journal = speechRecognitionSystem.getUserVoiceJournal(userId);
+      res.json(journal);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get voice journal", error });
+    }
+  });
+
+  app.get("/api/speech/progress/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const stats = speechRecognitionSystem.getProgressStats(userId);
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get speech progress", error });
+    }
+  });
+
+  // AI Tutoring API
+  app.get("/api/ai-tutor/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = aiTutoringSystem.getLearningProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get learning profile", error });
+    }
+  });
+
+  app.put("/api/ai-tutor/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const updates = req.body;
+      const profile = aiTutoringSystem.updateLearningProfile(userId, updates);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update learning profile", error });
+    }
+  });
+
+  app.post("/api/ai-tutor/study-plan", async (req, res) => {
+    try {
+      const { userId, goals, timeAvailable } = req.body;
+      const plan = await aiTutoringSystem.generatePersonalizedPlan(userId, goals, timeAvailable);
+      res.json(plan);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate study plan", error });
+    }
+  });
+
+  app.get("/api/ai-tutor/study-plans/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const plans = aiTutoringSystem.getUserStudyPlans(userId);
+      res.json(plans);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get study plans", error });
+    }
+  });
+
+  app.post("/api/ai-tutor/session", async (req, res) => {
+    try {
+      const { userId, topic, message } = req.body;
+      const session = await aiTutoringSystem.conductAISession(userId, topic, message);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to conduct AI session", error });
+    }
+  });
+
+  app.get("/api/ai-tutor/sessions/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const sessions = aiTutoringSystem.getUserTutorSessions(userId);
+      res.json(sessions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get tutor sessions", error });
+    }
+  });
+
+  app.get("/api/ai-tutor/assessments/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const assessments = aiTutoringSystem.getAvailableAssessments(userId);
+      res.json(assessments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get assessments", error });
+    }
+  });
+
+  // Cultural Immersion API
+  app.get("/api/cultural/scenarios", async (req, res) => {
+    try {
+      const { country, category, difficulty } = req.query;
+      const scenarios = culturalImmersionSystem.getCulturalScenarios(
+        country as string, 
+        category as string, 
+        difficulty as string
+      );
+      res.json(scenarios);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get cultural scenarios", error });
+    }
+  });
+
+  app.get("/api/cultural/current-events", async (req, res) => {
+    try {
+      const { category, difficulty } = req.query;
+      const events = culturalImmersionSystem.getCurrentEvents(
+        category as string, 
+        difficulty ? parseInt(difficulty as string) : undefined
+      );
+      res.json(events);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get current events", error });
+    }
+  });
+
+  app.get("/api/cultural/pop-culture", async (req, res) => {
+    try {
+      const { type, ageGroup } = req.query;
+      const content = culturalImmersionSystem.getPopCultureContent(
+        type as string, 
+        ageGroup as string
+      );
+      res.json(content);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get pop culture content", error });
+    }
+  });
+
+  app.get("/api/cultural/virtual-trips", async (req, res) => {
+    try {
+      const { type, difficulty } = req.query;
+      const trips = culturalImmersionSystem.getVirtualTrips(
+        type as string, 
+        difficulty as string
+      );
+      res.json(trips);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get virtual trips", error });
+    }
+  });
+
+  app.post("/api/cultural/practice", async (req, res) => {
+    try {
+      const { scenarioId, userId } = req.body;
+      const practice = culturalImmersionSystem.startCulturalPractice(scenarioId, userId);
+      res.json(practice);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start cultural practice", error });
+    }
+  });
+
+  app.post("/api/cultural/response", async (req, res) => {
+    try {
+      const { scenarioId, interactionId, userResponse } = req.body;
+      const feedback = culturalImmersionSystem.submitCulturalResponse(
+        scenarioId, 
+        interactionId, 
+        userResponse
+      );
+      res.json(feedback);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit cultural response", error });
     }
   });
 
