@@ -14,6 +14,8 @@ import { readingComprehensionSystem } from "./reading-comprehension";
 import { speakingPracticeSystem } from "./speaking-practice";
 import { socialLearningSystem } from "./social-learning";
 import { contentCreationSystem } from "./content-creation";
+import { grammarExerciseSystem } from "./grammar-exercises";
+import { riddleGameSystem } from "./riddle-game";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -850,6 +852,172 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(results);
     } catch (error) {
       res.status(500).json({ message: "Failed to search content", error });
+    }
+  });
+
+  // Grammar Exercises API
+  app.get("/api/grammar/rules", async (req, res) => {
+    try {
+      const { level } = req.query;
+      const rules = grammarExerciseSystem.getGrammarRules(level as string);
+      res.json(rules);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get grammar rules", error });
+    }
+  });
+
+  app.get("/api/grammar/rules/:id", async (req, res) => {
+    try {
+      const rule = grammarExerciseSystem.getGrammarRule(req.params.id);
+      if (!rule) {
+        return res.status(404).json({ message: "Grammar rule not found" });
+      }
+      res.json(rule);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get grammar rule", error });
+    }
+  });
+
+  app.get("/api/grammar/exercises/:ruleId", async (req, res) => {
+    try {
+      const { ruleId } = req.params;
+      const { difficulty } = req.query;
+      const exercises = grammarExerciseSystem.getExercisesByRule(
+        ruleId, 
+        difficulty ? parseInt(difficulty as string) : undefined
+      );
+      res.json(exercises);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get grammar exercises", error });
+    }
+  });
+
+  app.post("/api/grammar/check", async (req, res) => {
+    try {
+      const { exerciseId, userAnswer, userId, ruleId } = req.body;
+      const result = grammarExerciseSystem.checkAnswer(exerciseId, userAnswer);
+      
+      // Update user progress
+      grammarExerciseSystem.updateUserProgress(userId, ruleId, result.correct);
+      
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check grammar answer", error });
+    }
+  });
+
+  app.get("/api/grammar/progress/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const progress = grammarExerciseSystem.getUserProgress(userId);
+      res.json(progress);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get grammar progress", error });
+    }
+  });
+
+  app.get("/api/grammar/recommendations/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { count } = req.query;
+      const recommendations = grammarExerciseSystem.getRecommendedExercises(
+        userId, 
+        count ? parseInt(count as string) : 5
+      );
+      res.json(recommendations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get grammar recommendations", error });
+    }
+  });
+
+  // Riddle Game API
+  app.get("/api/riddles", async (req, res) => {
+    try {
+      const { difficulty, category } = req.query;
+      const riddles = riddleGameSystem.getRiddles(
+        difficulty as string, 
+        category as string
+      );
+      res.json(riddles);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get riddles", error });
+    }
+  });
+
+  app.get("/api/puzzles", async (req, res) => {
+    try {
+      const { difficulty, type } = req.query;
+      const puzzles = riddleGameSystem.getPuzzles(
+        difficulty as string, 
+        type as string
+      );
+      res.json(puzzles);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get puzzles", error });
+    }
+  });
+
+  app.post("/api/riddles/session", async (req, res) => {
+    try {
+      const { userId, gameType } = req.body;
+      const session = riddleGameSystem.startGameSession(userId, gameType);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start riddle session", error });
+    }
+  });
+
+  app.post("/api/riddles/check", async (req, res) => {
+    try {
+      const { riddleId, userAnswer, sessionId } = req.body;
+      const result = riddleGameSystem.checkRiddleAnswer(riddleId, userAnswer, sessionId);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check riddle answer", error });
+    }
+  });
+
+  app.get("/api/riddles/hint/:riddleId/:sessionId", async (req, res) => {
+    try {
+      const { riddleId, sessionId } = req.params;
+      const hint = riddleGameSystem.getHint(riddleId, sessionId);
+      res.json({ hint });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get hint", error });
+    }
+  });
+
+  app.post("/api/riddles/session/:sessionId/end", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const session = riddleGameSystem.endGameSession(sessionId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to end riddle session", error });
+    }
+  });
+
+  app.get("/api/riddles/leaderboard/:gameType", async (req, res) => {
+    try {
+      const { gameType } = req.params;
+      const { limit } = req.query;
+      const leaderboard = riddleGameSystem.getLeaderboard(
+        gameType as 'riddle' | 'puzzle',
+        limit ? parseInt(limit as string) : 10
+      );
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get leaderboard", error });
+    }
+  });
+
+  app.get("/api/riddles/stats/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const stats = riddleGameSystem.getUserStats(userId);
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user stats", error });
     }
   });
 
