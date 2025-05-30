@@ -54,88 +54,88 @@ export default function Dashboard() {
 
   const learningModules = [
     {
-      title: "🎯 AI Learning Path",
-      description: "Personalized lessons powered by AI that adapt to your learning style and progress",
+      title: "🧠 Smart Learning Path",
+      description: "AI-powered personalized curriculum that adapts to your unique learning style and pace",
       href: "/learning-paths",
       icon: Brain,
       cardClass: "cyber-card",
       iconClass: "text-primary",
-      stats: "Adaptive AI • 150+ lessons • Smart recommendations",
-      level: "NEURAL NETWORK",
+      stats: "Personalized AI • 200+ topics • Smart progression",
+      level: "ADAPTIVE LEARNING",
       progress: 72,
       badges: [
-        { label: "AI-Powered", color: "level-advanced" },
-        { label: "Adaptive", color: "level-intermediate" },
+        { label: "AI-Enhanced", color: "level-advanced" },
+        { label: "Personalized", color: "level-intermediate" },
       ]
     },
     {
-      title: "🤖 Speaking Partner Bot",
-      description: "Practice conversations with AI partners in realistic scenarios and receive instant feedback",
+      title: "🎭 Interactive Practice",
+      description: "Engage with AI tutors and practice partners for immersive, real-world learning scenarios",
       href: "/speaking-zone",
       icon: Mic,
       cardClass: "neon-card",
       iconClass: "text-secondary",
-      stats: "Role-play scenarios • Real-time analysis • Voice recognition",
-      level: "VOICE ENGINE",
+      stats: "AI tutors • Interactive scenarios • Instant feedback",
+      level: "PRACTICE HUB",
       progress: 85,
       badges: [
-        { label: "Voice AI", color: "level-advanced" },
+        { label: "Interactive", color: "level-advanced" },
       ]
     },
     {
-      title: "⚡ Daily Challenges",
-      description: "Smart daily missions that boost your skills with XP rewards and streak bonuses",
+      title: "🏆 Daily Missions",
+      description: "Complete fun daily challenges to build consistency and earn rewards while learning",
       href: "/games",
       icon: Gamepad2,
       cardClass: "cyber-card",
       iconClass: "text-accent",
-      stats: "Word mastery • Grammar fixes • Pronunciation drills",
-      level: "CHALLENGE CORE",
+      stats: "Daily streaks • Skill challenges • Achievement rewards",
+      level: "MISSION CENTER",
       progress: 94,
       badges: [
         { label: "12-Day Streak", color: "level-intermediate" },
       ]
     },
     {
-      title: "🌐 Cultural Exchange",
-      description: "Explore global cultures while mastering English through immersive content",
+      title: "🌍 World Explorer",
+      description: "Discover diverse subjects and cultures through engaging multimedia content and stories",
       href: "/cultural-content",
       icon: Globe,
       cardClass: "neon-card",
       iconClass: "text-primary",
-      stats: "Cultural immersion • Cross-cultural learning • Real contexts",
-      level: "GLOBAL NETWORK",
+      stats: "Global content • Interactive stories • Cultural insights",
+      level: "DISCOVERY ZONE",
       progress: 67,
       badges: [
-        { label: "Cultural Expert", color: "level-beginner" },
+        { label: "Explorer", color: "level-beginner" },
       ]
     },
     {
-      title: "🎮 Gamified Quests",
-      description: "Epic learning adventures with storylines, achievements, and team battles",
+      title: "👥 Social Learning",
+      description: "Connect with fellow learners through collaborative projects and friendly competitions",
       href: "/group-activities", 
-      icon: Trophy,
+      icon: Users,
       cardClass: "cyber-card",
       iconClass: "text-secondary",
-      stats: "Story mode • Team battles • Achievement system",
-      level: "QUEST SYSTEM",
+      stats: "Team projects • Peer learning • Social challenges",
+      level: "COMMUNITY HUB",
       progress: 58,
       badges: [
-        { label: "Guild Member", color: "level-intermediate" },
+        { label: "Team Player", color: "level-intermediate" },
       ]
     },
     {
-      title: "📊 Neural Analytics",
-      description: "Advanced progress tracking with AI insights and personalized recommendations",
+      title: "📈 Progress Insights",
+      description: "Track your learning journey with detailed analytics and personalized improvement suggestions",
       href: "/progress",
       icon: BarChart3,
       cardClass: "neon-card",
       iconClass: "text-accent",
-      stats: "AI insights • Progress tracking • Skill analysis",
-      level: "DATA CORE",
+      stats: "Learning analytics • Progress tracking • Smart insights",
+      level: "ANALYTICS CORE",
       progress: 76,
       badges: [
-        { label: "Data Expert", color: "level-advanced" },
+        { label: "Data Driven", color: "level-advanced" },
       ]
     }
   ];
@@ -151,13 +151,13 @@ export default function Dashboard() {
               <div className="space-y-8">
                 <div>
                   <h1 className="text-4xl md:text-6xl font-bold mb-6 neon-text floating-element">
-                    SPEAKWORLD
+                    LEARNVERSE
                   </h1>
                   <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-secondary">
-                    Welcome, {CURRENT_USER.firstName}
+                    Welcome back, {CURRENT_USER.firstName}!
                   </h2>
                   <p className="text-lg mb-8 text-primary-foreground/90">
-                    🚀 Neural Language Interface Active • AI-Powered Learning Engine Online
+                    🌟 Your personalized learning universe awaits • Discover, Practice, Master
                   </p>
                 </div>
                 
@@ -167,7 +167,7 @@ export default function Dashboard() {
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div className="space-y-2">
                         <div className="text-2xl font-bold neon-text">{CURRENT_USER.xp}</div>
-                        <div className="text-sm text-muted-foreground">NEURAL XP</div>
+                        <div className="text-sm text-muted-foreground">LEARNING XP</div>
                       </div>
                       <div className="space-y-2">
                         <div className="text-2xl font-bold text-secondary">{CURRENT_USER.streak}</div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
                     </div>
                     <div className="mt-6">
                       <div className="flex justify-between text-sm mb-2">
-                        <span>Neural Progress</span>
+                        <span>Learning Progress</span>
                         <span>{Math.round(levelProgress.progress)}%</span>
                       </div>
                       <div className="energy-progress h-3"></div>
@@ -195,7 +195,7 @@ export default function Dashboard() {
                   <Card className="neon-card">
                     <CardContent className="pt-6">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-bold neon-text">⚡ DAILY MISSION</h3>
+                        <h3 className="text-xl font-bold neon-text">🎯 TODAY'S CHALLENGE</h3>
                         <Badge className="holographic-button border-accent text-accent">
                           +{dailyChallenge.xpReward} XP
                         </Badge>

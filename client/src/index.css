@@ -3,41 +3,41 @@
 @tailwind utilities;
 
 :root {
-  /* Futuristic Sci-Fi Theme - Light Mode */
-  --background: 220 25% 96%; /* Light space-gray */
-  --foreground: 220 30% 15%; /* Dark text */
-  --muted: 220 15% 88%;
-  --muted-foreground: 220 20% 45%;
-  --popover: 220 25% 98%;
-  --popover-foreground: 220 30% 15%;
-  --card: 220 20% 98%;
-  --card-foreground: 220 30% 15%;
-  --border: 220 20% 85%;
-  --input: 220 20% 92%;
-  --primary: 185 100% 50%; /* Neon cyan */
-  --primary-foreground: 220 30% 5%;
-  --secondary: 270 100% 65%; /* Electric purple */
-  --secondary-foreground: 220 30% 5%;
-  --accent: 210 100% 55%; /* Electric blue */
-  --accent-foreground: 220 30% 5%;
-  --destructive: 0 85% 60%;
-  --destructive-foreground: 220 30% 5%;
-  --ring: 185 100% 50%;
+  /* Friendly Futuristic Theme - Light Mode */
+  --background: 220 20% 98%; /* Very light, clean background */
+  --foreground: 220 15% 20%; /* Softer dark text */
+  --muted: 220 15% 92%;
+  --muted-foreground: 220 15% 50%;
+  --popover: 220 20% 99%;
+  --popover-foreground: 220 15% 20%;
+  --card: 220 15% 99%;
+  --card-foreground: 220 15% 20%;
+  --border: 220 15% 88%;
+  --input: 220 15% 95%;
+  --primary: 195 85% 55%; /* Softer cyan-blue */
+  --primary-foreground: 220 20% 10%;
+  --secondary: 285 75% 65%; /* Softer purple */
+  --secondary-foreground: 220 20% 10%;
+  --accent: 220 85% 60%; /* Friendly blue */
+  --accent-foreground: 220 20% 10%;
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 220 20% 10%;
+  --ring: 195 85% 55%;
   --radius: 0.75rem;
   
-  /* Custom sci-fi colors */
-  --neon-cyan: 185 100% 50%;
-  --neon-purple: 270 100% 65%;
-  --neon-green: 120 100% 50%;
-  --electric-blue: 210 100% 55%;
-  --plasma-pink: 320 100% 65%;
-  --energy-orange: 30 100% 55%;
+  /* Friendly sci-fi colors */
+  --neon-cyan: 195 85% 55%;
+  --neon-purple: 285 75% 65%;
+  --neon-green: 140 80% 55%;
+  --electric-blue: 220 85% 60%;
+  --plasma-pink: 320 75% 70%;
+  --energy-orange: 35 85% 60%;
   
-  --chart-1: 185 100% 50%;
-  --chart-2: 270 100% 65%;
-  --chart-3: 210 100% 55%;
-  --chart-4: 120 100% 50%;
-  --chart-5: 320 100% 65%;
+  --chart-1: 195 85% 55%;
+  --chart-2: 285 75% 65%;
+  --chart-3: 220 85% 60%;
+  --chart-4: 140 80% 55%;
+  --chart-5: 320 75% 70%;
 }
 
 .dark {
