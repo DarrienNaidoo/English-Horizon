@@ -54,100 +54,156 @@ export default function Dashboard() {
 
   const learningModules = [
     {
-      title: "📚 Learning Paths",
-      description: "Structured lessons covering Food, Travel, Technology, Chinese Culture, and more",
+      title: "🎯 AI Learning Path",
+      description: "Personalized lessons powered by AI that adapt to your learning style and progress",
       href: "/learning-paths",
-      icon: BookOpen,
-      gradient: "from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20",
-      borderColor: "border-blue-100 dark:border-blue-800",
-      iconBg: "bg-primary",
-      stats: "12 topics • 150+ lessons",
+      icon: Brain,
+      cardClass: "cyber-card",
+      iconClass: "text-primary",
+      stats: "Adaptive AI • 150+ lessons • Smart recommendations",
+      level: "NEURAL NETWORK",
+      progress: 72,
       badges: [
-        { label: "Beginner", color: "level-beginner" },
-        { label: "Intermediate", color: "level-intermediate" },
-        { label: "Advanced", color: "level-advanced" },
+        { label: "AI-Powered", color: "level-advanced" },
+        { label: "Adaptive", color: "level-intermediate" },
       ]
     },
     {
-      title: "🗣️ Speaking Zone",
-      description: "Practice pronunciation, join AI debates, and improve your speaking confidence",
+      title: "🤖 Speaking Partner Bot",
+      description: "Practice conversations with AI partners in realistic scenarios and receive instant feedback",
       href: "/speaking-zone",
       icon: Mic,
-      gradient: "from-emerald-50 to-green-50 dark:from-emerald-950/20 dark:to-green-950/20",
-      borderColor: "border-emerald-100 dark:border-emerald-800",
-      iconBg: "bg-secondary",
-      stats: "AI Feedback • Real-time pronunciation scoring"
+      cardClass: "neon-card",
+      iconClass: "text-secondary",
+      stats: "Role-play scenarios • Real-time analysis • Voice recognition",
+      level: "VOICE ENGINE",
+      progress: 85,
+      badges: [
+        { label: "Voice AI", color: "level-advanced" },
+      ]
     },
     {
-      title: "🎮 Gamified Learning",
-      description: "Word matching, spelling bees, and role-play quests with XP rewards",
+      title: "⚡ Daily Challenges",
+      description: "Smart daily missions that boost your skills with XP rewards and streak bonuses",
       href: "/games",
       icon: Gamepad2,
-      gradient: "from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20",
-      borderColor: "border-purple-100 dark:border-purple-800",
-      iconBg: "bg-purple-500",
-      stats: "Word Match • Spelling Bee • Role-play • Quests"
+      cardClass: "cyber-card",
+      iconClass: "text-accent",
+      stats: "Word mastery • Grammar fixes • Pronunciation drills",
+      level: "CHALLENGE CORE",
+      progress: 94,
+      badges: [
+        { label: "12-Day Streak", color: "level-intermediate" },
+      ]
     },
     {
-      title: "👥 Group Activities",
-      description: "Collaborate with classmates on stories, debates, and team challenges",
-      href: "/group-activities",
-      icon: Users,
-      gradient: "from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20",
-      borderColor: "border-orange-100 dark:border-orange-800",
-      iconBg: "bg-orange-500",
-      stats: "Team collaboration • Peer feedback"
-    },
-    {
-      title: "🇨🇳 Cultural Bridge",
-      description: "Learn about Chinese culture, festivals, and famous places in English",
+      title: "🌐 Cultural Exchange",
+      description: "Explore global cultures while mastering English through immersive content",
       href: "/cultural-content",
-      icon: Flag,
-      gradient: "from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
-      borderColor: "border-red-100 dark:border-red-800",
-      iconBg: "bg-red-500",
-      stats: "Chinese festivals • Famous landmarks • Cultural traditions"
+      icon: Globe,
+      cardClass: "neon-card",
+      iconClass: "text-primary",
+      stats: "Cultural immersion • Cross-cultural learning • Real contexts",
+      level: "GLOBAL NETWORK",
+      progress: 67,
+      badges: [
+        { label: "Cultural Expert", color: "level-beginner" },
+      ]
     },
     {
-      title: "📈 Progress Hub",
-      description: "Track your improvement with detailed analytics and achievements",
+      title: "🎮 Gamified Quests",
+      description: "Epic learning adventures with storylines, achievements, and team battles",
+      href: "/group-activities", 
+      icon: Trophy,
+      cardClass: "cyber-card",
+      iconClass: "text-secondary",
+      stats: "Story mode • Team battles • Achievement system",
+      level: "QUEST SYSTEM",
+      progress: 58,
+      badges: [
+        { label: "Guild Member", color: "level-intermediate" },
+      ]
+    },
+    {
+      title: "📊 Neural Analytics",
+      description: "Advanced progress tracking with AI insights and personalized recommendations",
       href: "/progress",
       icon: BarChart3,
-      gradient: "from-indigo-50 to-blue-50 dark:from-indigo-950/20 dark:to-blue-950/20",
-      borderColor: "border-indigo-100 dark:border-indigo-800",
-      iconBg: "bg-indigo-500",
-      stats: `850 words • Level 5 • 12 badges`
+      cardClass: "neon-card",
+      iconClass: "text-accent",
+      stats: "AI insights • Progress tracking • Skill analysis",
+      level: "DATA CORE",
+      progress: 76,
+      badges: [
+        { label: "Data Expert", color: "level-advanced" },
+      ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="gradient-primary text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Welcome back, {CURRENT_USER.firstName}! 🌟
-              </h2>
-              <p className="text-blue-100 text-lg mb-6">
-                Ready to continue your English journey? Today's focus: Chinese Culture in English
-              </p>
-              
-              {/* Daily Challenge Card */}
-              {dailyChallenge && (
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+    <div className="min-h-screen matrix-background">
+      {/* Futuristic Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 cyber-grid opacity-20"></div>
+        <div className="gradient-primary py-16 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div>
+                  <h1 className="text-4xl md:text-6xl font-bold mb-6 neon-text floating-element">
+                    SPEAKWORLD
+                  </h1>
+                  <div className="glitch-text text-2xl md:text-3xl font-semibold mb-4" data-text={`Welcome, ${CURRENT_USER.firstName}`}>
+                    Welcome, {CURRENT_USER.firstName}
+                  </div>
+                  <p className="text-lg mb-8 text-primary-foreground/90">
+                    🚀 Neural Language Interface Active • AI-Powered Learning Engine Online
+                  </p>
+                </div>
+                
+                {/* User Stats Card */}
+                <Card className="cyber-card">
                   <CardContent className="pt-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-white">Today's Challenge</h3>
-                      <Badge className="bg-accent text-white hover:bg-accent/90">
-                        +{dailyChallenge.xpReward} XP
-                      </Badge>
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div className="space-y-2">
+                        <div className="text-2xl font-bold neon-text">{CURRENT_USER.xp}</div>
+                        <div className="text-sm text-muted-foreground">NEURAL XP</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="text-2xl font-bold text-secondary">{CURRENT_USER.streak}</div>
+                        <div className="text-sm text-muted-foreground">DAY STREAK</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="text-2xl font-bold text-accent">LV{levelProgress.level}</div>
+                        <div className="text-sm text-muted-foreground">RANK</div>
+                      </div>
                     </div>
-                    <p className="text-blue-100 mb-4">{dailyChallenge.description}</p>
-                    <Button 
-                      className="bg-white text-primary hover:bg-blue-50"
-                      asChild
+                    <div className="mt-6">
+                      <div className="flex justify-between text-sm mb-2">
+                        <span>Neural Progress</span>
+                        <span>{levelProgress.progressPercent}%</span>
+                      </div>
+                      <div className="energy-progress h-3"></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="space-y-6">
+                {/* Daily Challenge Card */}
+                {dailyChallenge && (
+                  <Card className="neon-card">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold neon-text">⚡ DAILY MISSION</h3>
+                        <Badge className="holographic-button border-accent text-accent">
+                          +{dailyChallenge.xpReward} XP
+                        </Badge>
+                      </div>
+                      <p className="text-foreground/80 mb-6">{dailyChallenge.description}</p>
+                      <Button 
+                        className="holographic-button w-full"
+                        asChild
                     >
                       <Link href="/daily-challenge">Start Challenge</Link>
                     </Button>
