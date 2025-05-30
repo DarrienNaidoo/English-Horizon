@@ -76,9 +76,10 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Inter', 'Orbitron', sans-serif;
-    background: radial-gradient(ellipse at top, hsl(var(--background)), hsl(220 30% 3%));
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #000000 0%, #001100 100%);
     min-height: 100vh;
+    color: #00FF00;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -143,6 +144,11 @@
 @keyframes matrix-grid-pulse {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.6; }
+}
+
+@keyframes matrix-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
 }
 
 @layer components {
@@ -328,10 +334,30 @@
 
   .cyber-grid {
     background-image: 
-      linear-gradient(rgba(0, 255, 0, 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 0, 0.3) 1px, transparent 1px);
-    background-size: 25px 25px;
+      linear-gradient(rgba(0, 255, 0, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 0, 0.4) 1px, transparent 1px);
+    background-size: 30px 30px;
     animation: matrix-grid-pulse 4s ease-in-out infinite;
+    position: relative;
+  }
+
+  .cyber-grid::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 98px,
+        rgba(0, 255, 0, 0.03) 100px
+      );
+    animation: matrix-scan 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
   }
 
   .energy-progress {
