@@ -61,7 +61,7 @@ export default function Header() {
                 <Globe className="text-white h-6 w-6" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">SpeakWorld</h1>
+                <h1 className="text-xl font-bold text-foreground">SpeakWorld</h1>
                 <p className="text-xs text-muted-foreground">English for Life</p>
               </div>
             </div>
