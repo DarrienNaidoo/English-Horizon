@@ -24,6 +24,7 @@ import { classroomManagementSystem } from "./classroom-management";
 import { listeningComprehensionSystem } from "./listening-comprehension";
 import { peerLearningSystem } from "./peer-learning";
 import { achievementSystem } from "./achievement-system";
+import { learningSoundtrackSystem } from "./learning-soundtrack";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1597,6 +1598,133 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(streak);
     } catch (error) {
       res.status(500).json({ message: "Failed to update learning streak", error });
+    }
+  });
+
+  // Learning Soundtrack API
+  app.get("/api/soundtrack/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = learningSoundtrackSystem.getUserMusicProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get music profile", error });
+    }
+  });
+
+  app.post("/api/soundtrack/profile", async (req, res) => {
+    try {
+      const { userId, ...preferences } = req.body;
+      const profile = learningSoundtrackSystem.createUserMusicProfile(userId, preferences);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create music profile", error });
+    }
+  });
+
+  app.put("/api/soundtrack/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const updates = req.body;
+      const profile = learningSoundtrackSystem.updateUserPreferences(userId, updates);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update music profile", error });
+    }
+  });
+
+  app.post("/api/soundtrack/playlist/generate", async (req, res) => {
+    try {
+      const { userId, learningActivity, duration, timeOfDay } = req.body;
+      const playlist = learningSoundtrackSystem.generatePersonalizedPlaylist(
+        userId, learningActivity, duration, timeOfDay
+      );
+      res.json(playlist);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate playlist", error });
+    }
+  });
+
+  app.get("/api/soundtrack/playlists/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const playlists = learningSoundtrackSystem.getUserPlaylists(userId);
+      res.json(playlists);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user playlists", error });
+    }
+  });
+
+  app.get("/api/soundtrack/playlist/:playlistId", async (req, res) => {
+    try {
+      const { playlistId } = req.params;
+      const playlist = learningSoundtrackSystem.getPlaylistById(playlistId);
+      res.json(playlist);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get playlist", error });
+    }
+  });
+
+  app.get("/api/soundtrack/tracks", async (req, res) => {
+    try {
+      const { genre, mood, focusLevel, learningType } = req.query;
+      const tracks = learningSoundtrackSystem.getMusicTracks({
+        genre: genre as string,
+        mood: mood as string,
+        focusLevel: focusLevel as string,
+        learningType: learningType as string
+      });
+      res.json(tracks);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get music tracks", error });
+    }
+  });
+
+  app.post("/api/soundtrack/session/start", async (req, res) => {
+    try {
+      const { userId, playlistId, learningActivity, plannedDuration } = req.body;
+      const session = learningSoundtrackSystem.startStudySession(
+        userId, playlistId, learningActivity, plannedDuration
+      );
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start study session", error });
+    }
+  });
+
+  app.post("/api/soundtrack/track/play", async (req, res) => {
+    try {
+      const { userId, trackId, duration, skipped, learningActivity } = req.body;
+      learningSoundtrackSystem.trackPlayback(userId, trackId, duration, skipped, learningActivity);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to track playback", error });
+    }
+  });
+
+  app.post("/api/soundtrack/track/rate", async (req, res) => {
+    try {
+      const { 
+        userId, trackId, learningActivity, focusImprovement, 
+        taskCompletion, overallSatisfaction, studyDuration, distractionLevel 
+      } = req.body;
+      learningSoundtrackSystem.rateTrackEffectiveness(
+        userId, trackId, learningActivity, focusImprovement,
+        taskCompletion, overallSatisfaction, studyDuration, distractionLevel
+      );
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to rate track effectiveness", error });
+    }
+  });
+
+  app.get("/api/soundtrack/insights/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const insights = learningSoundtrackSystem.generatePersonalizationInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get personalization insights", error });
     }
   });
 
