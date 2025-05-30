@@ -20,6 +20,10 @@ import { advancedWritingSystem } from "./advanced-writing";
 import { speechRecognitionSystem } from "./speech-recognition";
 import { aiTutoringSystem } from "./ai-tutoring";
 import { culturalImmersionSystem } from "./cultural-immersion";
+import { classroomManagementSystem } from "./classroom-management";
+import { listeningComprehensionSystem } from "./listening-comprehension";
+import { peerLearningSystem } from "./peer-learning";
+import { achievementSystem } from "./achievement-system";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1310,6 +1314,289 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(feedback);
     } catch (error) {
       res.status(500).json({ message: "Failed to submit cultural response", error });
+    }
+  });
+
+  // Classroom Management API
+  app.post("/api/classroom/teacher", async (req, res) => {
+    try {
+      const { userId, schoolName, certification, experience, specializations } = req.body;
+      const profile = classroomManagementSystem.createTeacherProfile(
+        userId, schoolName, certification, experience, specializations
+      );
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create teacher profile", error });
+    }
+  });
+
+  app.get("/api/classroom/teacher/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = classroomManagementSystem.getTeacherProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get teacher profile", error });
+    }
+  });
+
+  app.post("/api/classroom/create", async (req, res) => {
+    try {
+      const { teacherId, name, description, subject, gradeLevel, maxStudents } = req.body;
+      const classroom = classroomManagementSystem.createClassroom(
+        teacherId, name, description, subject, gradeLevel, maxStudents
+      );
+      res.json(classroom);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create classroom", error });
+    }
+  });
+
+  app.post("/api/classroom/join", async (req, res) => {
+    try {
+      const { userId, inviteCode, displayName } = req.body;
+      const success = classroomManagementSystem.joinClassroomByCode(userId, inviteCode, displayName);
+      res.json({ success });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to join classroom", error });
+    }
+  });
+
+  app.get("/api/classroom/teacher/:teacherId/classrooms", async (req, res) => {
+    try {
+      const teacherId = parseInt(req.params.teacherId);
+      const classrooms = classroomManagementSystem.getTeacherClassrooms(teacherId);
+      res.json(classrooms);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get teacher classrooms", error });
+    }
+  });
+
+  app.get("/api/classroom/student/:userId/classrooms", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const classrooms = classroomManagementSystem.getStudentClassrooms(userId);
+      res.json(classrooms);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get student classrooms", error });
+    }
+  });
+
+  app.post("/api/classroom/:classroomId/assignment", async (req, res) => {
+    try {
+      const { classroomId } = req.params;
+      const { teacherId, ...assignmentData } = req.body;
+      const assignment = classroomManagementSystem.createAssignment(classroomId, teacherId, assignmentData);
+      res.json(assignment);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create assignment", error });
+    }
+  });
+
+  app.get("/api/classroom/:classroomId/assignments", async (req, res) => {
+    try {
+      const { classroomId } = req.params;
+      const assignments = classroomManagementSystem.getClassroomAssignments(classroomId);
+      res.json(assignments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get classroom assignments", error });
+    }
+  });
+
+  app.get("/api/classroom/student/:userId/assignments", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const assignments = classroomManagementSystem.getStudentAssignments(userId);
+      res.json(assignments);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get student assignments", error });
+    }
+  });
+
+  app.post("/api/classroom/assignment/:assignmentId/submit", async (req, res) => {
+    try {
+      const { assignmentId } = req.params;
+      const { studentId, content, attachments } = req.body;
+      const submission = classroomManagementSystem.submitAssignment(assignmentId, studentId, content, attachments);
+      res.json(submission);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit assignment", error });
+    }
+  });
+
+  app.get("/api/classroom/teacher/:teacherId/dashboard", async (req, res) => {
+    try {
+      const teacherId = parseInt(req.params.teacherId);
+      const dashboard = classroomManagementSystem.getTeacherDashboard(teacherId);
+      res.json(dashboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get teacher dashboard", error });
+    }
+  });
+
+  app.post("/api/classroom/:classroomId/projection/enable", async (req, res) => {
+    try {
+      const { classroomId } = req.params;
+      const { teacherId } = req.body;
+      const projectionMode = classroomManagementSystem.enableProjectionMode(classroomId, teacherId);
+      res.json(projectionMode);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to enable projection mode", error });
+    }
+  });
+
+  // Listening Comprehension API
+  app.get("/api/listening/content", async (req, res) => {
+    try {
+      const { type, difficulty, accent } = req.query;
+      const content = listeningComprehensionSystem.getAudioContent(
+        type as string, difficulty as string, accent as string
+      );
+      res.json(content);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get listening content", error });
+    }
+  });
+
+  app.get("/api/listening/dramas", async (req, res) => {
+    try {
+      const { difficulty } = req.query;
+      const dramas = listeningComprehensionSystem.getAudioDramas(difficulty as string);
+      res.json(dramas);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get audio dramas", error });
+    }
+  });
+
+  app.post("/api/listening/session/start", async (req, res) => {
+    try {
+      const { contentId, userId } = req.body;
+      const session = listeningComprehensionSystem.startListeningSession(contentId, userId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start listening session", error });
+    }
+  });
+
+  app.post("/api/listening/session/answer", async (req, res) => {
+    try {
+      const { sessionId, questionId, userAnswer, timeSpent } = req.body;
+      const result = listeningComprehensionSystem.submitComprehensionAnswer(
+        sessionId, questionId, userAnswer, timeSpent
+      );
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit answer", error });
+    }
+  });
+
+  // Peer Learning API
+  app.get("/api/peer/profiles", async (req, res) => {
+    try {
+      const { targetLanguage, proficiencyLevel } = req.query;
+      const profiles = peerLearningSystem.getPeerProfiles(
+        targetLanguage as string, proficiencyLevel as string
+      );
+      res.json(profiles);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get peer profiles", error });
+    }
+  });
+
+  app.get("/api/peer/forums", async (req, res) => {
+    try {
+      const { category, level } = req.query;
+      const forums = peerLearningSystem.getDiscussionForums(category as string, level as string);
+      res.json(forums);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get discussion forums", error });
+    }
+  });
+
+  app.post("/api/peer/forum/:forumId/topic", async (req, res) => {
+    try {
+      const { forumId } = req.params;
+      const { authorId, title, content, tags } = req.body;
+      const topic = peerLearningSystem.createForumTopic(forumId, authorId, title, content, tags);
+      res.json(topic);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create forum topic", error });
+    }
+  });
+
+  app.get("/api/peer/mentorship", async (req, res) => {
+    try {
+      const { focus, status } = req.query;
+      const programs = peerLearningSystem.getMentorshipPrograms(focus as string, status as string);
+      res.json(programs);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get mentorship programs", error });
+    }
+  });
+
+  // Achievement System API
+  app.get("/api/achievements/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const achievements = achievementSystem.getUserAchievements(userId);
+      res.json(achievements);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user achievements", error });
+    }
+  });
+
+  app.get("/api/achievements/available/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const achievements = achievementSystem.getAvailableAchievements(userId);
+      res.json(achievements);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get available achievements", error });
+    }
+  });
+
+  app.get("/api/achievements/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = achievementSystem.getUserProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user profile", error });
+    }
+  });
+
+  app.get("/api/achievements/leaderboard/:category", async (req, res) => {
+    try {
+      const { category } = req.params;
+      const { timeframe, limit } = req.query;
+      const leaderboard = achievementSystem.getLeaderboard(
+        category, timeframe as string, limit ? parseInt(limit as string) : 50
+      );
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get leaderboard", error });
+    }
+  });
+
+  app.post("/api/achievements/check/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { activityData } = req.body;
+      const unlocked = achievementSystem.checkAndUnlockAchievements(userId, activityData);
+      res.json(unlocked);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check achievements", error });
+    }
+  });
+
+  app.post("/api/achievements/streak/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { activityDate } = req.body;
+      const streak = achievementSystem.updateLearningStreak(userId, activityDate ? new Date(activityDate) : new Date());
+      res.json(streak);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update learning streak", error });
     }
   });
 
