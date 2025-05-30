@@ -153,9 +153,9 @@ export default function Dashboard() {
                   <h1 className="text-4xl md:text-6xl font-bold mb-6 neon-text floating-element">
                     SPEAKWORLD
                   </h1>
-                  <div className="glitch-text text-2xl md:text-3xl font-semibold mb-4" data-text={`Welcome, ${CURRENT_USER.firstName}`}>
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-secondary">
                     Welcome, {CURRENT_USER.firstName}
-                  </div>
+                  </h2>
                   <p className="text-lg mb-8 text-primary-foreground/90">
                     🚀 Neural Language Interface Active • AI-Powered Learning Engine Online
                   </p>
@@ -174,14 +174,14 @@ export default function Dashboard() {
                         <div className="text-sm text-muted-foreground">DAY STREAK</div>
                       </div>
                       <div className="space-y-2">
-                        <div className="text-2xl font-bold text-accent">LV{levelProgress.level}</div>
+                        <div className="text-2xl font-bold text-accent">LV5</div>
                         <div className="text-sm text-muted-foreground">RANK</div>
                       </div>
                     </div>
                     <div className="mt-6">
                       <div className="flex justify-between text-sm mb-2">
                         <span>Neural Progress</span>
-                        <span>{levelProgress.progressPercent}%</span>
+                        <span>{Math.round(levelProgress.progress)}%</span>
                       </div>
                       <div className="energy-progress h-3"></div>
                     </div>
@@ -210,16 +210,6 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
               )}
-            </div>
-            
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-                  alt="Students collaborating in classroom" 
-                  className="w-full h-auto"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent"></div>
               </div>
             </div>
           </div>
@@ -336,33 +326,40 @@ export default function Dashboard() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {learningModules.map((module, index) => (
               <Link key={index} href={module.href}>
-                <Card className={cn(
-                  "learning-card",
-                  module.gradient,
-                  module.borderColor
-                )}>
-                  <CardContent className="p-8 text-center">
-                    <div className={cn(
-                      "w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform",
-                      module.iconBg
-                    )}>
-                      <module.icon className="text-white text-2xl h-8 w-8" />
+                <Card className={cn("learning-card", module.cardClass)}>
+                  <CardContent className="p-8 text-center relative z-10">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-element">
+                      <module.icon className={cn("h-8 w-8", module.iconClass)} />
                     </div>
                     
-                    <h3 className="text-xl font-bold mb-3">{module.title}</h3>
-                    <p className="text-muted-foreground mb-6">{module.description}</p>
-                    
-                    {module.badges && (
-                      <div className="flex justify-center space-x-2 mb-4">
-                        {module.badges.map((badge, i) => (
-                          <Badge key={i} className={cn("level-badge", badge.color)}>
-                            {badge.label}
-                          </Badge>
-                        ))}
+                    <div className="space-y-4">
+                      <div className="text-xs font-bold text-accent tracking-wider">
+                        {module.level}
                       </div>
-                    )}
-                    
-                    <div className="text-sm text-muted-foreground">{module.stats}</div>
+                      
+                      <h3 className="text-xl font-bold mb-3">{module.title}</h3>
+                      <p className="text-muted-foreground mb-6">{module.description}</p>
+                      
+                      {module.badges && (
+                        <div className="flex justify-center space-x-2 mb-4">
+                          {module.badges.map((badge, i) => (
+                            <Badge key={i} className={cn("level-badge", badge.color)}>
+                              {badge.label}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span>Progress</span>
+                          <span className="text-primary">{module.progress}%</span>
+                        </div>
+                        <div className="energy-progress h-2"></div>
+                      </div>
+                      
+                      <div className="text-sm text-muted-foreground">{module.stats}</div>
+                    </div>
                   </CardContent>
                 </Card>
               </Link>
