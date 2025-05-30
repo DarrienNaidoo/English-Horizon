@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MatrixLoader, useMatrixLoader } from "@/components/MatrixLoader";
 import { 
   BookOpen, 
   Mic, 
@@ -50,6 +51,7 @@ export default function Dashboard() {
     queryKey: ["/api/users", CURRENT_USER_ID, "stats"],
   });
 
+  const matrixLoader = useMatrixLoader();
   const levelProgress = getLevelProgress(CURRENT_USER.xp, CURRENT_USER.level);
 
   const learningModules = [
@@ -190,6 +192,38 @@ export default function Dashboard() {
               </div>
 
               <div className="space-y-6">
+                {/* Matrix Loading Demo Card */}
+                <Card className="neon-card">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold neon-text">⚡ MATRIX LOADING SYSTEM</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4 font-mono">
+                      {'>'} Experience authentic Matrix digital rain loading animations
+                    </p>
+                    <div className="flex gap-3 flex-wrap">
+                      <Button
+                        onClick={() => matrixLoader.startLoading("INITIALIZING MATRIX...", 3000)}
+                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                      >
+                        Test Loading
+                      </Button>
+                      <Button
+                        onClick={() => matrixLoader.startLoading("NEURAL LINK ESTABLISHED", 4000)}
+                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                      >
+                        Neural Link
+                      </Button>
+                      <Button
+                        onClick={() => matrixLoader.startLoading("ACCESSING MAINFRAME...", 5000)}
+                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                      >
+                        Mainframe Access
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* Daily Challenge Card */}
                 {dailyChallenge && (
                   <Card className="neon-card">
@@ -425,6 +459,13 @@ export default function Dashboard() {
           </Card>
         </div>
       </section>
+
+      {/* Matrix Loader Component */}
+      <MatrixLoader 
+        isLoading={matrixLoader.isLoading}
+        message={matrixLoader.message}
+        fullscreen={true}
+      />
     </div>
   );
 }
