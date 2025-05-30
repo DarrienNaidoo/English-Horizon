@@ -1,4 +1,4 @@
-import { Globe, Menu } from "lucide-react";
+import { Globe, Menu, Languages, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +7,9 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import OfflineIndicator from "@/components/pwa/offline-indicator";
+import { TranslatableText, useTranslation, TranslationControls } from "@/components/translation-provider";
 
 // Mock user data - in real app this would come from auth context
 const CURRENT_USER = {
@@ -25,6 +27,44 @@ const navigationItems = [
   { href: "/progress", label: "Progress" },
 ];
 
+// Language selector component
+function LanguageSelector() {
+  const { currentLanguage, toggleLanguage, showTranslations, toggleTranslations } = useTranslation();
+  const [showSettings, setShowSettings] = useState(false);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" className="flex items-center space-x-2">
+          <Languages className="h-4 w-4" />
+          <span>{currentLanguage === 'en' ? 'EN' : '中文'}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-64">
+        <DropdownMenuItem onClick={toggleLanguage}>
+          <Globe className="h-4 w-4 mr-2" />
+          <span>Switch to {currentLanguage === 'en' ? '中文 (Chinese)' : 'English'}</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={toggleTranslations}>
+          <Languages className="h-4 w-4 mr-2" />
+          <span>{showTranslations ? 'Hide' : 'Show'} Translation Hints</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => setShowSettings(!showSettings)}>
+          <Settings className="h-4 w-4 mr-2" />
+          <span>Translation Settings</span>
+        </DropdownMenuItem>
+        {showSettings && (
+          <div className="p-3 border-t">
+            <TranslationControls />
+          </div>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 function NavigationMenu({ className, onItemClick }: { className?: string; onItemClick?: () => void }) {
   const [location] = useLocation();
 
@@ -40,7 +80,7 @@ function NavigationMenu({ className, onItemClick }: { className?: string; onItem
             )}
             onClick={onItemClick}
           >
-            {item.label}
+            <TranslatableText>{item.label}</TranslatableText>
           </Button>
         </Link>
       ))}
@@ -63,7 +103,9 @@ export default function Header() {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-blue-600">SpeakWorld</h1>
-                <p className="text-xs text-muted-foreground">English for Life</p>
+                <p className="text-xs text-muted-foreground">
+                  <TranslatableText>English for Life</TranslatableText>
+                </p>
               </div>
             </div>
           </Link>
@@ -73,6 +115,9 @@ export default function Header() {
 
           {/* User Profile and Status */}
           <div className="flex items-center space-x-4">
+            {/* Language Selector */}
+            <LanguageSelector />
+            
             {/* Theme Toggle */}
             <ThemeToggle />
             
@@ -141,6 +186,16 @@ export default function Header() {
                     className="flex-col items-start space-x-0 space-y-2"
                     onItemClick={() => setMobileMenuOpen(false)}
                   />
+                  
+                  <div className="pt-4 border-t border-border">
+                    <div className="space-y-4">
+                      <LanguageSelector />
+                      <div className="flex items-center space-x-2">
+                        <ThemeToggle />
+                        <OfflineIndicator />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
