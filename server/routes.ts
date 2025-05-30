@@ -25,6 +25,10 @@ import { listeningComprehensionSystem } from "./listening-comprehension";
 import { peerLearningSystem } from "./peer-learning";
 import { achievementSystem } from "./achievement-system";
 import { learningSoundtrackSystem } from "./learning-soundtrack";
+import { mascotProgressSystem } from "./mascot-progress";
+import { gestureNavigationSystem } from "./gesture-navigation";
+import { socialSharingSystem } from "./social-sharing";
+import { miniGameSystem } from "./mini-games";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1725,6 +1729,230 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(insights);
     } catch (error) {
       res.status(500).json({ message: "Failed to get personalization insights", error });
+    }
+  });
+
+  // Mascot Progress API
+  app.get("/api/mascot/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const mascot = mascotProgressSystem.getUserMascot(userId);
+      res.json(mascot);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user mascot", error });
+    }
+  });
+
+  app.post("/api/mascot/assign", async (req, res) => {
+    try {
+      const { userId, mascotId, nickname } = req.body;
+      const mascot = mascotProgressSystem.assignMascotToUser(userId, mascotId, nickname);
+      res.json(mascot);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to assign mascot", error });
+    }
+  });
+
+  app.post("/api/mascot/interact", async (req, res) => {
+    try {
+      const { userId, interactionType, duration } = req.body;
+      const interaction = mascotProgressSystem.interactWithMascot(userId, interactionType, duration);
+      res.json(interaction);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to interact with mascot", error });
+    }
+  });
+
+  app.post("/api/mascot/animation", async (req, res) => {
+    try {
+      const { userId, progressType, previousValue, newValue, maxValue, context } = req.body;
+      const animation = mascotProgressSystem.createProgressAnimation(
+        userId, progressType, previousValue, newValue, maxValue, context
+      );
+      res.json(animation);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create progress animation", error });
+    }
+  });
+
+  app.get("/api/mascot/available", async (req, res) => {
+    try {
+      const mascots = mascotProgressSystem.getAvailableMascots();
+      res.json(mascots);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get available mascots", error });
+    }
+  });
+
+  // Gesture Navigation API
+  app.post("/api/gesture/process", async (req, res) => {
+    try {
+      const { userId, gestureType, coordinates, direction, pressure, velocity, duration, context, deviceInfo } = req.body;
+      const gestureEvent = gestureNavigationSystem.processGestureEvent(
+        userId, gestureType, coordinates, direction, pressure, velocity, duration, context, deviceInfo
+      );
+      res.json(gestureEvent);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to process gesture", error });
+    }
+  });
+
+  app.get("/api/gesture/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = gestureNavigationSystem.getUserGestureProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get gesture profile", error });
+    }
+  });
+
+  app.get("/api/gesture/mappings", async (req, res) => {
+    try {
+      const { context } = req.query;
+      const mappings = gestureNavigationSystem.getAvailableGestures(context as string);
+      res.json(mappings);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get gesture mappings", error });
+    }
+  });
+
+  app.get("/api/gesture/flows", async (req, res) => {
+    try {
+      const { difficulty } = req.query;
+      const flows = gestureNavigationSystem.getNavigationFlows(difficulty as string);
+      res.json(flows);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get navigation flows", error });
+    }
+  });
+
+  // Social Sharing API
+  app.get("/api/social/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = socialSharingSystem.getUserSocialProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get social profile", error });
+    }
+  });
+
+  app.get("/api/social/badges/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const badges = socialSharingSystem.getUserBadges(userId);
+      res.json(badges);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user badges", error });
+    }
+  });
+
+  app.post("/api/social/badge/award", async (req, res) => {
+    try {
+      const { userId, badgeId, context } = req.body;
+      const userBadge = socialSharingSystem.awardBadge(userId, badgeId, context);
+      res.json(userBadge);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to award badge", error });
+    }
+  });
+
+  app.post("/api/social/share", async (req, res) => {
+    try {
+      const { userId, badgeId, platform, visibility, customMessage } = req.body;
+      const share = socialSharingSystem.shareBadge(userId, badgeId, platform, visibility, customMessage);
+      res.json(share);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to share badge", error });
+    }
+  });
+
+  app.post("/api/social/react", async (req, res) => {
+    try {
+      const { userId, shareId, reactionType, message } = req.body;
+      const success = socialSharingSystem.reactToShare(userId, shareId, reactionType, message);
+      res.json({ success });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to react to share", error });
+    }
+  });
+
+  app.get("/api/social/feed/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { feedType } = req.query;
+      const feed = socialSharingSystem.generateSocialFeed(userId, feedType as any);
+      res.json(feed);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get social feed", error });
+    }
+  });
+
+  // Mini Games API
+  app.get("/api/games/available/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const games = miniGameSystem.getAvailableGames(userId);
+      res.json(games);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get available games", error });
+    }
+  });
+
+  app.get("/api/games/profile/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const profile = miniGameSystem.getUserGameProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get game profile", error });
+    }
+  });
+
+  app.post("/api/games/session/start", async (req, res) => {
+    try {
+      const { userId, gameId } = req.body;
+      const session = miniGameSystem.startGameSession(userId, gameId);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start game session", error });
+    }
+  });
+
+  app.post("/api/games/session/complete", async (req, res) => {
+    try {
+      const { sessionId, finalScore, accuracy, mistakes } = req.body;
+      const session = miniGameSystem.completeGameSession(sessionId, finalScore, accuracy, mistakes);
+      res.json(session);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to complete game session", error });
+    }
+  });
+
+  app.get("/api/games/break/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const breakNeeded = miniGameSystem.checkBreakNeeded(userId);
+      if (breakNeeded) {
+        const suggestedGame = miniGameSystem.suggestBreakGame(userId);
+        res.json({ breakNeeded: true, suggestedGame });
+      } else {
+        res.json({ breakNeeded: false });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check break status", error });
+    }
+  });
+
+  app.get("/api/games/leaderboard/:gameId", async (req, res) => {
+    try {
+      const { gameId } = req.params;
+      const { limit } = req.query;
+      const leaderboard = miniGameSystem.getGameLeaderboard(gameId, limit ? parseInt(limit as string) : 10);
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get game leaderboard", error });
     }
   });
 
