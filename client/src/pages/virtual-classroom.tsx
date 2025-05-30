@@ -1,487 +1,402 @@
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { 
-  Users, 
-  Plus, 
-  Video, 
-  MessageSquare,
-  BookOpen,
-  Calendar,
-  UserPlus,
-  Settings,
-  Award,
-  Clock
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-
-interface ClassroomSession {
-  id: string;
-  title: string;
-  description: string;
-  teacherId: number;
-  students: number[];
-  status: 'waiting' | 'active' | 'completed';
-  startTime: Date;
-  maxStudents: number;
-  activities: any[];
-  createdAt: Date;
-}
-
-interface StudyGroup {
-  id: string;
-  name: string;
-  description: string;
-  members: number[];
-  ownerId: number;
-  isPublic: boolean;
-  focusTopics: string[];
-  maxMembers: number;
-  createdAt: Date;
-}
-
-interface GroupProject {
-  id: string;
-  title: string;
-  description: string;
-  groupMembers: number[];
-  leaderId: number;
-  deadline: Date;
-  status: 'planning' | 'in-progress' | 'review' | 'completed';
-  tasks: any[];
-  submissions: any[];
-}
-
-const CURRENT_USER_ID = 1;
+import { GraduationCap, Users, ClipboardList, TrendingUp, Calendar, Clock, FileText, CheckCircle } from "lucide-react";
+import { queryClient } from "@/lib/queryClient";
 
 export default function VirtualClassroom() {
-  const [newSessionTitle, setNewSessionTitle] = useState("");
-  const [newSessionDescription, setNewSessionDescription] = useState("");
-  const [newGroupName, setNewGroupName] = useState("");
-  const [newGroupDescription, setNewGroupDescription] = useState("");
-  const [newGroupTopics, setNewGroupTopics] = useState("");
-  const [isCreateSessionOpen, setIsCreateSessionOpen] = useState(false);
-  const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
+  const [userRole, setUserRole] = useState("teacher"); // teacher or student
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
-  const queryClient = useQueryClient();
-
-  const { data: sessions } = useQuery<ClassroomSession[]>({
-    queryKey: ["/api/classroom/sessions"],
+  const { data: assignments, isLoading: assignmentsLoading } = useQuery({
+    queryKey: ["/api/classroom/assignments"],
   });
 
-  const { data: studyGroups } = useQuery<StudyGroup[]>({
-    queryKey: ["/api/classroom/study-groups"],
-    queryFn: () => fetch("/api/classroom/study-groups?isPublic=true").then(res => res.json()),
+  const { data: studentProgress, isLoading: progressLoading } = useQuery({
+    queryKey: ["/api/classroom/student-progress"],
   });
 
-  const { data: myGroups } = useQuery<StudyGroup[]>({
-    queryKey: ["/api/classroom/study-groups", "mine"],
-    queryFn: () => fetch(`/api/classroom/study-groups?userId=${CURRENT_USER_ID}`).then(res => res.json()),
-  });
-
-  const { data: projects } = useQuery<GroupProject[]>({
-    queryKey: ["/api/classroom/projects"],
-    queryFn: () => fetch(`/api/classroom/projects?userId=${CURRENT_USER_ID}`).then(res => res.json()),
-  });
-
-  const createSessionMutation = useMutation({
-    mutationFn: async (data: { title: string; description: string }) => {
-      const response = await fetch('/api/classroom/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          teacherId: CURRENT_USER_ID,
-          title: data.title,
-          description: data.description,
-          maxStudents: 30
-        }),
+  const createAssignmentMutation = useMutation({
+    mutationFn: async (data) => {
+      const response = await fetch("/api/classroom/assignments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/classroom/sessions"] });
-      setIsCreateSessionOpen(false);
-      setNewSessionTitle("");
-      setNewSessionDescription("");
+      queryClient.invalidateQueries({ queryKey: ["/api/classroom/assignments"] });
     },
   });
 
-  const createGroupMutation = useMutation({
-    mutationFn: async (data: { name: string; description: string; topics: string[] }) => {
-      const response = await fetch('/api/classroom/study-groups', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ownerId: CURRENT_USER_ID,
-          name: data.name,
-          description: data.description,
-          focusTopics: data.topics,
-          isPublic: true,
-          maxMembers: 10
-        }),
-      });
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/classroom/study-groups"] });
-      setIsCreateGroupOpen(false);
-      setNewGroupName("");
-      setNewGroupDescription("");
-      setNewGroupTopics("");
-    },
-  });
-
-  const joinSessionMutation = useMutation({
-    mutationFn: async (sessionId: string) => {
-      const response = await fetch(`/api/classroom/sessions/${sessionId}/join`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId: CURRENT_USER_ID }),
-      });
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/classroom/sessions"] });
-    },
-  });
-
-  const handleCreateSession = () => {
-    if (newSessionTitle.trim() && newSessionDescription.trim()) {
-      createSessionMutation.mutate({
-        title: newSessionTitle,
-        description: newSessionDescription
-      });
-    }
+  const getCompletionColor = (percentage) => {
+    if (percentage >= 90) return "text-green-600";
+    if (percentage >= 70) return "text-blue-600";
+    if (percentage >= 50) return "text-yellow-600";
+    return "text-red-600";
   };
 
-  const handleCreateGroup = () => {
-    if (newGroupName.trim() && newGroupDescription.trim()) {
-      const topics = newGroupTopics.split(',').map(t => t.trim()).filter(t => t.length > 0);
-      createGroupMutation.mutate({
-        name: newGroupName,
-        description: newGroupDescription,
-        topics
-      });
-    }
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-green-500';
-      case 'waiting': return 'bg-yellow-500';
-      case 'completed': return 'bg-gray-500';
-      default: return 'bg-blue-500';
-    }
+  const getInitials = (name) => {
+    return name?.split(" ").map(n => n[0]).join("").toUpperCase() || "?";
   };
+
+  const TeacherDashboard = () => (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Active Assignments</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-blue-600">
+              {assignments?.assignments?.length || 0}
+            </div>
+            <p className="text-sm text-muted-foreground">Currently assigned</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Students</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-green-600">
+              {studentProgress?.students?.length || 0}
+            </div>
+            <p className="text-sm text-muted-foreground">Enrolled students</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Avg. Completion</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-purple-600">
+              {assignments?.assignments ? 
+                Math.round(assignments.assignments.reduce((acc, a) => acc + (a.submissions / a.totalStudents * 100), 0) / assignments.assignments.length) 
+                : 0}%
+            </div>
+            <p className="text-sm text-muted-foreground">Assignment completion</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Tabs defaultValue="assignments" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="assignments">Assignments</TabsTrigger>
+          <TabsTrigger value="students">Students</TabsTrigger>
+          <TabsTrigger value="create">Create Assignment</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="assignments">
+          <div className="space-y-4">
+            {assignments?.assignments?.map((assignment) => (
+              <Card key={assignment.id}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <FileText className="w-5 h-5" />
+                        {assignment.title}
+                      </CardTitle>
+                      <CardDescription>{assignment.description}</CardDescription>
+                    </div>
+                    <div className="flex gap-2">
+                      <Badge variant="outline">{assignment.subject}</Badge>
+                      <Badge variant="secondary">{assignment.difficulty}</Badge>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                      <p className="text-sm font-medium">Due Date</p>
+                      <p className="text-sm text-muted-foreground">
+                        {formatDate(assignment.dueDate)}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Submissions</p>
+                      <p className="text-sm text-muted-foreground">
+                        {assignment.submissions}/{assignment.totalStudents}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Avg. Score</p>
+                      <p className={`text-sm font-medium ${getCompletionColor(assignment.averageScore || 0)}`}>
+                        {assignment.averageScore || "N/A"}%
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Completion</p>
+                      <div className="flex items-center gap-2">
+                        <Progress 
+                          value={(assignment.submissions / assignment.totalStudents) * 100} 
+                          className="flex-1 h-2"
+                        />
+                        <span className="text-xs">
+                          {Math.round((assignment.submissions / assignment.totalStudents) * 100)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline">View Submissions</Button>
+                    <Button size="sm" variant="outline">Send Reminder</Button>
+                    <Button size="sm" variant="outline">Grade</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="students">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {studentProgress?.students?.map((student) => (
+              <Card key={student.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-3">
+                    <Avatar>
+                      <AvatarFallback>{getInitials(student.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{student.name}</CardTitle>
+                      <Badge variant="outline">{student.level}</Badge>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="font-medium">Completed</p>
+                      <p className="text-muted-foreground">
+                        {student.completedAssignments}/{student.totalAssignments}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-medium">Avg. Score</p>
+                      <p className={`font-medium ${getCompletionColor(student.averageScore)}`}>
+                        {student.averageScore}%
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="font-medium text-sm mb-2">Progress</p>
+                    <Progress 
+                      value={(student.completedAssignments / student.totalAssignments) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-xs">
+                    <div>
+                      <p className="font-medium text-green-600">Strengths</p>
+                      <div className="space-y-1">
+                        {student.strengths.map((strength, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs">
+                            {strength}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-medium text-red-600">Needs Work</p>
+                      <div className="space-y-1">
+                        {student.weaknesses.map((weakness, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs">
+                            {weakness}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-xs text-muted-foreground">
+                    Last active: {formatDate(student.lastActive)}
+                  </div>
+
+                  <Button size="sm" className="w-full">View Details</Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="create">
+          <Card>
+            <CardHeader>
+              <CardTitle>Create New Assignment</CardTitle>
+              <CardDescription>
+                Design a new assignment for your students
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Title</label>
+                  <Input placeholder="Assignment title" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Subject</label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select subject" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="writing">Writing</SelectItem>
+                      <SelectItem value="speaking">Speaking</SelectItem>
+                      <SelectItem value="reading">Reading</SelectItem>
+                      <SelectItem value="listening">Listening</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Description</label>
+                <Textarea 
+                  placeholder="Describe what students need to do..."
+                  className="min-h-24"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Difficulty</label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select difficulty" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="beginner">Beginner</SelectItem>
+                      <SelectItem value="intermediate">Intermediate</SelectItem>
+                      <SelectItem value="advanced">Advanced</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Due Date</label>
+                  <Input type="datetime-local" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Points</label>
+                  <Input type="number" placeholder="100" />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Instructions</label>
+                <Textarea 
+                  placeholder="Detailed instructions for students..."
+                  className="min-h-32"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button className="flex-1">Create Assignment</Button>
+                <Button variant="outline">Save as Draft</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+
+  if (assignmentsLoading || progressLoading) {
+    return <div className="flex justify-center p-8">Loading classroom data...</div>;
+  }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold mb-2">Virtual Classroom</h1>
-          <p className="text-white/80">
-            Join live sessions, collaborate in study groups, and work on group projects
+    <div className="container mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Virtual Classroom
+          </h1>
+          <p className="text-muted-foreground">
+            Manage assignments and track student progress
           </p>
+        </div>
+        
+        <div className="flex gap-2">
+          <Button 
+            variant={userRole === "teacher" ? "default" : "outline"}
+            onClick={() => setUserRole("teacher")}
+          >
+            <GraduationCap className="w-4 h-4 mr-2" />
+            Teacher View
+          </Button>
+          <Button 
+            variant={userRole === "student" ? "default" : "outline"}
+            onClick={() => setUserRole("student")}
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Student View
+          </Button>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="sessions" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="sessions">Live Sessions</TabsTrigger>
-            <TabsTrigger value="groups">Study Groups</TabsTrigger>
-            <TabsTrigger value="projects">Group Projects</TabsTrigger>
-          </TabsList>
-
-          {/* Live Sessions Tab */}
-          <TabsContent value="sessions">
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Live Sessions</h2>
-                <Dialog open={isCreateSessionOpen} onOpenChange={setIsCreateSessionOpen}>
-                  <DialogTrigger asChild>
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Session
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Create New Session</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Session Title</label>
-                        <Input
-                          value={newSessionTitle}
-                          onChange={(e) => setNewSessionTitle(e.target.value)}
-                          placeholder="Enter session title..."
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Description</label>
-                        <Textarea
-                          value={newSessionDescription}
-                          onChange={(e) => setNewSessionDescription(e.target.value)}
-                          placeholder="Describe what this session will cover..."
-                          rows={3}
-                        />
-                      </div>
-                      <Button 
-                        onClick={handleCreateSession}
-                        disabled={createSessionMutation.isPending}
-                        className="w-full"
-                      >
-                        {createSessionMutation.isPending ? 'Creating...' : 'Create Session'}
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sessions?.map((session) => (
-                  <Card key={session.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <CardTitle className="text-lg">{session.title}</CardTitle>
-                        <Badge className={cn("text-white", getStatusColor(session.status))}>
-                          {session.status}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm text-muted-foreground">{session.description}</p>
-                      
-                      <div className="flex items-center space-x-4 text-sm">
-                        <div className="flex items-center space-x-1">
-                          <Users className="h-4 w-4" />
-                          <span>{session.students.length}/{session.maxStudents}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{new Date(session.startTime).toLocaleTimeString()}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex space-x-2">
-                        <Button 
-                          onClick={() => joinSessionMutation.mutate(session.id)}
-                          disabled={session.students.includes(CURRENT_USER_ID) || session.students.length >= session.maxStudents}
-                          className="flex-1"
-                        >
-                          {session.students.includes(CURRENT_USER_ID) ? (
-                            <>
-                              <Video className="h-4 w-4 mr-2" />
-                              Joined
-                            </>
-                          ) : (
-                            <>
-                              <UserPlus className="h-4 w-4 mr-2" />
-                              Join
-                            </>
-                          )}
-                        </Button>
-                        {session.teacherId === CURRENT_USER_ID && (
-                          <Button variant="outline" size="sm">
-                            <Settings className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Study Groups Tab */}
-          <TabsContent value="groups">
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Study Groups</h2>
-                <Dialog open={isCreateGroupOpen} onOpenChange={setIsCreateGroupOpen}>
-                  <DialogTrigger asChild>
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Group
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Create Study Group</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Group Name</label>
-                        <Input
-                          value={newGroupName}
-                          onChange={(e) => setNewGroupName(e.target.value)}
-                          placeholder="Enter group name..."
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Description</label>
-                        <Textarea
-                          value={newGroupDescription}
-                          onChange={(e) => setNewGroupDescription(e.target.value)}
-                          placeholder="What will this group focus on?"
-                          rows={3}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium mb-2 block">Focus Topics</label>
-                        <Input
-                          value={newGroupTopics}
-                          onChange={(e) => setNewGroupTopics(e.target.value)}
-                          placeholder="grammar, speaking, business english (comma separated)"
-                        />
-                      </div>
-                      <Button 
-                        onClick={handleCreateGroup}
-                        disabled={createGroupMutation.isPending}
-                        className="w-full"
-                      >
-                        {createGroupMutation.isPending ? 'Creating...' : 'Create Group'}
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* My Groups */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">My Groups</h3>
-                  <div className="space-y-4">
-                    {myGroups?.map((group) => (
-                      <Card key={group.id}>
-                        <CardHeader>
-                          <CardTitle className="text-base">{group.name}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                          <p className="text-sm text-muted-foreground">{group.description}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {group.focusTopics.map((topic, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {topic}
-                              </Badge>
-                            ))}
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-muted-foreground">
-                              {group.members.length} members
-                            </span>
-                            <Button size="sm">
-                              <MessageSquare className="h-4 w-4 mr-2" />
-                              Open
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+      {userRole === "teacher" && <TeacherDashboard />}
+      
+      {userRole === "student" && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {assignments?.assignments?.map((assignment) => (
+              <Card key={assignment.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ClipboardList className="w-5 h-5" />
+                    {assignment.title}
+                  </CardTitle>
+                  <div className="flex gap-2">
+                    <Badge variant="outline">{assignment.subject}</Badge>
+                    <Badge variant="secondary">{assignment.difficulty}</Badge>
                   </div>
-                </div>
-
-                {/* Public Groups */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Join Public Groups</h3>
-                  <div className="space-y-4">
-                    {studyGroups?.filter(g => !g.members.includes(CURRENT_USER_ID)).map((group) => (
-                      <Card key={group.id}>
-                        <CardHeader>
-                          <CardTitle className="text-base">{group.name}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                          <p className="text-sm text-muted-foreground">{group.description}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {group.focusTopics.map((topic, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {topic}
-                              </Badge>
-                            ))}
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-muted-foreground">
-                              {group.members.length}/{group.maxMembers} members
-                            </span>
-                            <Button size="sm" disabled={group.members.length >= group.maxMembers}>
-                              <UserPlus className="h-4 w-4 mr-2" />
-                              Join
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">{assignment.description}</p>
+                  
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>Due: {formatDate(assignment.dueDate)}</span>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
 
-          {/* Group Projects Tab */}
-          <TabsContent value="projects">
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Group Projects</h2>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create Project
-                </Button>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects?.map((project) => (
-                  <Card key={project.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <CardTitle className="text-lg">{project.title}</CardTitle>
-                        <Badge variant="outline" className="capitalize">
-                          {project.status.replace('-', ' ')}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm text-muted-foreground">{project.description}</p>
-                      
-                      <div className="flex items-center space-x-4 text-sm">
-                        <div className="flex items-center space-x-1">
-                          <Users className="h-4 w-4" />
-                          <span>{project.groupMembers.length} members</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Calendar className="h-4 w-4" />
-                          <span>{new Date(project.deadline).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex space-x-2">
-                        <Button className="flex-1">
-                          <BookOpen className="h-4 w-4 mr-2" />
-                          Open
-                        </Button>
-                        {project.leaderId === CURRENT_USER_ID && (
-                          <Button variant="outline" size="sm">
-                            <Settings className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
+                  <div className="flex gap-2">
+                    <Button className="flex-1">Start Assignment</Button>
+                    <Button variant="outline" size="sm">
+                      <FileText className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
