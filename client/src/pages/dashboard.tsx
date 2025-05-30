@@ -164,61 +164,87 @@ export default function Dashboard() {
                 </div>
                 
                 {/* User Stats Card */}
-                <Card className="cyber-card">
+                <Card className="interactive-card bounce-in">
                   <CardContent className="pt-6">
-                    <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="flex items-center space-x-4 mb-6 slide-up-stagger">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold float-gentle">
+                        {CURRENT_USER.username?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-bold">{CURRENT_USER.username}</h2>
+                        <div className="level-badge">
+                          ⭐ Level 5 Learner
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-3 gap-4 text-center mb-6">
                       <div className="space-y-2">
-                        <div className="text-2xl font-bold neon-text">{CURRENT_USER.xp}</div>
+                        <div className="xp-badge">
+                          💎 {CURRENT_USER.xp} XP
+                        </div>
                         <div className="text-sm text-muted-foreground">LEARNING XP</div>
                       </div>
                       <div className="space-y-2">
-                        <div className="text-2xl font-bold text-secondary">{CURRENT_USER.streak}</div>
-                        <div className="text-sm text-muted-foreground">DAY STREAK</div>
+                        <div className="streak-badge">
+                          🔥 {CURRENT_USER.streak} days
+                        </div>
+                        <div className="text-sm text-muted-foreground">STREAK</div>
                       </div>
                       <div className="space-y-2">
-                        <div className="text-2xl font-bold text-accent">LV5</div>
+                        <div className="level-badge">
+                          🏆 #5
+                        </div>
                         <div className="text-sm text-muted-foreground">RANK</div>
                       </div>
                     </div>
                     <div className="mt-6">
                       <div className="flex justify-between text-sm mb-2">
                         <span>Learning Progress</span>
-                        <span>{Math.round(levelProgress.progress)}%</span>
+                        <span className="font-semibold">{Math.round(levelProgress.progress)}%</span>
                       </div>
-                      <div className="energy-progress h-3"></div>
+                      <div className="gamified-progress">
+                        <div 
+                          className="gamified-progress-fill"
+                          style={{ '--progress-width': `${Math.round(levelProgress.progress)}%` } as React.CSSProperties}
+                        ></div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               </div>
 
               <div className="space-y-6">
-                {/* Matrix Loading Demo Card */}
-                <Card className="neon-card">
+                {/* Interactive Demo Card */}
+                <Card className="interactive-card bounce-in">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-bold neon-text">⚡ MATRIX LOADING SYSTEM</h3>
+                      <h3 className="text-xl font-bold">🎮 Interactive Animations</h3>
+                      <div className="sparkle-effect">
+                        <span className="xp-badge">+50 XP</span>
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4 font-mono">
-                      {'>'} Experience authentic Matrix digital rain loading animations
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Experience beautiful loading animations and gamified interactions
                     </p>
                     <div className="flex gap-3 flex-wrap">
                       <Button
-                        onClick={() => matrixLoader.startLoading("INITIALIZING MATRIX...", 3000)}
-                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                        onClick={() => matrixLoader.startLoading("Learning in progress...", 3000)}
+                        className="gamified-button bg-primary text-primary-foreground"
                       >
-                        Test Loading
+                        🌟 Start Learning
                       </Button>
                       <Button
-                        onClick={() => matrixLoader.startLoading("NEURAL LINK ESTABLISHED", 4000)}
-                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                        onClick={() => matrixLoader.startLoading("Unlocking achievements...", 4000)}
+                        className="gamified-button bg-secondary text-secondary-foreground"
                       >
-                        Neural Link
+                        🏆 Achievements
                       </Button>
                       <Button
-                        onClick={() => matrixLoader.startLoading("ACCESSING MAINFRAME...", 5000)}
-                        className="bg-black border-green-400 text-green-400 hover:bg-green-900/20"
+                        onClick={() => matrixLoader.startLoading("Connecting with friends...", 5000)}
+                        className="gamified-button bg-accent text-accent-foreground"
                       >
-                        Mainframe Access
+                        👥 Social Hub
                       </Button>
                     </div>
                   </CardContent>

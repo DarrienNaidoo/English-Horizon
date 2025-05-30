@@ -3,70 +3,69 @@
 @tailwind utilities;
 
 :root {
-  /* Cyber Matrix Theme - Light Mode */
-  --background: 120 20% 98%; /* Light matrix background */
-  --foreground: 120 100% 5%; /* Deep matrix black text */
-  --muted: 120 15% 88%;
-  --muted-foreground: 120 20% 35%;
-  --popover: 120 25% 96%;
-  --popover-foreground: 120 100% 5%;
-  --card: 120 20% 95%;
-  --card-foreground: 120 100% 5%;
-  --border: 120 25% 80%;
-  --input: 120 15% 90%;
-  --primary: 120 100% 25%; /* Matrix green */
-  --primary-foreground: 120 20% 98%;
-  --secondary: 120 80% 30%; /* Dark matrix green */
-  --secondary-foreground: 120 20% 98%;
-  --accent: 120 60% 35%; /* Matrix accent */
-  --accent-foreground: 120 20% 98%;
-  --destructive: 0 70% 45%;
-  --destructive-foreground: 120 20% 98%;
-  --ring: 120 100% 25%;
-  --radius: 0.25rem;
+  /* Gamified Learning Theme - Light Mode */
+  --background: 240 15% 97%; /* Soft light blue-grey */
+  --foreground: 240 20% 10%; /* Deep blue-black text */
+  --muted: 240 10% 90%;
+  --muted-foreground: 240 15% 45%;
+  --popover: 240 15% 96%;
+  --popover-foreground: 240 20% 10%;
+  --card: 240 20% 98%;
+  --card-foreground: 240 20% 10%;
+  --border: 240 15% 85%;
+  --input: 240 10% 94%;
+  --primary: 260 100% 60%; /* Vibrant purple */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 100% 55%; /* Bright blue */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 140 60% 50%; /* Fresh green */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 260 100% 60%;
+  --radius: 0.75rem;
   
-  /* Matrix cyber colors */
-  --matrix-green: 120 100% 25%;
-  --matrix-bright: 120 100% 50%;
-  --matrix-dark: 120 80% 15%;
-  --matrix-glow: 120 100% 40%;
-  --digital-cyan: 180 100% 40%;
-  --hacker-red: 0 100% 50%;
+  /* Gamification colors */
+  --xp-gold: 45 100% 55%;
+  --level-blue: 220 100% 60%;
+  --achievement-purple: 280 100% 65%;
+  --streak-orange: 25 100% 60%;
+  --reward-pink: 320 100% 65%;
   
-  --chart-1: 120 100% 25%;
-  --chart-2: 120 80% 30%;
-  --chart-3: 120 60% 35%;
-  --chart-4: 180 100% 40%;
-  --chart-5: 90 100% 30%;
+  --chart-1: 260 100% 60%;
+  --chart-2: 210 100% 55%;
+  --chart-3: 140 60% 50%;
+  --chart-4: 45 100% 55%;
+  --chart-5: 320 100% 65%;
 }
 
 .dark {
-  /* Cyber Matrix Dark Mode - High Contrast Hacker Theme */
-  --background: 0 0% 3%; /* Deep black background */
-  --foreground: 120 100% 90%; /* Bright green text */
-  --muted: 0 0% 8%; /* Dark grey muted */
-  --muted-foreground: 120 50% 60%; /* Medium green for muted text */
-  --popover: 0 0% 5%; /* Nearly black popover */
-  --popover-foreground: 120 100% 90%; /* Bright green popover text */
-  --card: 0 0% 6%; /* Dark card background */
-  --card-foreground: 120 100% 90%; /* Bright green card text */
-  --border: 120 60% 25%; /* Darker green borders */
-  --input: 0 0% 8%; /* Dark input background */
-  --primary: 120 100% 50%; /* Bright matrix green */
-  --primary-foreground: 0 0% 3%; /* Black text on green */
-  --secondary: 120 80% 20%; /* Dark green secondary */
-  --secondary-foreground: 120 100% 90%; /* Bright green text */
-  --accent: 180 100% 60%; /* Bright cyan accent */
-  --accent-foreground: 0 0% 3%; /* Black text on cyan */
-  --destructive: 0 100% 60%; /* Red for destructive actions */
-  --destructive-foreground: 0 0% 100%; /* White text on red */
-  --ring: 120 100% 50%; /* Green focus ring */
+  /* Gamified Learning Dark Mode */
+  --background: 240 15% 8%; /* Dark blue-grey */
+  --foreground: 240 20% 95%; /* Light text */
+  --muted: 240 15% 12%;
+  --muted-foreground: 240 15% 65%;
+  --popover: 240 15% 10%;
+  --popover-foreground: 240 20% 95%;
+  --card: 240 15% 11%;
+  --card-foreground: 240 20% 95%;
+  --border: 240 15% 20%;
+  --input: 240 15% 15%;
+  --primary: 260 100% 70%; /* Brighter purple for dark mode */
+  --primary-foreground: 240 15% 8%;
+  --secondary: 210 100% 65%; /* Brighter blue */
+  --secondary-foreground: 240 15% 8%;
+  --accent: 140 60% 60%; /* Brighter green */
+  --accent-foreground: 240 15% 8%;
+  --destructive: 0 75% 65%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 260 100% 70%;
   
-  --chart-1: 120 100% 50%;
-  --chart-2: 180 100% 60%;
-  --chart-3: 90 100% 50%;
-  --chart-4: 60 100% 50%;
-  --chart-5: 300 100% 60%;
+  --chart-1: 260 100% 70%;
+  --chart-2: 210 100% 65%;
+  --chart-3: 140 60% 60%;
+  --chart-4: 45 100% 65%;
+  --chart-5: 320 100% 70%;
 }
 
 @layer base {
@@ -76,128 +75,156 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Courier New', monospace;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
   }
   
   .dark body {
-    background: #000000;
     background-image: 
-      radial-gradient(circle at 25% 25%, #001100 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, #002200 0%, transparent 50%),
-      linear-gradient(135deg, #000000 0%, #001a00 100%);
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.2) 0%, transparent 50%);
   }
   
   * {
-    font-family: 'Courier New', monospace;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-foreground;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.1em;
+    @apply font-bold text-foreground;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    letter-spacing: -0.025em;
   }
   
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    text-shadow: 0 0 10px hsl(var(--primary));
-  }
-  
-  /* Input styling that respects theme */
+  /* Smooth input styling */
   input, textarea, select {
-    @apply bg-input border-border text-foreground;
-    font-family: 'Courier New', monospace;
+    @apply bg-input border-border text-foreground transition-all duration-200;
+    border-radius: var(--radius);
   }
   
   input:focus, textarea:focus, select:focus {
-    @apply ring-2 ring-ring border-primary;
-  }
-  
-  .dark input:focus, .dark textarea:focus, .dark select:focus {
-    box-shadow: 0 0 10px hsl(var(--primary));
+    @apply ring-2 ring-primary/20 border-primary;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
   
   input::placeholder, textarea::placeholder {
     @apply text-muted-foreground;
   }
   
-  /* Card styling that respects theme */
+  /* Beautiful card styling */
   .card, [data-radix-collection-item] {
-    @apply bg-card text-card-foreground border-border;
+    @apply bg-card text-card-foreground border-border transition-all duration-200;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   }
   
-  .dark .card, .dark [data-radix-collection-item] {
-    background: rgba(0, 20, 0, 0.3);
-    border: 1px solid hsl(var(--border));
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
   
-  /* Button styling that respects theme */
+  /* Smooth button styling */
   button {
-    @apply bg-background text-foreground border-border;
-    font-family: 'Courier New', monospace;
+    @apply transition-all duration-200;
+    border-radius: var(--radius);
   }
   
-  button:hover {
-    @apply bg-accent text-accent-foreground;
+  button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
-  .dark button:hover {
-    background: rgba(0, 17, 0, 0.8);
-    box-shadow: 0 0 15px hsl(var(--primary));
+  button:active:not(:disabled) {
+    transform: translateY(0);
   }
 }
 
-/* Futuristic animations */
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 5px hsl(var(--neon-cyan)), 0 0 10px hsl(var(--neon-cyan)); 
+/* Beautiful gamified animations */
+@keyframes bounce-in {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.3) translateY(50px); 
   }
   50% { 
-    box-shadow: 0 0 10px hsl(var(--neon-cyan)), 0 0 20px hsl(var(--neon-cyan)), 0 0 30px hsl(var(--neon-cyan)); 
+    opacity: 1; 
+    transform: scale(1.05) translateY(-10px); 
+  }
+  70% { 
+    transform: scale(0.95) translateY(0); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1) translateY(0); 
   }
 }
 
-@keyframes cyber-flicker {
-  0%, 98% { opacity: 1; }
-  99% { opacity: 0.9; }
-  100% { opacity: 1; }
+@keyframes float-gentle {
+  0%, 100% { 
+    transform: translateY(0px) rotateZ(0deg); 
+  }
+  33% { 
+    transform: translateY(-8px) rotateZ(1deg); 
+  }
+  66% { 
+    transform: translateY(4px) rotateZ(-1deg); 
+  }
 }
 
-@keyframes energy-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes pulse-success {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
 }
 
-@keyframes hologram-shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes matrix-rain {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
-@keyframes matrix-flicker {
-  0%, 100% {
-    text-shadow: 
-      0 0 5px hsl(var(--primary)),
-      0 0 10px hsl(var(--primary)),
-      0 0 20px hsl(var(--primary)),
-      0 0 40px hsl(var(--primary));
+@keyframes slide-up-stagger {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
-  98% { opacity: 1; }
-  99% { opacity: 0.8; }
-  100% { opacity: 1; }
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0; 
+    transform: scale(0) rotate(0deg); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1) rotate(180deg); 
+  }
+}
+
+@keyframes progress-fill {
+  from { 
+    width: 0%; 
+  }
+  to { 
+    width: var(--progress-width, 0%); 
+  }
+}
+
+@keyframes shimmer {
+  0% { 
+    background-position: -200px 0; 
+  }
+  100% { 
+    background-position: calc(200px + 100%) 0; 
+  }
 }
 
 @keyframes matrix-grid-pulse {
@@ -418,6 +445,206 @@
     pointer-events: none;
     z-index: -1;
   }
+
+/* Gamified element classes */
+.bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.float-gentle {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.pulse-success {
+  animation: pulse-success 2s infinite;
+}
+
+.slide-up-stagger {
+  animation: slide-up-stagger 0.5s ease-out forwards;
+}
+
+/* Beautiful progress bars */
+.gamified-progress {
+  background: linear-gradient(90deg, 
+    hsl(var(--muted)) 0%, 
+    hsl(var(--muted)) 100%);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  height: 8px;
+}
+
+.gamified-progress-fill {
+  background: linear-gradient(90deg, 
+    hsl(var(--primary)) 0%, 
+    hsl(var(--secondary)) 50%,
+    hsl(var(--accent)) 100%);
+  height: 100%;
+  border-radius: 9999px;
+  position: relative;
+  animation: progress-fill 1s ease-out forwards;
+}
+
+.gamified-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Achievement and XP styling */
+.xp-badge {
+  background: linear-gradient(135deg, 
+    hsl(var(--xp-gold)) 0%, 
+    hsl(var(--streak-orange)) 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.level-badge {
+  background: linear-gradient(135deg, 
+    hsl(var(--level-blue)) 0%, 
+    hsl(var(--achievement-purple)) 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.streak-badge {
+  background: linear-gradient(135deg, 
+    hsl(var(--streak-orange)) 0%, 
+    hsl(var(--reward-pink)) 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Interactive button effects */
+.gamified-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gamified-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent);
+  transition: left 0.5s;
+}
+
+.gamified-button:hover::before {
+  left: 100%;
+}
+
+.gamified-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.gamified-button:active {
+  transform: translateY(0);
+}
+
+/* Card hover effects */
+.interactive-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Learning module themes */
+.module-speaking {
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)) 0%, 
+    hsl(var(--secondary)) 100%);
+}
+
+.module-reading {
+  background: linear-gradient(135deg, 
+    hsl(var(--accent)) 0%, 
+    hsl(var(--primary)) 100%);
+}
+
+.module-writing {
+  background: linear-gradient(135deg, 
+    hsl(var(--secondary)) 0%, 
+    hsl(var(--accent)) 100%);
+}
+
+.module-listening {
+  background: linear-gradient(135deg, 
+    hsl(var(--achievement-purple)) 0%, 
+    hsl(var(--reward-pink)) 100%);
+}
+
+.module-games {
+  background: linear-gradient(135deg, 
+    hsl(var(--streak-orange)) 0%, 
+    hsl(var(--xp-gold)) 100%);
+}
+
+/* Sparkle effect for achievements */
+.sparkle-effect {
+  position: relative;
+}
+
+.sparkle-effect::before,
+.sparkle-effect::after {
+  content: '✨';
+  position: absolute;
+  font-size: 12px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.sparkle-effect::before {
+  top: -5px;
+  left: -5px;
+  animation-delay: 0s;
+}
+
+.sparkle-effect::after {
+  bottom: -5px;
+  right: -5px;
+  animation-delay: 1s;
+}
 
   .energy-progress {
     @apply h-2 bg-muted rounded-full overflow-hidden relative;
