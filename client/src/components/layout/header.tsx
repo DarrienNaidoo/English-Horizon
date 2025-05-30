@@ -10,6 +10,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import OfflineIndicator from "@/components/pwa/offline-indicator";
 import { TranslatableText, useTranslation, TranslationControls } from "@/components/translation-provider";
+import { ModeSelector, ModeIndicator } from "@/components/mode-selector";
 
 // Mock user data - in real app this would come from auth context
 const CURRENT_USER = {
@@ -115,6 +116,9 @@ export default function Header() {
 
           {/* User Profile and Status */}
           <div className="flex items-center space-x-4">
+            {/* Mode Selector */}
+            <ModeSelector />
+            
             {/* Language Selector */}
             <LanguageSelector />
             
@@ -189,6 +193,7 @@ export default function Header() {
                   
                   <div className="pt-4 border-t border-border">
                     <div className="space-y-4">
+                      <ModeSelector />
                       <LanguageSelector />
                       <div className="flex items-center space-x-2">
                         <ThemeToggle />

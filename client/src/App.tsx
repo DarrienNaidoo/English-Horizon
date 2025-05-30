@@ -4,8 +4,11 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TranslationProvider } from "@/components/translation-provider";
+import { ModeProvider, useUserMode } from "@/components/mode-selector";
 import Header from "@/components/layout/header";
 import Dashboard from "@/pages/dashboard";
+import TeacherDashboard from "@/pages/teacher-dashboard";
 import LearningPaths from "@/pages/learning-paths";
 import SpeakingZone from "@/pages/speaking-zone";
 import Games from "@/pages/games";
@@ -29,17 +32,20 @@ import DailyChallenge from "@/pages/daily-challenge";
 import AIDebates from "@/pages/ai-debates";
 import Presentations from "@/pages/presentations";
 import EnhancedVoiceTranslator from "@/pages/enhanced-voice-translator";
-import { TranslationProvider } from "@/components/translation-provider";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
 function Router() {
+  const { currentMode } = useUserMode();
+  
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
         <Switch>
-          <Route path="/" component={Dashboard} />
+          <Route path="/" component={currentMode === 'teacher' ? TeacherDashboard : Dashboard} />
+          <Route path="/teacher-dashboard" component={TeacherDashboard} />
+          <Route path="/student-dashboard" component={Dashboard} />
           <Route path="/learning-paths" component={LearningPaths} />
           <Route path="/speaking-zone" component={SpeakingZone} />
           <Route path="/games" component={Games} />
