@@ -15,10 +15,13 @@ import {
   FileText,
   Settings,
   Download,
-  PlusCircle
+  PlusCircle,
+  Trophy,
+  Target
 } from "lucide-react";
 import { TranslatableText } from "@/components/translation-provider";
 import { cn } from "@/lib/utils";
+import ClassManagement from "@/components/classroom/class-management";
 
 // Mock classroom data
 const CLASSROOM_DATA = {
@@ -142,8 +145,12 @@ export default function TeacherDashboard() {
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="students" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+      <Tabs defaultValue="classroom" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="classroom">
+            <Trophy className="h-4 w-4 mr-1" />
+            <TranslatableText>Class Management</TranslatableText>
+          </TabsTrigger>
           <TabsTrigger value="students">
             <TranslatableText>Students</TranslatableText>
           </TabsTrigger>
