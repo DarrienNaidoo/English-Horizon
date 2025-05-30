@@ -101,10 +101,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="speakworld-ui-theme">
         <TranslationProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Router />
-          </TooltipProvider>
+          <ModeProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Router />
+            </TooltipProvider>
+          </ModeProvider>
         </TranslationProvider>
       </ThemeProvider>
     </QueryClientProvider>
