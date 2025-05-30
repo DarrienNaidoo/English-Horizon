@@ -103,11 +103,43 @@
     color: #00FF00 !important;
   }
   
+  /* Fix input fields and form elements */
+  input, textarea, select {
+    background: #000000 !important;
+    border: 1px solid #00FF00 !important;
+    color: #00FF00 !important;
+    font-family: 'Courier New', monospace !important;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    background: #001100 !important;
+    border: 1px solid #00FF00 !important;
+    box-shadow: 0 0 10px #00FF00 !important;
+    outline: none !important;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: #006600 !important;
+  }
+  
   /* Ensure cards have proper matrix styling */
   .card, [data-radix-collection-item] {
     background: rgba(0, 20, 0, 0.8) !important;
     border: 1px solid #00FF00 !important;
     color: #00FF00 !important;
+  }
+  
+  /* Fix button styling */
+  button {
+    background: #000000 !important;
+    border: 1px solid #00FF00 !important;
+    color: #00FF00 !important;
+    font-family: 'Courier New', monospace !important;
+  }
+  
+  button:hover {
+    background: #001100 !important;
+    box-shadow: 0 0 15px #00FF00 !important;
   }
 }
 
