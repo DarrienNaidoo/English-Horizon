@@ -151,13 +151,13 @@ export default function Dashboard() {
               <div className="space-y-8">
                 <div>
                   <h1 className="text-4xl md:text-6xl font-bold mb-6 neon-text floating-element">
-                    LEARNVERSE
+                    SPEAKWORLD
                   </h1>
                   <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-secondary">
-                    Welcome back, {CURRENT_USER.firstName}!
+                    Welcome back, {CURRENT_USER.firstName}
                   </h2>
-                  <p className="text-lg mb-8 text-primary-foreground/90">
-                    🌟 Your personalized learning universe awaits • Discover, Practice, Master
+                  <p className="text-lg mb-8 text-primary-foreground/80">
+                    Advanced learning technology at your fingertips • Elevate your skills
                   </p>
                 </div>
                 
