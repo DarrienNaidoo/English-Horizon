@@ -152,7 +152,7 @@ export default function Dashboard() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
                 <div>
-                  <h1 className="text-4xl md:text-6xl font-bold mb-6 neon-text floating-element">
+                  <h1 className="text-4xl md:text-6xl font-bold mb-6 text-blue-600 floating-element">
                     SPEAKWORLD
                   </h1>
                   <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-secondary">
