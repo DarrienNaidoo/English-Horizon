@@ -54,35 +54,522 @@ app.get("/api/daily-challenge", (req, res) => {
 });
 
 app.get("/api/lessons", (req, res) => {
-  res.json([
+  const { level, unit } = req.query;
+  
+  const lessons = [
+    // Unit 1: My Daily Life
     {
       id: 1,
-      title: "Basic Greetings",
-      description: "Learn essential greeting phrases",
-      category: "speaking",
+      title: "Morning Routine",
+      description: "Describe your daily morning activities in English",
+      unit: 1,
+      unitName: "My Daily Life",
       level: "beginner",
+      category: "speaking",
       xpReward: 25,
-      estimatedMinutes: 15
+      estimatedMinutes: 15,
+      components: {
+        listening: "Dialogue: What time do you wake up?",
+        vocabulary: ["wake up", "breakfast", "brush teeth", "uniform", "school bus"],
+        grammar: "Present simple tense: I wake up at 7 AM",
+        writing: "Reorder sentences about morning routines",
+        speaking: "Record yourself describing your morning",
+        game: "Match time with daily activities",
+        quiz: "5 questions about daily routines"
+      },
+      chineseContext: "Compare Chinese and Western breakfast habits"
     },
     {
       id: 2,
-      title: "Food & Dining",
-      description: "Vocabulary for restaurants and meals",
+      title: "School Life",
+      description: "Talk about your school day and subjects",
+      unit: 1,
+      unitName: "My Daily Life",
+      level: "beginner",
       category: "vocabulary",
-      level: "intermediate",
       xpReward: 30,
-      estimatedMinutes: 20
+      estimatedMinutes: 20,
+      components: {
+        listening: "Student talking about favorite subjects",
+        vocabulary: ["mathematics", "Chinese class", "PE", "homework", "teacher"],
+        grammar: "Expressing preferences: I like... / I don't like...",
+        writing: "Write 3 sentences about your school subjects",
+        speaking: "Describe your favorite school subject",
+        game: "School subject matching game",
+        quiz: "Quiz about school vocabulary"
+      },
+      chineseContext: "Differences between Chinese and international schools"
+    },
+
+    // Unit 2: Food & Culture
+    {
+      id: 3,
+      title: "Chinese Dishes in English",
+      description: "Learn to describe traditional Chinese food",
+      unit: 2,
+      unitName: "Food & Culture",
+      level: "intermediate",
+      category: "vocabulary",
+      xpReward: 35,
+      estimatedMinutes: 25,
+      components: {
+        listening: "Ordering food at a Chinese restaurant in English",
+        vocabulary: ["dumplings", "hot pot", "kung pao chicken", "sweet and sour", "stir-fry"],
+        grammar: "Food adjectives: spicy, sweet, sour, crispy",
+        writing: "Describe your favorite Chinese dish to a foreign friend",
+        speaking: "Explain how to eat with chopsticks",
+        game: "Match Chinese dishes with descriptions",
+        quiz: "Food culture comparison quiz"
+      },
+      chineseContext: "Introducing Chinese cuisine to international friends"
+    },
+    {
+      id: 4,
+      title: "Restaurant Conversations",
+      description: "Order food and interact with staff in English",
+      unit: 2,
+      unitName: "Food & Culture",
+      level: "intermediate",
+      category: "speaking",
+      xpReward: 40,
+      estimatedMinutes: 30,
+      components: {
+        listening: "Dialogue between customer and waiter",
+        vocabulary: ["menu", "recommendation", "appetizer", "main course", "bill"],
+        grammar: "Polite requests: Could I have... / Would you recommend...",
+        writing: "Write a restaurant review",
+        speaking: "Role-play ordering food in a restaurant",
+        game: "Restaurant scenario simulation",
+        quiz: "Restaurant etiquette quiz"
+      },
+      chineseContext: "Dining customs in China vs. Western countries"
+    },
+
+    // Unit 3: Technology & Me
+    {
+      id: 5,
+      title: "My Digital Life",
+      description: "Talk about apps, games, and online activities",
+      unit: 3,
+      unitName: "Technology & Me",
+      level: "beginner",
+      category: "vocabulary",
+      xpReward: 30,
+      estimatedMinutes: 20,
+      components: {
+        listening: "Teenagers discussing favorite apps",
+        vocabulary: ["smartphone", "WeChat", "TikTok", "gaming", "livestream"],
+        grammar: "Frequency adverbs: always, often, sometimes, never",
+        writing: "Describe your phone usage habits",
+        speaking: "Talk about your favorite app",
+        game: "Tech vocabulary matching",
+        quiz: "Digital habits survey"
+      },
+      chineseContext: "Popular Chinese apps vs. international apps"
+    },
+
+    // Unit 4: Future Dreams
+    {
+      id: 6,
+      title: "Career Aspirations",
+      description: "Express your future goals and dream job",
+      unit: 4,
+      unitName: "Future Dreams",
+      level: "intermediate",
+      category: "speaking",
+      xpReward: 45,
+      estimatedMinutes: 35,
+      components: {
+        listening: "Professionals talking about their careers",
+        vocabulary: ["engineer", "doctor", "entrepreneur", "programmer", "designer"],
+        grammar: "Future tense: I want to become... / I will...",
+        writing: "Write about your 10-year plan",
+        speaking: "Present your dream career",
+        game: "Career path decision game",
+        quiz: "Future goals discussion"
+      },
+      chineseContext: "Popular careers in modern China"
+    },
+
+    // Unit 5: Famous People
+    {
+      id: 7,
+      title: "Chinese Innovators",
+      description: "Learn about famous Chinese entrepreneurs and inventors",
+      unit: 5,
+      unitName: "Famous People",
+      level: "advanced",
+      category: "reading",
+      xpReward: 50,
+      estimatedMinutes: 40,
+      components: {
+        listening: "Biography of Jack Ma or other Chinese innovators",
+        vocabulary: ["innovation", "entrepreneur", "achievement", "influence", "legacy"],
+        grammar: "Past tense storytelling and achievements",
+        writing: "Write a short biography of someone you admire",
+        speaking: "Present about a Chinese historical figure",
+        game: "Famous people timeline game",
+        quiz: "Chinese innovators knowledge test"
+      },
+      chineseContext: "China's contribution to global technology and culture"
+    },
+
+    // Unit 6: Travel & Places
+    {
+      id: 8,
+      title: "Exploring China",
+      description: "Describe famous Chinese landmarks and cities",
+      unit: 6,
+      unitName: "Travel & Places",
+      level: "intermediate",
+      category: "vocabulary",
+      xpReward: 40,
+      estimatedMinutes: 30,
+      components: {
+        listening: "Travel guide describing Beijing attractions",
+        vocabulary: ["Great Wall", "Forbidden City", "Temple of Heaven", "hutong", "high-speed train"],
+        grammar: "Describing locations: located in, famous for, built in",
+        writing: "Create a travel itinerary for foreign visitors",
+        speaking: "Be a tour guide for your hometown",
+        game: "Chinese landmarks quiz",
+        quiz: "Geography and culture knowledge"
+      },
+      chineseContext: "Promoting Chinese tourism to international visitors"
+    },
+
+    // Unit 7: Emotions & Opinions
+    {
+      id: 9,
+      title: "Expressing Feelings",
+      description: "Learn to express emotions and opinions clearly",
+      unit: 7,
+      unitName: "Emotions & Opinions",
+      level: "intermediate",
+      category: "speaking",
+      xpReward: 35,
+      estimatedMinutes: 25,
+      components: {
+        listening: "Students sharing opinions about school policies",
+        vocabulary: ["excited", "frustrated", "confident", "anxious", "optimistic"],
+        grammar: "Opinion expressions: I think... / In my opinion... / I believe...",
+        writing: "Write your opinion on a current topic",
+        speaking: "Debate a school-related topic",
+        game: "Emotion charades",
+        quiz: "Opinion and feeling expressions"
+      },
+      chineseContext: "Cultural differences in expressing emotions"
+    },
+
+    // Unit 8: Social Media World
+    {
+      id: 10,
+      title: "Online Communication",
+      description: "Navigate social media and digital communication",
+      unit: 8,
+      unitName: "Social Media World",
+      level: "beginner",
+      category: "writing",
+      xpReward: 30,
+      estimatedMinutes: 20,
+      components: {
+        listening: "Teens discussing social media trends",
+        vocabulary: ["post", "like", "share", "comment", "follower", "hashtag"],
+        grammar: "Internet slang and abbreviations: LOL, BRB, ASAP",
+        writing: "Write social media posts in English",
+        speaking: "Discuss social media impact",
+        game: "Social media vocabulary game",
+        quiz: "Digital communication quiz"
+      },
+      chineseContext: "Differences between Chinese and Western social media"
+    },
+
+    // Unit 9: Chinese Festivals in English
+    {
+      id: 11,
+      title: "Spring Festival Traditions",
+      description: "Explain Chinese New Year to international friends",
+      unit: 9,
+      unitName: "Chinese Festivals in English",
+      level: "intermediate",
+      category: "cultural",
+      xpReward: 45,
+      estimatedMinutes: 35,
+      components: {
+        listening: "Family discussing Spring Festival preparations",
+        vocabulary: ["red envelope", "fireworks", "family reunion", "zodiac", "lion dance"],
+        grammar: "Cultural explanation patterns: We celebrate... / It's a tradition to...",
+        writing: "Write an invitation to Spring Festival celebration",
+        speaking: "Explain Spring Festival customs",
+        game: "Festival traditions matching",
+        quiz: "Chinese festivals knowledge"
+      },
+      chineseContext: "Authentic Chinese cultural content"
+    },
+    {
+      id: 12,
+      title: "Mid-Autumn Festival",
+      description: "Share the beauty of moon festival traditions",
+      unit: 9,
+      unitName: "Chinese Festivals in English",
+      level: "intermediate",
+      category: "cultural",
+      xpReward: 40,
+      estimatedMinutes: 30,
+      components: {
+        listening: "Story of Chang'e and the moon",
+        vocabulary: ["mooncake", "full moon", "family gathering", "legend", "harvest"],
+        grammar: "Storytelling past tense and narrative structure",
+        writing: "Retell a Chinese legend in English",
+        speaking: "Describe festival foods and activities",
+        game: "Moon festival story game",
+        quiz: "Festival legends and customs"
+      },
+      chineseContext: "Traditional Chinese stories and values"
+    },
+
+    // Unit 10: Problems & Solutions
+    {
+      id: 13,
+      title: "Environmental Challenges",
+      description: "Discuss environmental issues and solutions",
+      unit: 10,
+      unitName: "Problems & Solutions",
+      level: "advanced",
+      category: "debate",
+      xpReward: 55,
+      estimatedMinutes: 45,
+      components: {
+        listening: "Environmental expert discussing climate change",
+        vocabulary: ["pollution", "renewable energy", "carbon footprint", "sustainability", "conservation"],
+        grammar: "Problem-solution structure: The issue is... / We could solve this by...",
+        writing: "Propose solutions to local environmental problems",
+        speaking: "Debate environmental policies",
+        game: "Environmental solutions strategy game",
+        quiz: "Global environmental awareness"
+      },
+      chineseContext: "China's role in global environmental efforts"
+    },
+    {
+      id: 14,
+      title: "Academic Stress",
+      description: "Discuss school pressure and healthy study habits",
+      unit: 10,
+      unitName: "Problems & Solutions",
+      level: "intermediate",
+      category: "discussion",
+      xpReward: 40,
+      estimatedMinutes: 30,
+      components: {
+        listening: "Students sharing stress management tips",
+        vocabulary: ["pressure", "balance", "time management", "mental health", "relaxation"],
+        grammar: "Giving advice: You should... / It's important to... / I recommend...",
+        writing: "Write advice for stressed students",
+        speaking: "Share your study strategies",
+        game: "Stress-busting activity game",
+        quiz: "Healthy study habits assessment"
+      },
+      chineseContext: "Academic pressure in Chinese education system"
+    }
+  ];
+
+  let filteredLessons = lessons;
+  
+  if (level) {
+    filteredLessons = filteredLessons.filter(lesson => lesson.level === level);
+  }
+  
+  if (unit) {
+    filteredLessons = filteredLessons.filter(lesson => lesson.unit === parseInt(unit));
+  }
+
+  res.json(filteredLessons);
+});
+
+// Get learning units overview
+app.get("/api/units", (req, res) => {
+  const units = [
+    {
+      id: 1,
+      title: "My Daily Life",
+      description: "Routines, school, family - familiar and personal",
+      level: "beginner",
+      lessonsCount: 2,
+      estimatedHours: 1,
+      topics: ["morning routine", "school life", "family time"],
+      chineseContext: "Compare daily life in China and other countries"
+    },
+    {
+      id: 2,
+      title: "Food & Culture",
+      description: "Describing Chinese dishes, comparing cultures",
+      level: "intermediate",
+      lessonsCount: 2,
+      estimatedHours: 1.5,
+      topics: ["Chinese cuisine", "restaurant conversations", "food culture"],
+      chineseContext: "Traditional Chinese food and dining customs"
     },
     {
       id: 3,
-      title: "Travel Conversations",
-      description: "Essential phrases for travel situations",
-      category: "speaking",
+      title: "Technology & Me",
+      description: "Phones, apps, gaming vocabulary",
+      level: "beginner",
+      lessonsCount: 1,
+      estimatedHours: 0.5,
+      topics: ["digital life", "popular apps", "online communication"],
+      chineseContext: "Chinese tech platforms vs international platforms"
+    },
+    {
+      id: 4,
+      title: "Future Dreams",
+      description: "Jobs, goals, ambitions - great for speaking",
       level: "intermediate",
-      xpReward: 35,
-      estimatedMinutes: 25
+      lessonsCount: 1,
+      estimatedHours: 1,
+      topics: ["career goals", "life planning", "professional development"],
+      chineseContext: "Career opportunities in modern China"
+    },
+    {
+      id: 5,
+      title: "Famous People",
+      description: "Celebrities, inventors, historical figures",
+      level: "advanced",
+      lessonsCount: 1,
+      estimatedHours: 1,
+      topics: ["biographies", "achievements", "historical impact"],
+      chineseContext: "Chinese innovators and cultural figures"
+    },
+    {
+      id: 6,
+      title: "Travel & Places",
+      description: "Locations, directions, sightseeing",
+      level: "intermediate",
+      lessonsCount: 1,
+      estimatedHours: 1,
+      topics: ["landmarks", "travel planning", "cultural sites"],
+      chineseContext: "Promoting Chinese tourism and culture"
+    },
+    {
+      id: 7,
+      title: "Emotions & Opinions",
+      description: "Debates, feelings, reactions",
+      level: "intermediate",
+      lessonsCount: 1,
+      estimatedHours: 0.5,
+      topics: ["expressing feelings", "sharing opinions", "cultural perspectives"],
+      chineseContext: "Cultural differences in emotional expression"
+    },
+    {
+      id: 8,
+      title: "Social Media World",
+      description: "Likes, trends, digital communication",
+      level: "beginner",
+      lessonsCount: 1,
+      estimatedHours: 0.5,
+      topics: ["online platforms", "digital trends", "social networking"],
+      chineseContext: "Chinese social media vs global platforms"
+    },
+    {
+      id: 9,
+      title: "Chinese Festivals in English",
+      description: "Culturally specific and authentic content",
+      level: "intermediate",
+      lessonsCount: 2,
+      estimatedHours: 2,
+      topics: ["Spring Festival", "Mid-Autumn Festival", "traditional customs"],
+      chineseContext: "Authentic Chinese cultural traditions"
+    },
+    {
+      id: 10,
+      title: "Problems & Solutions",
+      description: "Environment, school stress, global issues",
+      level: "advanced",
+      lessonsCount: 2,
+      estimatedHours: 2.5,
+      topics: ["environmental issues", "academic pressure", "social challenges"],
+      chineseContext: "China's role in addressing global challenges"
     }
-  ]);
+  ];
+  
+  res.json(units);
+});
+
+// Get vocabulary by level and unit
+app.get("/api/vocabulary", (req, res) => {
+  const { level, unit } = req.query;
+  
+  const vocabularyData = {
+    beginner: [
+      {
+        unit: 1,
+        unitName: "My Daily Life",
+        words: [
+          { word: "wake up", chinese: "起床", pronunciation: "/weɪk ʌp/", example: "I wake up at 7 AM every day." },
+          { word: "breakfast", chinese: "早餐", pronunciation: "/ˈbrekfəst/", example: "I eat breakfast with my family." },
+          { word: "brush teeth", chinese: "刷牙", pronunciation: "/brʌʃ tiːθ/", example: "Don't forget to brush your teeth!" },
+          { word: "uniform", chinese: "校服", pronunciation: "/ˈjuːnɪfɔːrm/", example: "We wear uniforms to school." },
+          { word: "homework", chinese: "作业", pronunciation: "/ˈhoʊmwɜːrk/", example: "I finish my homework after dinner." }
+        ]
+      },
+      {
+        unit: 3,
+        unitName: "Technology & Me", 
+        words: [
+          { word: "smartphone", chinese: "智能手机", pronunciation: "/ˈsmɑːrtfoʊn/", example: "Everyone has a smartphone now." },
+          { word: "WeChat", chinese: "微信", pronunciation: "/ˈwiːtʃæt/", example: "We use WeChat to communicate." },
+          { word: "gaming", chinese: "游戏", pronunciation: "/ˈɡeɪmɪŋ/", example: "Gaming is very popular among teenagers." },
+          { word: "livestream", chinese: "直播", pronunciation: "/ˈlaɪvstriːm/", example: "Many people livestream their daily activities." }
+        ]
+      }
+    ],
+    intermediate: [
+      {
+        unit: 2,
+        unitName: "Food & Culture",
+        words: [
+          { word: "dumplings", chinese: "饺子", pronunciation: "/ˈdʌmplɪŋz/", example: "We make dumplings for Chinese New Year." },
+          { word: "hot pot", chinese: "火锅", pronunciation: "/hɑːt pɑːt/", example: "Hot pot is perfect for cold weather." },
+          { word: "stir-fry", chinese: "炒菜", pronunciation: "/stɜːr fraɪ/", example: "My mom can stir-fry vegetables quickly." },
+          { word: "chopsticks", chinese: "筷子", pronunciation: "/ˈtʃɑːpstɪks/", example: "Learning to use chopsticks takes practice." }
+        ]
+      },
+      {
+        unit: 9,
+        unitName: "Chinese Festivals",
+        words: [
+          { word: "red envelope", chinese: "红包", pronunciation: "/red ˈenvəloʊp/", example: "Children receive red envelopes during Spring Festival." },
+          { word: "fireworks", chinese: "烟花", pronunciation: "/ˈfaɪərwɜːrks/", example: "We watch fireworks at midnight." },
+          { word: "mooncake", chinese: "月饼", pronunciation: "/muːnkeɪk/", example: "Mooncakes are traditional Mid-Autumn Festival food." },
+          { word: "family reunion", chinese: "家庭团聚", pronunciation: "/ˈfæməli riˈjuːnjən/", example: "Spring Festival is time for family reunion." }
+        ]
+      }
+    ],
+    advanced: [
+      {
+        unit: 5,
+        unitName: "Famous People",
+        words: [
+          { word: "innovation", chinese: "创新", pronunciation: "/ˌɪnəˈveɪʃən/", example: "China leads in technological innovation." },
+          { word: "entrepreneur", chinese: "企业家", pronunciation: "/ˌɑːntrəprəˈnɜːr/", example: "Many young entrepreneurs start tech companies." },
+          { word: "achievement", chinese: "成就", pronunciation: "/əˈtʃiːvmənt/", example: "His scientific achievements changed the world." },
+          { word: "legacy", chinese: "遗产", pronunciation: "/ˈleɡəsi/", example: "Great leaders leave a lasting legacy." }
+        ]
+      }
+    ]
+  };
+
+  let result = vocabularyData;
+  
+  if (level) {
+    result = { [level]: vocabularyData[level] || [] };
+  }
+  
+  if (unit && level) {
+    const levelData = vocabularyData[level] || [];
+    const unitData = levelData.find(u => u.unit === parseInt(unit));
+    result = unitData ? { [level]: [unitData] } : { [level]: [] };
+  }
+
+  res.json(result);
 });
 
 app.get("/api/learning-path/:userId", (req, res) => {
