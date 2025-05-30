@@ -41,32 +41,32 @@
 }
 
 .dark {
-  /* Cyber Matrix Dark Mode - Classic Hacker Theme */
-  --background: 120 100% 2%; /* Deep matrix black */
-  --foreground: 120 100% 85%; /* Bright matrix green text */
-  --muted: 120 50% 8%;
-  --muted-foreground: 120 60% 40%;
-  --popover: 120 80% 3%;
-  --popover-foreground: 120 100% 85%;
-  --card: 120 60% 4%;
-  --card-foreground: 120 100% 85%;
-  --border: 120 100% 15%;
-  --input: 120 80% 8%;
+  /* Cyber Matrix Dark Mode - High Contrast Hacker Theme */
+  --background: 0 0% 3%; /* Deep black background */
+  --foreground: 120 100% 90%; /* Bright green text */
+  --muted: 0 0% 8%; /* Dark grey muted */
+  --muted-foreground: 120 50% 60%; /* Medium green for muted text */
+  --popover: 0 0% 5%; /* Nearly black popover */
+  --popover-foreground: 120 100% 90%; /* Bright green popover text */
+  --card: 0 0% 6%; /* Dark card background */
+  --card-foreground: 120 100% 90%; /* Bright green card text */
+  --border: 120 60% 25%; /* Darker green borders */
+  --input: 0 0% 8%; /* Dark input background */
   --primary: 120 100% 50%; /* Bright matrix green */
-  --primary-foreground: 120 100% 2%;
-  --secondary: 120 80% 35%; /* Matrix dark green */
-  --secondary-foreground: 120 100% 2%;
-  --accent: 180 100% 50%; /* Digital cyan */
-  --accent-foreground: 120 100% 2%;
-  --destructive: 0 100% 60%;
-  --destructive-foreground: 120 100% 2%;
-  --ring: 120 100% 50%;
+  --primary-foreground: 0 0% 3%; /* Black text on green */
+  --secondary: 120 80% 20%; /* Dark green secondary */
+  --secondary-foreground: 120 100% 90%; /* Bright green text */
+  --accent: 180 100% 60%; /* Bright cyan accent */
+  --accent-foreground: 0 0% 3%; /* Black text on cyan */
+  --destructive: 0 100% 60%; /* Red for destructive actions */
+  --destructive-foreground: 0 0% 100%; /* White text on red */
+  --ring: 120 100% 50%; /* Green focus ring */
   
   --chart-1: 120 100% 50%;
-  --chart-2: 120 80% 35%;
-  --chart-3: 180 100% 50%;
-  --chart-4: 90 100% 45%;
-  --chart-5: 150 100% 40%;
+  --chart-2: 180 100% 60%;
+  --chart-3: 90 100% 50%;
+  --chart-4: 60 100% 50%;
+  --chart-5: 300 100% 60%;
 }
 
 @layer base {
@@ -75,71 +75,75 @@
   }
 
   body {
-    font-family: 'Courier New', monospace !important;
-    background: #000000 !important;
-    background-image: 
-      radial-gradient(circle at 25% 25%, #001100 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, #002200 0%, transparent 50%),
-      linear-gradient(135deg, #000000 0%, #001a00 100%) !important;
+    @apply bg-background text-foreground;
+    font-family: 'Courier New', monospace;
     min-height: 100vh;
-    color: #00FF00 !important;
     overflow-x: hidden;
   }
   
+  .dark body {
+    background: #000000;
+    background-image: 
+      radial-gradient(circle at 25% 25%, #001100 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, #002200 0%, transparent 50%),
+      linear-gradient(135deg, #000000 0%, #001a00 100%);
+  }
+  
   * {
-    font-family: 'Courier New', monospace !important;
+    font-family: 'Courier New', monospace;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold;
-    font-family: 'Courier New', monospace !important;
+    @apply font-semibold text-foreground;
+    font-family: 'Courier New', monospace;
     letter-spacing: 0.1em;
-    color: #00FF00 !important;
-    text-shadow: 0 0 10px #00FF00;
   }
   
-  /* Override all text colors to matrix green */
-  p, span, div, label, input, button {
-    color: #00FF00 !important;
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    text-shadow: 0 0 10px hsl(var(--primary));
   }
   
-  /* Fix input fields and form elements */
+  /* Input styling that respects theme */
   input, textarea, select {
-    background: #000000 !important;
-    border: 1px solid #00FF00 !important;
-    color: #00FF00 !important;
-    font-family: 'Courier New', monospace !important;
+    @apply bg-input border-border text-foreground;
+    font-family: 'Courier New', monospace;
   }
   
   input:focus, textarea:focus, select:focus {
-    background: #001100 !important;
-    border: 1px solid #00FF00 !important;
-    box-shadow: 0 0 10px #00FF00 !important;
-    outline: none !important;
+    @apply ring-2 ring-ring border-primary;
+  }
+  
+  .dark input:focus, .dark textarea:focus, .dark select:focus {
+    box-shadow: 0 0 10px hsl(var(--primary));
   }
   
   input::placeholder, textarea::placeholder {
-    color: #006600 !important;
+    @apply text-muted-foreground;
   }
   
-  /* Ensure cards have proper matrix styling */
+  /* Card styling that respects theme */
   .card, [data-radix-collection-item] {
-    background: rgba(0, 20, 0, 0.8) !important;
-    border: 1px solid #00FF00 !important;
-    color: #00FF00 !important;
+    @apply bg-card text-card-foreground border-border;
   }
   
-  /* Fix button styling */
+  .dark .card, .dark [data-radix-collection-item] {
+    background: rgba(0, 20, 0, 0.3);
+    border: 1px solid hsl(var(--border));
+  }
+  
+  /* Button styling that respects theme */
   button {
-    background: #000000 !important;
-    border: 1px solid #00FF00 !important;
-    color: #00FF00 !important;
-    font-family: 'Courier New', monospace !important;
+    @apply bg-background text-foreground border-border;
+    font-family: 'Courier New', monospace;
   }
   
   button:hover {
-    background: #001100 !important;
-    box-shadow: 0 0 15px #00FF00 !important;
+    @apply bg-accent text-accent-foreground;
+  }
+  
+  .dark button:hover {
+    background: rgba(0, 17, 0, 0.8);
+    box-shadow: 0 0 15px hsl(var(--primary));
   }
 }
 
