@@ -21,6 +21,10 @@ import VirtualClassroom from "@/pages/virtual-classroom";
 import PronunciationPractice from "@/pages/pronunciation-practice";
 import ReadingComprehension from "@/pages/reading-comprehension";
 import SocialLearning from "@/pages/social-learning";
+import SpeechRecognition from "@/pages/speech-recognition";
+import InteractiveGames from "@/pages/interactive-games";
+import CulturalImmersion from "@/pages/cultural-immersion";
+import Achievements from "@/pages/achievements";
 import NotFound from "@/pages/not-found";
 import { useState, useEffect } from "react";
 
@@ -46,6 +50,10 @@ function Router() {
           <Route path="/pronunciation-practice" component={PronunciationPractice} />
           <Route path="/reading-comprehension" component={ReadingComprehension} />
           <Route path="/social-learning" component={SocialLearning} />
+          <Route path="/speech-recognition" component={SpeechRecognition} />
+          <Route path="/interactive-games" component={InteractiveGames} />
+          <Route path="/cultural-immersion" component={CulturalImmersion} />
+          <Route path="/achievements" component={Achievements} />
           <Route component={NotFound} />
         </Switch>
       </main>
