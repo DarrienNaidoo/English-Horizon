@@ -3,18 +3,53 @@ import React, { useState } from "react";
 const mysteries = [
   {
     id: 1,
-    clue: "I'm something you open when you're curious, and I'm often found on a birthday.",
-    answer: "present",
+    clue: "I'm something you read that tells a story or gives you facts.",
+    answer: "book",
   },
   {
     id: 2,
-    clue: "I’m something you wear on your feet, and I help you walk comfortably.",
-    answer: "shoes",
+    clue: "I'm full of keys but can't open a door.",
+    answer: "keyboard",
   },
   {
     id: 3,
-    clue: "I'm full of pages, and I tell stories or share knowledge.",
-    answer: "book",
+    clue: "I’m cold and made of water, but I’m not wet.",
+    answer: "ice",
+  },
+  {
+    id: 4,
+    clue: "I have hands but no arms. I tell you the time.",
+    answer: "clock",
+  },
+  {
+    id: 5,
+    clue: "You write with me, and I help your thoughts flow.",
+    answer: "pen",
+  },
+  {
+    id: 6,
+    clue: "I light up a room, but I'm not the sun.",
+    answer: "lamp",
+  },
+  {
+    id: 7,
+    clue: "You wear me on your feet and I come in pairs.",
+    answer: "shoes",
+  },
+  {
+    id: 8,
+    clue: "I'm green, live in the ground, and you eat me in salads.",
+    answer: "lettuce",
+  },
+  {
+    id: 9,
+    clue: "You can hear with me, but I don’t speak.",
+    answer: "ear",
+  },
+  {
+    id: 10,
+    clue: "I go up when the rain comes down.",
+    answer: "umbrella",
   },
 ];
 
