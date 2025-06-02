@@ -5,16 +5,80 @@ const topics = [
     id: 1,
     title: "Should school uniforms be mandatory?",
     sampleArguments: [
-      "Uniforms create equality.",
-      "Students lose individuality.",
+      "Uniforms reduce distractions and create equality.",
+      "Students should express their individuality through clothing.",
     ],
   },
   {
     id: 2,
-    title: "Is technology helping or harming education?",
+    title: "Is online learning better than classroom learning?",
     sampleArguments: [
-      "It gives access to information.",
-      "It causes distraction.",
+      "Online learning offers flexibility and access from anywhere.",
+      "Classroom learning encourages social interaction and discipline.",
+    ],
+  },
+  {
+    id: 3,
+    title: "Should students have homework every day?",
+    sampleArguments: [
+      "Daily homework helps practice and retain lessons.",
+      "Too much homework causes stress and reduces free time.",
+    ],
+  },
+  {
+    id: 4,
+    title: "Are video games good for learning?",
+    sampleArguments: [
+      "Some games improve problem-solving and language skills.",
+      "Too much gaming can reduce focus on studies.",
+    ],
+  },
+  {
+    id: 5,
+    title: "Should smartphones be allowed in class?",
+    sampleArguments: [
+      "Phones can be useful for learning tools and research.",
+      "They can cause distraction and cheating.",
+    ],
+  },
+  {
+    id: 6,
+    title: "Is it better to be rich or happy?",
+    sampleArguments: [
+      "Money provides comfort and opportunities.",
+      "Happiness is more important than material things.",
+    ],
+  },
+  {
+    id: 7,
+    title: "Should schools start later in the morning?",
+    sampleArguments: [
+      "Later starts help students get enough sleep.",
+      "Early starts prepare students for the real world.",
+    ],
+  },
+  {
+    id: 8,
+    title: "Should animals be kept in zoos?",
+    sampleArguments: [
+      "Zoos protect endangered species and educate the public.",
+      "Animals should live in their natural environments.",
+    ],
+  },
+  {
+    id: 9,
+    title: "Is it better to read books or watch movies?",
+    sampleArguments: [
+      "Books improve imagination and vocabulary.",
+      "Movies are quicker and easier to understand visually.",
+    ],
+  },
+  {
+    id: 10,
+    title: "Should teenagers have part-time jobs?",
+    sampleArguments: [
+      "Jobs teach responsibility and money management.",
+      "Work can take time away from school and rest.",
     ],
   },
 ];
