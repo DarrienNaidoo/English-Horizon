@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import GameMenu from "./GameMenu";
 
-// Import game modules
 import AIQuestAcademy from "../games/AIQuestAcademy/AIQuestAcademy";
-// Future games can be added here like:
-// import GrammarGalaxy from "../games/GrammarGalaxy/GrammarGalaxy";
+import GrammarGalaxy from "../games/GrammarGalaxy/GrammarGalaxy";
 
 const GameContainer = () => {
   const [selectedGame, setSelectedGame] = useState(null);
@@ -31,9 +29,18 @@ const GameContainer = () => {
             <AIQuestAcademy />
           </div>
         );
-      // Add more games like this:
-      // case "grammarGalaxy":
-      //   return <GrammarGalaxy />;
+      case "grammarGalaxy":
+        return (
+          <div>
+            <button
+              className="mb-4 text-sm text-purple-600 hover:underline"
+              onClick={handleBackToMenu}
+            >
+              ← Back to Game Menu
+            </button>
+            <GrammarGalaxy />
+          </div>
+        );
       default:
         return <GameMenu onSelectGame={handleSelectGame} />;
     }
