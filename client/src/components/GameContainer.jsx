@@ -6,6 +6,7 @@ import GrammarGalaxy from "../games/GrammarGalaxy/GrammarGalaxy";
 import MysteryWords from "../games/MysteryWords/MysteryWords";
 import DebateClub from "../games/DebateClub/DebateClub";
 import RoleplayTheater from "../games/RoleplayTheater/RoleplayTheater";
+import SoundDetective from "../games/SoundDetective/SoundDetective";
 
 const GameContainer = () => {
   const [selectedGame, setSelectedGame] = useState(null);
