@@ -3,6 +3,9 @@ import GameMenu from "./GameMenu";
 
 import AIQuestAcademy from "../games/AIQuestAcademy/AIQuestAcademy";
 import GrammarGalaxy from "../games/GrammarGalaxy/GrammarGalaxy";
+import MysteryWords from "../games/MysteryWords/MysteryWords";
+import DebateClub from "../games/DebateClub/DebateClub";
+import RoleplayTheater from "../games/RoleplayTheater/RoleplayTheater";
 
 const GameContainer = () => {
   const [selectedGame, setSelectedGame] = useState(null);
@@ -39,6 +42,42 @@ const GameContainer = () => {
               ← Back to Game Menu
             </button>
             <GrammarGalaxy />
+          </div>
+        );
+      case "mysteryWords":
+        return (
+          <div>
+            <button
+              className="mb-4 text-sm text-indigo-600 hover:underline"
+              onClick={handleBackToMenu}
+            >
+              ← Back to Game Menu
+            </button>
+            <MysteryWords />
+          </div>
+        );
+      case "debateClub":
+        return (
+          <div>
+            <button
+              className="mb-4 text-sm text-red-600 hover:underline"
+              onClick={handleBackToMenu}
+            >
+              ← Back to Game Menu
+            </button>
+            <DebateClub />
+          </div>
+        );
+      case "roleplayTheater":
+        return (
+          <div>
+            <button
+              className="mb-4 text-sm text-yellow-600 hover:underline"
+              onClick={handleBackToMenu}
+            >
+              ← Back to Game Menu
+            </button>
+            <RoleplayTheater />
           </div>
         );
       default:
