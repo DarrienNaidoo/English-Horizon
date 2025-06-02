@@ -12,13 +12,11 @@ const GameMenu = ({ onSelectGame }) => {
         🧠 AI Quest Academy
       </button>
 
-      {/* Placeholder for future games */}
       <button
-        onClick={() => alert("Coming soon!")}
-        className="bg-gray-300 text-gray-800 px-6 py-3 rounded-lg shadow hover:bg-gray-400 transition"
-        disabled
+        onClick={() => onSelectGame("grammarGalaxy")}
+        className="bg-purple-500 text-white px-6 py-3 rounded-lg shadow hover:bg-purple-600 transition"
       >
-        🚀 Grammar Galaxy (Coming Soon)
+        🚀 Grammar Galaxy
       </button>
     </div>
   );
