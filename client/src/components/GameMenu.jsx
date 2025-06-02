@@ -39,6 +39,13 @@ const GameMenu = ({ onSelectGame }) => {
       >
         🎭 Roleplay Theater
       </button>
+
+      <button
+        onClick={() => onSelectGame("soundDetective")}
+        className="bg-teal-500 text-white px-6 py-3 rounded-lg shadow hover:bg-teal-600 transition"
+      >
+        🎧 Sound Detective
+      </button>
     </div>
   );
 };
