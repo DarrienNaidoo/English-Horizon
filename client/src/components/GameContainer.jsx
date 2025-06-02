@@ -81,16 +81,24 @@ const GameContainer = () => {
             <RoleplayTheater />
           </div>
         );
+      case "soundDetective":
+        return (
+          <div>
+            <button
+              className="mb-4 text-sm text-teal-600 hover:underline"
+              onClick={handleBackToMenu}
+            >
+              ← Back to Game Menu
+            </button>
+            <SoundDetective />
+          </div>
+        );
       default:
         return <GameMenu onSelectGame={handleSelectGame} />;
     }
   };
 
-  return (
-    <div className="p-6">
-      {renderGame()}
-    </div>
-  );
+  return <div className="p-6">{renderGame()}</div>;
 };
 
 export default GameContainer;
