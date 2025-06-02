@@ -3,13 +3,33 @@ import React, { useState } from "react";
 const scenes = [
   {
     id: 1,
-    setting: "Ordering food at a restaurant",
+    setting: "Ordering at a restaurant",
     line: "Can I please have the chicken sandwich and a lemonade?",
   },
   {
     id: 2,
     setting: "Asking for directions",
-    line: "Excuse me, how do I get to the train station?",
+    line: "Excuse me, how do I get to the nearest bus stop?",
+  },
+  {
+    id: 3,
+    setting: "Making a phone call",
+    line: "Hello, I’d like to speak to Mr. Lee, please.",
+  },
+  {
+    id: 4,
+    setting: "Shopping for clothes",
+    line: "Do you have this shirt in a smaller size?",
+  },
+  {
+    id: 5,
+    setting: "At the doctor’s office",
+    line: "I’ve been coughing and feeling tired for three days.",
+  },
+  {
+    id: 6,
+    setting: "Job interview introduction",
+    line: "Hi, my name is Sarah and I'm excited to apply for this position.",
   },
 ];
 
