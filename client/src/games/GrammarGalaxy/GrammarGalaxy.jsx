@@ -4,21 +4,61 @@ const grammarPlanets = [
   {
     id: "tenses",
     name: "⏳ Tense Planet",
-    description: "Explore verb tenses and practice when to use them.",
+    description: "Practice using the correct verb tenses in context.",
     challenge: {
-      question: "Which tense is correct: 'I ___ to the store yesterday'?",
-      options: ["go", "went", "will go"],
+      question: "Choose the correct verb: 'Yesterday, I ___ to the park.'",
+      options: ["go", "went", "going"],
       answer: "went",
     },
   },
   {
     id: "articles",
     name: "📖 Article Asteroid",
-    description: "Learn about 'a', 'an', and 'the'.",
+    description: "Learn to use 'a', 'an', and 'the' properly.",
     challenge: {
-      question: "Which article fits: '___ apple a day keeps the doctor away'?",
+      question: "Which article fits: '___ orange is full of vitamin C'?",
       options: ["A", "An", "The"],
       answer: "An",
+    },
+  },
+  {
+    id: "prepositions",
+    name: "🛰️ Preposition Planet",
+    description: "Explore words like 'in', 'on', 'at' to describe time and place.",
+    challenge: {
+      question: "Choose the correct preposition: 'The cat is ___ the table.'",
+      options: ["on", "in", "at"],
+      answer: "on",
+    },
+  },
+  {
+    id: "pronouns",
+    name: "👽 Pronoun Planet",
+    description: "Learn how to replace nouns with pronouns.",
+    challenge: {
+      question: "Which pronoun replaces 'Tom and I'? '___ are friends.'",
+      options: ["He", "We", "They"],
+      answer: "We",
+    },
+  },
+  {
+    id: "plurals",
+    name: "🌌 Plural Galaxy",
+    description: "Practice forming regular and irregular plurals.",
+    challenge: {
+      question: "What is the plural of 'mouse'?",
+      options: ["mouses", "mouse", "mice"],
+      answer: "mice",
+    },
+  },
+  {
+    id: "adjectives",
+    name: "🌈 Adjective Asteroid Belt",
+    description: "Learn words that describe nouns.",
+    challenge: {
+      question: "Identify the adjective: 'The tall man ran fast.'",
+      options: ["tall", "man", "fast"],
+      answer: "tall",
     },
   },
 ];
