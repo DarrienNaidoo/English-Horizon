@@ -18,6 +18,27 @@ const GameMenu = ({ onSelectGame }) => {
       >
         🚀 Grammar Galaxy
       </button>
+
+      <button
+        onClick={() => onSelectGame("mysteryWords")}
+        className="bg-indigo-500 text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-600 transition"
+      >
+        🔍 Mystery Words
+      </button>
+
+      <button
+        onClick={() => onSelectGame("debateClub")}
+        className="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600 transition"
+      >
+        🎤 Debate Club
+      </button>
+
+      <button
+        onClick={() => onSelectGame("roleplayTheater")}
+        className="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow hover:bg-yellow-600 transition"
+      >
+        🎭 Roleplay Theater
+      </button>
     </div>
   );
 };
